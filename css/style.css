@@ -102,6 +102,23 @@ a:focus {
           box-shadow: none;
 }
 
+.search-nav .input-group .input-group-text
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.navbar-nav .dropdown-menu
+{
+  overflow: hidden;
+}
+
+.search-nav .input-group input[type=search]
+{
+  font-size: 1rem;
+}
 /*header section*/
 .hero_area {
   position: relative;
@@ -123,6 +140,7 @@ a:focus {
 
 .header_section {
     padding: 15px 0;
+    max-height: 400px;
 }
 
 .header_section .container-fluid {
@@ -846,7 +864,7 @@ a:focus {
   color: #ffffff;
 }
 
-.footer_section .footer_social {
+.footer_social {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -857,7 +875,7 @@ a:focus {
     margin-bottom: 10px;
 }
 
-.footer_section .footer_social a {
+.footer_social a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -877,7 +895,7 @@ a:focus {
   font-size: 18px;
 }
 
-.footer_section .footer_social a:hover {
+.footer_social a:hover {
   color: #f7444e;
 }
 
@@ -1120,7 +1138,20 @@ form input[type="submit"]:focus {
     font-weight: 400;
 }
 
-http://kute-themes.com/html/boutique/html/index.html
-https://template.hasthemes.com/noraure/noraure/index.html
-https://preview.hasthemes.com/xoss-preview/xoss/index.html
+/*start products page*/
+/*start categories*/
+.categories li {
+  transition: background-color 0.2s;
+  cursor: pointer;
+  margin: 0 !important;
+}
 
+.categories li.active {
+  background-color: #000;
+}
+
+.categories li:hover {
+  background-color: #000;
+}
+/*end categories*/
+/*end products page*/
