@@ -1137,3 +1137,21 @@ form input[type="submit"]:focus {
     font-size: 15px;
     font-weight: 400;
 }
+
+/*start products page*/
+/*start categories*/
+.categories li {
+  transition: background-color 0.2s;
+  cursor: pointer;
+  margin: 0 !important;
+}
+
+.categories li.active {
+  background-color: #000;
+}
+
+.categories li:hover {
+  background-color: #000;
+}
+/*end categories*/
+/*end products page*/
