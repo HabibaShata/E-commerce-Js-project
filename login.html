@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="loginCss.css">
+</head>
+<style>
+    #EnterWebsit {
+        border-radius: 200px;
+
+    }
+</style>
+
+<body>
+    <div class="container w-25">
+        <form class="text-center border border-light p-5">
+            <p class="h4 mb-4">Login</p>
+
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="Password" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <div class="form-group">
+                <a href="#">Forgot your password?</a>
+                <input type="checkbox" class="RemmberPassword" onclick="">
+            </div>
+            <button class="btn btn-info btn-block my-4" type="submit" id="submit">Submit</button>
+            <p>Don't have an account yet?
+                <a href="/sign-up.html">Sign Up</a>
+            </p>
+        </form>
+        <div class="Enterwebsite">
+            <input class="btn bg-body-secondary btn-block my-5 btn-outline-success" type="button" value="Enter Websit"
+                id="EnterWebsit" onclick="window.location.href='./customer.html'">
+        </div>
+    </div>
+
+    <script src=" script.js"></script>
+</body>
+
+</html>
