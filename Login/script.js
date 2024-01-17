@@ -10,10 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
         existingUsers.push(adminUser);
 
         let user = existingUsers.find(function (user) {
-            return user.email === _username && user.password === _password;
+            return user.userEmail == _username && user.userPassword == _password;
         });
-
-        return user ? user.role : false;
+        return user ? user : false;
     }
 
     function validateEmail(email) {
@@ -25,41 +24,51 @@ document.addEventListener("DOMContentLoaded", function () {
         return password.length >= 7;
     }
 
-    function login(event) {
-        event.preventDefault();
-        let username = document.getElementById("email");
-        let password = document.getElementById("Password");
-        let emailError = document.getElementById("emailError");
-        let passwordError = document.getElementById("passwordError");
-        let validationPopup = document.getElementById("validationPopup");
+    
+        function login(event) {
+            event.preventDefault();
+            let userEmail = document.getElementById("email");
+            let password = document.getElementById("Password");
+            
 
-        emailError.style.visibility = "hidden";
-        passwordError.style.visibility = "hidden";
+            let emailError = document.getElementById("emailError");
+            let passwordError = document.getElementById("passwordError");
+            let validationPopup = document.getElementById("validationPopup");
+        
+            emailError.style.visibility = "hidden";
+            passwordError.style.visibility = "hidden";
+        
+            let user = checkCredentials(userEmail.value, password.value);
+            if (user) {
 
-        let role = checkCredentials(username.value, password.value);
-        if (role) {
-            window.location.assign(`../Users/${role}.html`);
-        } else {
-            validationPopup.style.animation = "";
-            validationPopup.style.display = "block";
-
-            void validationPopup.offsetWidth;
-
-            validationPopup.style.animation = "fadeOut 4s forwards";
-
-            if (!validateEmail(username.value) && !validatePassword(password.value)) {
-                validationPopup.innerText = "Invalid email and password";
-            } else if (!validateEmail(username.value)) {
-                validationPopup.innerText = "Invalid email";
-            } else if (!validatePassword(password.value)) {
-                validationPopup.innerText = "Invalid password";
-            } else {
-                validationPopup.innerText = "Invalid email or password";
+                localStorage.setItem("loggedInUser",JSON.stringify(user));
+                    
+                window.location.assign(`../${user.userRole}.html`);           
             }
-
-            setTimeout(function () {
-                validationPopup.style.display = "none";
-            }, 5000);
+            else 
+            {
+                validationPopup.style.animation = "";
+                validationPopup.style.display = "block";
+        
+                void validationPopup.offsetWidth;
+        
+                validationPopup.style.animation = "fadeOut 4s forwards";
+        
+                if (!validateEmail(userEmail.value) && !validatePassword(password.value)) {
+                    validationPopup.innerText = "Invalid email and password";
+                } else if (!validateEmail(userEmail.value)) {
+                    validationPopup.innerText = "Invalid email";
+                } else if (!validatePassword(password.value)) {
+                    validationPopup.innerText = "Invalid password";
+                } else {
+                    validationPopup.innerText = "Invalid email or password";
+                }
+        
+                setTimeout(function () {
+                    validationPopup.style.display = "none";
+                }, 5000);
+            }
         }
-    }
+    
+        
 });

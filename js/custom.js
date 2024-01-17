@@ -8,6 +8,8 @@
 // getYear();
 
 //Product class function
+import { LogOut } from "./products.js";
+
 class Product
 {
     constructor(_productId, _productName, _category, _sellerName, _images, _price, _description, _options)
@@ -25,7 +27,7 @@ class Product
 
 //random data
 let products = [
-      new Product(1, "Jewellery", "Jewellery", "Seller1", ["images/p1.png", "images/p1.png", "images/p1.png"], 50000, "This is a Jewellery", ["Black", "White", "Red"]),
+      new Product(1, "Jewellery", "Jewellery", "Seller1", ["images/p1.png", "images/p2.png", "images/p3.png"], 50000, "This is a Jewellery", ["Black", "White", "Red"]),
       new Product(2, "Accessories", "Accessories", "Seller2", ["images/p2.png", "images/p2.png", "images/p2.png"], 20000, "This is a Accessories", ["Black", "White", "Red"]),
       new Product(3, "Artwork", "Artwork", "Seller3", ["images/p3.png", "images/p3.png", "images/p3.png"], 30000, "This is a Artwork", ["Black", "White", "Red"]),
       new Product(4, "Accessories", "Accessories", "Seller4", ["images/p4.png", "images/p4.png", "images/p4.png"], 1000, "This is a Accessories", ["Black", "White", "Red"]),
@@ -79,7 +81,9 @@ $(function(){
    //      }
    //  });
    let productCards = GetProducts(9);
-   document.getElementById("products-Landing").innerHTML = productCards;
+   if (document.getElementById("products-Landing")) {
+      document.getElementById("products-Landing").innerHTML = productCards;   
+   }
 })
 
 function GetProducts(maxNumber, productsList)
