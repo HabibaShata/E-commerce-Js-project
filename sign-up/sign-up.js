@@ -71,16 +71,20 @@ function validateForm() {
 
     var validationMessages = [];
 
+    const firstNameMessage = document.getElementById('firstNameMessage');
+    const emailMessage = document.getElementById('emailMessage');
+    const passwordMessage = document.getElementById('passwordMessage');
+
     // You can add more specific validation if needed
-    if (!isValidEmail(email)) {
+    if (!isValidEmail(email, emailMessage)) {
         validationMessages.push("Fix the email error.");
     }
 
-    if (!isValidName(username)) {
+    if (!isValidName(username, firstNameMessage)) {
         validationMessages.push("Fix the username error.");
     }
 
-    if (!isValidPassword(username)) {
+    if (!isValidPassword(password, passwordMessage)) {
         validationMessages.push("Fix the password error.");
     }
 
