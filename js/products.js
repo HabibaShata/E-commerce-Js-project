@@ -24,11 +24,11 @@ function searchProductsByName(productName)
 window.addEventListener("load", function(){
     //Check if the user is logged in then change the Account dropdown menu and change the links urls
     if (this.localStorage.getItem("loggedInUser")!=null) {
-        document.getElementById("loggedInUser").innerHTML = "Welcome, " +  localStorage.getItem("loggedInUser").userName;
+        document.getElementById("loggedInUser").innerHTML = "Welcome, " +  JSON.parse(localStorage.getItem("loggedInUser")).userName;
         //add the list items to the dropdown menu
         let userDropDown = document.getElementById("user-DropDown");
         userDropDown.innerHTML = `
-        <li><a href="#">Profile</a></li>
+        <li><a href="profile.html">Profile</a></li>
         <li><a href="#">Orders</a></li>
         <li><a href="#" id="logOut">Log out</a></li>
         `;
