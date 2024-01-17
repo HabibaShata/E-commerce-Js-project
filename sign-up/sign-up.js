@@ -3,28 +3,29 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
 
         // Validate the form before proceeding
-        var validationMessages = validateForm();
+        let validationMessages = validateForm();
 
         if (validationMessages.length > 0) {
             showValidationMessages(validationMessages);
             return;
         }
 
-        var role = document.getElementById('sellerBtn').checked ? 'seller' : 'customer';
-        var email = document.querySelector('input[name="email"]').value;
-        var password = document.querySelector('input[name="password"]').value;
+        let role = document.getElementById('sellerBtn').checked ? 'seller' : 'customer';
+        let email = document.querySelector('input[name="email"]').value;
+        let password = document.querySelector('input[name="password"]').value;
 
-        var existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+        let existingUsers = JSON.parse(localStorage.getItem('users')) || [];
 
-        var emailExists = existingUsers.some(function (user) {
+        let emailExists = existingUsers.some(function (user) {
             return user.email === email;
         });
 
         if (emailExists) {
             showValidationMessages(['This email is already signed up. Please use a different email.']);
         } else {
-            var user = {
+            let user = {
                 role: role,
+                
                 email: email,
                 password: password
             };
@@ -32,24 +33,25 @@ document.addEventListener("DOMContentLoaded", function () {
             existingUsers.push(user);
 
             localStorage.setItem('users', JSON.stringify(existingUsers));
+            
 
-            window.location.href = "../Users/customer.html";
+            window.location.href = (`../Users/${role}.html`);
 
             console.log('User added to local storage.');
         }
     }
 
     // Attach the form submission handler to the form
-    var signUpForm = document.getElementById('signupForm');
+    let signUpForm = document.getElementById('signupForm');
     signUpForm.addEventListener('submit', handleFormSubmit);
 });
 
 function validateForm() {
-    var email = document.querySelector('input[name="email"]').value;
-    var password = document.getElementById("password").value;
-    var confirmPassword = document.getElementById("confirmPassword").value;
+    let email = document.querySelector('input[name="email"]').value;
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
 
-    var validationMessages = [];
+    let validationMessages = [];
 
     // You can add more specific validation if needed
     if (!validateEmail(email)) {
@@ -73,7 +75,7 @@ function validateEmail(email) {
 }
 
 function showValidationMessages(messages) {
-    var validationPopup = document.getElementById("validationPopup");
+    let validationPopup = document.getElementById("validationPopup");
     validationPopup.innerHTML = messages.map(message => `<p>${message}</p>`).join('');
     validationPopup.style.animation = ""; // Reset animation
     validationPopup.style.display = "block";
@@ -81,10 +83,10 @@ function showValidationMessages(messages) {
     void validationPopup.offsetWidth;
 
     // Start the animation by adding the class
-    validationPopup.style.animation = "fadeOut 4s forwards";
+    validationPopup.style.animation = "fadeOut 5s forwards";
 
     // Hide the popup after 2 seconds
     setTimeout(function () {
         validationPopup.style.display = "none";
-    }, 2000);
+    }, 5000);
 }

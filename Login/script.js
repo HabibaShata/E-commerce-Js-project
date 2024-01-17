@@ -3,10 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
     submit.addEventListener("click", login);
 
     function checkCredentials(_username, _password) {
-        // Retrieve existing users from local storage
-        var existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+        let existingUsers = JSON.parse(localStorage.getItem('users')) || [];
 
-        var user = existingUsers.find(function (user) {
+        const adminUser = { email: 'admin@example.com', password: 'adminpassword', role: 'admin' };
+        
+        existingUsers.push(adminUser);
+
+        let user = existingUsers.find(function (user) {
             return user.email === _username && user.password === _password;
         });
 
@@ -22,57 +25,41 @@ document.addEventListener("DOMContentLoaded", function () {
         return password.length >= 7;
     }
 
-    
-        function login(event) {
-            event.preventDefault();
-            let username = document.getElementById("email");
-            let password = document.getElementById("Password");
-        
-            let emailError = document.getElementById("emailError");
-            let passwordError = document.getElementById("passwordError");
-            let validationPopup = document.getElementById("validationPopup");
-        
-            emailError.style.visibility = "hidden";
-            passwordError.style.visibility = "hidden";
-        
-            let role = checkCredentials(username.value, password.value);
-            if (role) {
-                switch (role) {
-                    case "customer":
-                        window.location.assign("../Users/customer.html");
-                        break;
-                    case "seller":
-                        window.location.assign("../Users/seller.html");
-                        break;
-                    case "admin":
-                        window.location.assign("../Users/admin.html");
-                        break;
-                    default:
-                        alert("Role not recognized");
-                }
+    function login(event) {
+        event.preventDefault();
+        let username = document.getElementById("email");
+        let password = document.getElementById("Password");
+        let emailError = document.getElementById("emailError");
+        let passwordError = document.getElementById("passwordError");
+        let validationPopup = document.getElementById("validationPopup");
+
+        emailError.style.visibility = "hidden";
+        passwordError.style.visibility = "hidden";
+
+        let role = checkCredentials(username.value, password.value);
+        if (role) {
+            window.location.assign(`../Users/${role}.html`);
+        } else {
+            validationPopup.style.animation = "";
+            validationPopup.style.display = "block";
+
+            void validationPopup.offsetWidth;
+
+            validationPopup.style.animation = "fadeOut 4s forwards";
+
+            if (!validateEmail(username.value) && !validatePassword(password.value)) {
+                validationPopup.innerText = "Invalid email and password";
+            } else if (!validateEmail(username.value)) {
+                validationPopup.innerText = "Invalid email";
+            } else if (!validatePassword(password.value)) {
+                validationPopup.innerText = "Invalid password";
             } else {
-                validationPopup.style.animation = "";
-                validationPopup.style.display = "block";
-        
-                void validationPopup.offsetWidth;
-        
-                validationPopup.style.animation = "fadeOut 4s forwards";
-        
-                if (!validateEmail(username.value) && !validatePassword(password.value)) {
-                    validationPopup.innerText = "Invalid email and password";
-                } else if (!validateEmail(username.value)) {
-                    validationPopup.innerText = "Invalid email";
-                } else if (!validatePassword(password.value)) {
-                    validationPopup.innerText = "Invalid password";
-                } else {
-                    validationPopup.innerText = "Invalid email or password";
-                }
-        
-                setTimeout(function () {
-                    validationPopup.style.display = "none";
-                }, 5000);
+                validationPopup.innerText = "Invalid email or password";
             }
+
+            setTimeout(function () {
+                validationPopup.style.display = "none";
+            }, 5000);
         }
-    
-        
+    }
 });
