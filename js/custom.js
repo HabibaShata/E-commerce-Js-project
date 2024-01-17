@@ -8,6 +8,8 @@
 // getYear();
 
 //Product class function
+import { LogOut } from "./products.js";
+
 class Product
 {
     constructor(_productId, _productName, _category, _sellerName, _images, _price, _description, _options)
@@ -79,7 +81,9 @@ $(function(){
    //      }
    //  });
    let productCards = GetProducts(9);
-   document.getElementById("products-Landing").innerHTML = productCards;
+   if (document.getElementById("products-Landing")) {
+      document.getElementById("products-Landing").innerHTML = productCards;   
+   }
 })
 
 function GetProducts(maxNumber, productsList)

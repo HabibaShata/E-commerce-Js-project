@@ -1,3 +1,28 @@
+export class users
+{
+    constructor(userID, userName, userPassword, userEmail, userRole) {
+        this.userID = userID;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.userEmail = userEmail;
+        this.userRole = userRole;
+    }
+}
+
+let usersArray = [];
+
+if(localStorage.getItem("users") != null)
+{
+    usersArray = JSON.parse(localStorage.getItem("users"));
+}
+
+
+let admin = new users(0, "admin", 1234567, "admin@gmail.com", "admin");
+
+usersArray.push(admin);
+
+localStorage.setItem("users", JSON.stringify(usersArray));
+
 document.addEventListener("DOMContentLoaded", function () {
     function handleFormSubmit(event) {
         event.preventDefault();
@@ -13,29 +38,26 @@ document.addEventListener("DOMContentLoaded", function () {
         var role = document.getElementById('sellerBtn').checked ? 'seller' : 'customer';
         var email = document.querySelector('input[name="email"]').value;
         var password = document.querySelector('input[name="password"]').value;
+        var username = document.querySelector('input[name="username"]').value;
 
-        var existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+        var usersArray = JSON.parse(localStorage.getItem('users')) || [];
 
-        var emailExists = existingUsers.some(function (user) {
+        var emailExists = usersArray.some(function (user) {
             return user.email === email;
         });
 
         if (emailExists) {
             showValidationMessages(['This email is already signed up. Please use a different email.']);
         } else {
-            var user = {
-                role: role,
-                email: email,
-                password: password
-            };
+            var user = new users(usersArray.length+1, username, password, email, role);
 
-            existingUsers.push(user);
+            usersArray.push(user);
 
-            localStorage.setItem('users', JSON.stringify(existingUsers));
+            localStorage.setItem('users', JSON.stringify(usersArray));
 
-            window.location.href = "../Users/customer.html";
+            localStorage.setItem('loggedInUser', username);
 
-            console.log('User added to local storage.');
+            window.location.href = "../customer.html";
         }
     }
 
@@ -46,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function validateForm() {
     var email = document.querySelector('input[name="email"]').value;
+    var username = document.querySelector('input[name="username"]').value;
     var password = document.getElementById("password").value;
     var confirmPassword = document.getElementById("confirmPassword").value;
 
@@ -54,6 +77,10 @@ function validateForm() {
     // You can add more specific validation if needed
     if (!validateEmail(email)) {
         validationMessages.push("Invalid email format.");
+    }
+
+    if (username.length < 4) {
+        validationMessages.push("Username must be at least 4 characters.");
     }
 
     if (password.length < 7) {
@@ -84,7 +111,7 @@ function showValidationMessages(messages) {
     validationPopup.style.animation = "fadeOut 4s forwards";
 
     // Hide the popup after 2 seconds
-    setTimeout(function () {
-        validationPopup.style.display = "none";
-    }, 2000);
+    // setTimeout(function () {
+    //     validationPopup.style.display = "none";
+    // }, 2000);
 }

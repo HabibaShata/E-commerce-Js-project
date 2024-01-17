@@ -7,10 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
         var existingUsers = JSON.parse(localStorage.getItem('users')) || [];
 
         var user = existingUsers.find(function (user) {
-            return user.email === _username && user.password === _password;
+            return user.userEmail == _username && user.userPassword == _password;
         });
-
-        return user ? user.role : false;
+        return user ? user : false;
     }
 
     function validateEmail(email) {
@@ -25,9 +24,10 @@ document.addEventListener("DOMContentLoaded", function () {
     
         function login(event) {
             event.preventDefault();
-            let username = document.getElementById("email");
+            let userEmail = document.getElementById("email");
             let password = document.getElementById("Password");
-        
+            
+
             let emailError = document.getElementById("emailError");
             let passwordError = document.getElementById("passwordError");
             let validationPopup = document.getElementById("validationPopup");
@@ -35,17 +35,19 @@ document.addEventListener("DOMContentLoaded", function () {
             emailError.style.visibility = "hidden";
             passwordError.style.visibility = "hidden";
         
-            let role = checkCredentials(username.value, password.value);
-            if (role) {
-                switch (role) {
+            let user = checkCredentials(userEmail.value, password.value);
+            if (user) {
+
+                localStorage.setItem("loggedInUser", user.userName);
+                switch (user.userRole) {
                     case "customer":
-                        window.location.assign("../Users/customer.html");
+                        window.location.assign("../customer.html");
                         break;
                     case "seller":
                         window.location.assign("../Users/seller.html");
                         break;
                     case "admin":
-                        window.location.assign("../Users/admin.html");
+                        window.location.assign("../admin.html");
                         break;
                     default:
                         alert("Role not recognized");
@@ -58,9 +60,9 @@ document.addEventListener("DOMContentLoaded", function () {
         
                 validationPopup.style.animation = "fadeOut 4s forwards";
         
-                if (!validateEmail(username.value) && !validatePassword(password.value)) {
+                if (!validateEmail(userEmail.value) && !validatePassword(password.value)) {
                     validationPopup.innerText = "Invalid email and password";
-                } else if (!validateEmail(username.value)) {
+                } else if (!validateEmail(userEmail.value)) {
                     validationPopup.innerText = "Invalid email";
                 } else if (!validatePassword(password.value)) {
                     validationPopup.innerText = "Invalid password";
