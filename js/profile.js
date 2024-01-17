@@ -138,5 +138,3 @@ window.addEventListener('load', function () {
     return true;
   }
 });
-
-export {isEmailValid, isValidName, isValidPassword}
