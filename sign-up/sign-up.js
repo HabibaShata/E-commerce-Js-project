@@ -9,17 +9,12 @@ export class users
     }
 }
 
-let usersArray = [];
+let usersArray = [new users(0, "admin", 1234567, "admin@gmail.com", "admin")];
 
 if(localStorage.getItem("users") != null)
 {
     usersArray = JSON.parse(localStorage.getItem("users"));
 }
-
-
-let admin = new users(0, "admin", 1234567, "admin@gmail.com", "admin");
-
-usersArray.push(admin);
 
 localStorage.setItem("users", JSON.stringify(usersArray));
 
@@ -55,9 +50,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             localStorage.setItem('users', JSON.stringify(usersArray));
 
-            localStorage.setItem('loggedInUser', username);
+            localStorage.setItem("loggedInUser",JSON.stringify(user));
 
-            window.location.href = "../customer.html";
+            window.location.href =(`../${role}.html`) ;
         }
     }
 

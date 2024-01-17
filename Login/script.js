@@ -38,21 +38,12 @@ document.addEventListener("DOMContentLoaded", function () {
             let user = checkCredentials(userEmail.value, password.value);
             if (user) {
 
-                localStorage.setItem("loggedInUser", user.userName);
-                switch (user.userRole) {
-                    case "customer":
-                        window.location.assign("../customer.html");
-                        break;
-                    case "seller":
-                        window.location.assign("../Users/seller.html");
-                        break;
-                    case "admin":
-                        window.location.assign("../admin.html");
-                        break;
-                    default:
-                        alert("Role not recognized");
-                }
-            } else {
+                localStorage.setItem("loggedInUser",JSON.stringify(user));
+                    
+                window.location.assign(`../${user.userRole}.html`);           
+            }
+            else 
+            {
                 validationPopup.style.animation = "";
                 validationPopup.style.display = "block";
         

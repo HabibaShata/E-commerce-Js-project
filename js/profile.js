@@ -1,10 +1,12 @@
+import { users as usersClass } from "../sign-up/sign-up.js";
+
 // profile.js
 window.addEventListener('load', function () {
 
   // Fetch user data from local storage
 
   ////////////////////////////////////////////////////////////////////////////
-  const userDataString = localStorage.getItem('userData');
+  const userDataString = localStorage.getItem('loggedInUser');
   if (!userDataString) {
     alert('User data not found. Please create a customer first.');
     return;
@@ -13,10 +15,9 @@ window.addEventListener('load', function () {
   const userData = JSON.parse(userDataString);
 
   // Populate form with user data
-  document.getElementById('firstName').value = userData.firstName || '';
-  document.getElementById('lastName').value = userData.lastName || '';
-  document.getElementById('email').value = userData.email || '';
-  document.getElementById('password').value = userData.password || '';
+  document.getElementById('firstName').value = userData.userName || '';
+  document.getElementById('email').value = userData.userEmail || '';
+  document.getElementById('password').value = userData.userPassword || '';
 
 
   // Handle form submission
@@ -26,7 +27,6 @@ window.addEventListener('load', function () {
     // Get updated user information
     const updatedUserData = {
       firstName: document.getElementById('firstName').value,
-      lastName: document.getElementById('lastName').value,
       email: document.getElementById('email').value,
       password: document.getElementById('password').value,
     };
@@ -38,7 +38,6 @@ window.addEventListener('load', function () {
 
     // Validate user information
     const firstNameMessage = document.getElementById('firstNameMessage');
-    const lastNameMessage = document.getElementById('lastNameMessage');
     const emailMessage = document.getElementById('emailMessage');
     const passwordMessage = document.getElementById('passwordMessage');
     const validationMessage = document.getElementById('validationMessage');
@@ -46,28 +45,35 @@ window.addEventListener('load', function () {
 
     // Clear previous validation messages
     firstNameMessage.innerText = '';
-    lastNameMessage.innerText = '';
     emailMessage.innerText = '';
     passwordMessage.innerText = '';
     validationMessage.innerText = '';
 
     const isFirstNameValid = isValidName(updatedUserData.firstName, firstNameMessage);
-    const isLastNameValid = isValidName(updatedUserData.lastName, lastNameMessage);
     const isEmailValid = isValidEmail(updatedUserData.email, emailMessage);
     const isPasswordValid = isValidPassword(updatedUserData.password, passwordMessage);
 
-    if (!isFirstNameValid || !isLastNameValid || !isEmailValid || !isPasswordValid) {
+    if (!isFirstNameValid || !isEmailValid || !isPasswordValid) {
 
       document.getElementById('firstName').value = updatedUserData.firstName || '';
-      document.getElementById('lastName').value = updatedUserData.lastName || '';
       document.getElementById('email').value = updatedUserData.email || '';
       document.getElementById('password').value = updatedUserData.password || '';
       return;
     }
 
+    //make a new user object
+    let updatedUserObj = new usersClass(userData.userID, updatedUserData.firstName, updatedUserData.password, updatedUserData.email, userData.userRole);
     // Update user data in local storage
+    localStorage.setItem('loggedInUser', JSON.stringify(updatedUserObj));
     ////////////////////////////////////////////////////////////////////////////////////
-    localStorage.setItem('userData', JSON.stringify(updatedUserData));
+    //get all the users from the local storage
+    let users = JSON.parse(localStorage.getItem('users'));
+    //find the index of the user with the same userID
+    let userIndex = users.findIndex(user => user.userID === userData.userID);
+    //update the user data with the updated user data
+    users.splice(userIndex, 1, updatedUserObj);
+    //save the updated users array to the local storage with the key 'users'
+    localStorage.setItem('users', JSON.stringify(users));
 
     // Display success message only if data is updated
     successMessage.innerText = 'Profile updated successfully!';
@@ -132,3 +138,5 @@ window.addEventListener('load', function () {
     return true;
   }
 });
+
+export {isEmailValid, isValidName, isValidPassword}
