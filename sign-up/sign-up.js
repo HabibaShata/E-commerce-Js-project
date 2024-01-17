@@ -1,3 +1,5 @@
+import { isValidEmail, isValidPassword, isValidName } from "../js/profile.js";
+
 export class users
 {
     constructor(userID, userName, userPassword, userEmail, userRole) {
@@ -70,16 +72,16 @@ function validateForm() {
     var validationMessages = [];
 
     // You can add more specific validation if needed
-    if (!validateEmail(email)) {
-        validationMessages.push("Invalid email format.");
+    if (!isValidEmail(email)) {
+        validationMessages.push("Fix the email error.");
     }
 
-    if (username.length < 4) {
-        validationMessages.push("Username must be at least 4 characters.");
+    if (!isValidName(username)) {
+        validationMessages.push("Fix the username error.");
     }
 
-    if (password.length < 7) {
-        validationMessages.push("Password must be at least 7 characters.");
+    if (!isValidPassword(username)) {
+        validationMessages.push("Fix the password error.");
     }
 
     if (password !== confirmPassword) {
@@ -89,10 +91,10 @@ function validateForm() {
     return validationMessages;
 }
 
-function validateEmail(email) {
-    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-}
+// function validateEmail(email) {
+//     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//     return re.test(String(email).toLowerCase());
+// }
 
 function showValidationMessages(messages) {
     var validationPopup = document.getElementById("validationPopup");

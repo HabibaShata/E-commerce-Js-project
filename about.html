@@ -24,7 +24,8 @@
    <body class="sub_page">
       <div class="hero_area">
          <!-- header section strats -->
-         <header class="header_section">
+         <!-- header section strats -->
+         <header class="header_section" id="about-header-content">
             <div class="container">
                <nav class="navbar navbar-expand-lg custom_nav-container ">
                   <a class="navbar-brand" href="index.html"><img width="250" src="images/logo.png" alt="#" /></a>
@@ -36,21 +37,18 @@
                         <li class="nav-item">
                            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                         </li>
-                        <li class="nav-item dropdown active">
-                           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Pages <span class="caret"></span></a>
+                       <li class="nav-item dropdown">
+                           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Account <span class="caret"></span></a>
                            <ul class="dropdown-menu">
-                              <li><a href="about.html">About</a></li>
-                              <li><a href="testimonial.html">Testimonial</a></li>
+                              <li><a href="sign-up/sign-up.html">Register</a></li>
+                              <li><a href="Login/login.html">Log in</a></li>
                            </ul>
                         </li>
                         <li class="nav-item">
                            <a class="nav-link" href="product.html">Products</a>
                         </li>
-                        <li class="nav-item">
-                           <a class="nav-link" href="blog_list.html">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link" href="contact.html">Contact</a>
+                        <li class="nav-item active">
+                           <a class="nav-link" href="about.html">About</a>
                         </li>
                         <li class="nav-item">
                            <a class="nav-link" href="#">
@@ -106,18 +104,15 @@
                                  <g>
                                  </g>
                               </svg>
+                              <span>0</span>
                            </a>
                         </li>
-                        <form class="form-inline">
-                           <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
-                           <i class="fa fa-search" aria-hidden="true"></i>
-                           </button>
-                        </form>
                      </ul>
                   </div>
                </nav>
             </div>
          </header>
+         <!-- end header section -->
          <!-- end header section -->
       </div>
       <!-- inner page section -->
@@ -381,32 +376,6 @@
          </div>
       </section>
       <!-- end why section -->
-      <!-- arrival section -->
-      <section class="arrival_section">
-         <div class="container">
-            <div class="box">
-               <div class="arrival_bg_box">
-                  <img src="images/arrival-bg.png" alt="">
-               </div>
-               <div class="row">
-                  <div class="col-md-6 ml-auto">
-                     <div class="heading_container remove_line_bt">
-                        <h2>
-                           #NewArrivals
-                        </h2>
-                     </div>
-                     <p style="margin-top: 20px;margin-bottom: 30px;">
-                        Vitae fugiat laboriosam officia perferendis provident aliquid voluptatibus dolorem, fugit ullam sit earum id eaque nisi hic? Tenetur commodi, nisi rem vel, ea eaque ab ipsa, autem similique ex unde!
-                     </p>
-                     <a href="">
-                     Shop Now
-                     </a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </section>
-      <!-- end arrival section -->
       <!-- footer section -->
       <footer class="footer_section">
          <div class="container">
@@ -493,6 +462,6 @@
       <!-- bootstrap js -->
       <script src="js/bootstrap.js"></script>
       <!-- custom js -->
-      <script src="js/custom.js"></script>
+      <script src="js/about-loggedin.js" type="module"></script>
    </body>
 </html>
