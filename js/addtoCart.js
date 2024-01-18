@@ -20,7 +20,6 @@ if(localStorage.getItem("cart")!=null)
 
 function listCartAsHTML()
 {
-    debugger;
     let totalPrice = document.querySelector('.cart-total');
     let totalQuantity = 0;
     let total=0;
