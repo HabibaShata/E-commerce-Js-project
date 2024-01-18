@@ -4,12 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function checkCredentials(_username, _password) {
         let existingUsers = JSON.parse(localStorage.getItem('users')) || [];
-
-        const adminUser = { email: 'admin@example.com', password: 'adminpassword', role: 'admin' };
-        
-        existingUsers.push(adminUser);
-
-        let user = existingUsers.find(function (user) {
+        var user = existingUsers.find(function (user) {
             return user.userEmail == _username && user.userPassword == _password;
         });
         return user ? user : false;

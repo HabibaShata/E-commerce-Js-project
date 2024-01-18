@@ -1,3 +1,5 @@
+
+import { isValidEmail, isValidPassword, isValidName } from "../js/profile.js";
 export class users
 {
     constructor(userID, userName, userPassword, userEmail, userRole) {
@@ -33,27 +35,24 @@ document.addEventListener("DOMContentLoaded", function () {
         var role = document.getElementById('sellerBtn').checked ? 'seller' : 'customer';
         var email = document.querySelector('input[name="email"]').value;
         var password = document.querySelector('input[name="password"]').value;
+        var username = document.querySelector('input[name="username"]').value;
 
-        var existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+        var usersArray = JSON.parse(localStorage.getItem('users')) || [];
 
-        var emailExists = existingUsers.some(function (user) {
+        var emailExists = usersArray.some(function (user) {
             return user.email === email;
         });
 
         if (emailExists) {
             showValidationMessages(['This email is already signed up. Please use a different email.']);
         } else {
-            var user = {
-                role: role,
-                email: email,
-                password: password
-            };
+            var user = new users(usersArray.length+1, username, password, email, role);
 
-            existingUsers.push(user);
+            usersArray.push(user);
 
-            localStorage.setItem('users', JSON.stringify(existingUsers));
+            localStorage.setItem('users', JSON.stringify(usersArray));
 
-            window.location.href = "../Users/customer.html";
+            localStorage.setItem("loggedInUser",JSON.stringify(user));
 
             window.location.href =(`../${role}.html`) ;
         }
@@ -66,22 +65,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function validateForm() {
     var email = document.querySelector('input[name="email"]').value;
+    var username = document.querySelector('input[name="username"]').value;
     var password = document.getElementById("password").value;
     var confirmPassword = document.getElementById("confirmPassword").value;
 
     let validationMessages = [];
 
+    const firstNameMessage = document.getElementById('firstNameMessage');
+    const emailMessage = document.getElementById('emailMessage');
+    const passwordMessage = document.getElementById('passwordMessage');
+
     // You can add more specific validation if needed
-    if (!validateEmail(email)) {
-        validationMessages.push("Invalid email format.");
+    if (!isValidEmail(email, emailMessage)) {
+        validationMessages.push("Fix the email error.");
     }
 
-    if (username.length < 4) {
-        validationMessages.push("Username must be at least 4 characters.");
+    if (!isValidName(username, firstNameMessage)) {
+        validationMessages.push("Fix the username error.");
     }
 
-    if (password.length < 7) {
-        validationMessages.push("Password must be at least 7 characters.");
+    if (!isValidPassword(password, passwordMessage)) {
+        validationMessages.push("Fix the password error.");
     }
 
     if (password !== confirmPassword) {
@@ -91,10 +95,10 @@ function validateForm() {
     return validationMessages;
 }
 
-function validateEmail(email) {
-    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-}
+// function validateEmail(email) {
+//     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//     return re.test(String(email).toLowerCase());
+// }
 
 function showValidationMessages(messages) {
     let validationPopup = document.getElementById("validationPopup");
@@ -108,7 +112,7 @@ function showValidationMessages(messages) {
     validationPopup.style.animation = "fadeOut 5s forwards";
 
     // Hide the popup after 2 seconds
-    setTimeout(function () {
-        validationPopup.style.display = "none";
-    }, 2000);
+    // setTimeout(function () {
+    //     validationPopup.style.display = "none";
+    // }, 2000);
 }

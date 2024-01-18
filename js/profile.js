@@ -83,58 +83,60 @@ window.addEventListener('load', function () {
       successMessage.innerText = '';
     }, 3000);
   });
-
-  // Function to validate first name and last name
-  function isValidName(name, messageElement) {
-    // Name must be at least three characters long and at most 15 characters
-    if (name.length < 3 || name.length > 15) {
-      messageElement.innerText = 'Name must be between 3 and 15 characters.';
-      return false;
-    }
-
-    // Name can't be all numbers
-    if (/^\d+$/.test(name)) {
-      messageElement.innerText = 'Name can\'t be all numbers.';
-      return false;
-    }
-
-    // Validation passed
-    return true;
-  }
-
-  // Function to validate email
-  function isValidEmail(email, messageElement) {
-    // Email must contain @ and a dot after @
-    if (!/@.*\..*/.test(email)) {
-      messageElement.innerText = 'Invalid email format. Make sure it contains "@" and a dot (.) after "@" (e.g., example@example.com).';
-      return false;
-    }
-
-    // Validation passed
-    return true;
-  }
-
-  // Function to validate password
-  function isValidPassword(password, messageElement) {
-    // Password must be at least eight characters long and at most 20 characters
-    if (password.length < 8 || password.length > 20) {
-      messageElement.innerText = 'Password must be between 8 and 20 characters.';
-      return false;
-    }
-
-    // Password must contain at least one alphabet
-    if (!/[a-zA-Z]/.test(password)) {
-      messageElement.innerText = 'Password must contain at least one alphabet.';
-      return false;
-    }
-
-    // Password must contain at least one special character
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-      messageElement.innerText = 'Password must contain at least one special character.';
-      return false;
-    }
-
-    // Validation passed
-    return true;
-  }
 });
+
+// Function to validate first name and last name
+function isValidName(name, messageElement) {
+  // Name must be at least three characters long and at most 15 characters
+  if (name.length < 3 || name.length > 15) {
+    messageElement.innerText = 'Name must be between 3 and 15 characters.';
+    return false;
+  }
+
+  // Name can't be all numbers
+  if (/^\d+$/.test(name)) {
+    messageElement.innerText = 'Name can\'t be all numbers.';
+    return false;
+  }
+
+  // Validation passed
+  return true;
+}
+
+// Function to validate email
+function isValidEmail(email, messageElement) {
+  // Email must contain @ and a dot after @
+  if (!/@.*\..*/.test(email)) {
+    messageElement.innerText = 'Invalid email format. Make sure it contains "@" and a dot (.) after "@" (e.g., example@example.com).';
+    return false;
+  }
+
+  // Validation passed
+  return true;
+}
+
+// Function to validate password
+function isValidPassword(password, messageElement) {
+  // Password must be at least eight characters long and at most 20 characters
+  if (password.length < 8 || password.length > 20) {
+    messageElement.innerText = 'Password must be between 8 and 20 characters.';
+    return false;
+  }
+
+  // Password must contain at least one alphabet
+  if (!/[a-zA-Z]/.test(password)) {
+    messageElement.innerText = 'Password must contain at least one alphabet.';
+    return false;
+  }
+
+  // Password must contain at least one special character
+  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    messageElement.innerText = 'Password must contain at least one special character.';
+    return false;
+  }
+
+  // Validation passed
+  return true;
+}
+
+export {isValidEmail, isValidName, isValidPassword};
