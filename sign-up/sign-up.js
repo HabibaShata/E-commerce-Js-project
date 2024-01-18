@@ -1,5 +1,5 @@
-import { isValidEmail, isValidPassword, isValidName } from "../js/profile.js";
 
+import { isValidEmail, isValidPassword, isValidName } from "../js/profile.js";
 export class users
 {
     constructor(userID, userName, userPassword, userEmail, userRole) {
@@ -15,7 +15,7 @@ window.addEventListener("load", function () {
     function handleFormSubmit(event) {
         event.preventDefault();
         // Validate the form before proceeding
-        var validationMessages = validateForm();
+        let validationMessages = validateForm();
 
         if (validationMessages.length > 0) {
             showValidationMessages(validationMessages);
@@ -59,7 +59,7 @@ function validateForm() {
     var password = document.getElementById("password").value;
     var confirmPassword = document.getElementById("confirmPassword").value;
 
-    var validationMessages = [];
+    let validationMessages = [];
 
     const firstNameMessage = document.getElementById('firstNameMessage');
     const emailMessage = document.getElementById('emailMessage');
@@ -91,7 +91,7 @@ function validateForm() {
 // }
 
 function showValidationMessages(messages) {
-    var validationPopup = document.getElementById("validationPopup");
+    let validationPopup = document.getElementById("validationPopup");
     validationPopup.innerHTML = messages.map(message => `<p>${message}</p>`).join('');
     validationPopup.style.animation = ""; // Reset animation
     validationPopup.style.display = "block";
@@ -99,7 +99,7 @@ function showValidationMessages(messages) {
     void validationPopup.offsetWidth;
 
     // Start the animation by adding the class
-    validationPopup.style.animation = "fadeOut 4s forwards";
+    validationPopup.style.animation = "fadeOut 5s forwards";
 
     // Hide the popup after 2 seconds
     // setTimeout(function () {

@@ -18,9 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     submit.addEventListener("click", login);
 
     function checkCredentials(_username, _password) {
-        // Retrieve existing users from local storage
-        var existingUsers = JSON.parse(localStorage.getItem('users')) || [];
-
+        let existingUsers = JSON.parse(localStorage.getItem('users')) || [];
         var user = existingUsers.find(function (user) {
             return user.userEmail == _username && user.userPassword == _password;
         });
