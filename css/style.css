@@ -1423,3 +1423,8 @@ form input[type="submit"]:focus {
   color: #eb3f3f;
 }
 /*end products page*/
+
+
+.arrowBack {
+  cursor: pointer;
+}

@@ -11,91 +11,21 @@ let cart = document.querySelector(".cart");
 let lyercartOverlay = document.querySelector(".cart-overlay");
 let temmraryDiv = document.querySelector(".addedSuccess");
 
-var arrCart = [];
-
-//cart events
-iconCart.addEventListener("click", showCart);
-arrowBack.addEventListener("click", hideCart);
-closeCart.addEventListener("click", clearCart);
-
-function showCart() {
-    cart.classList.add("show");
-    lyercartOverlay.classList.add("show");
+let arrCart = [];
+if(localStorage.getItem("cart")!=null)
+{
+    arrCart = JSON.parse(localStorage.getItem("cart"));
+    listCartAsHTML();
 }
 
-function hideCart() {
-    lyercartOverlay.classList.remove("show");
-    cart.classList.remove("show");
-}
-function clearCart(e) {
-    arrCart = [];
-    addCartToMemory();
-    addCartToHTML();
-
-  
-  };
-  
-// to make sure Dom[html code] loded 
-var product_Id;
-window.addEventListener("load", function () {
-    var addCartLink = document.querySelectorAll(".addCart");
-    for (var i = 0; i < addCartLink.length; i++) {
-        addCartLink[i].addEventListener("click", function (event) {
-            event.preventDefault();
-            product_Id = parseInt(event.target.parentElement.parentElement.parentElement.parentElement.classList[3].split('=')[1]);      
-            addToCart(product_Id);
-        
-        })
-    }
-
-})
-
-//**   add to cart    / */
-
-var cnt=0;
-const addToCart = (product_id) => {
-
-    //findindex fun return index of ele if it extist in arr else if rturn -1;
-    let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == product_id);
-    console.log(positionThisProductInCart);
-    if (arrCart.length <= 0) {
-        arrCart = [{
-            product_id: product_id,
-            quantity: 1,
-        }];
-        temmraryDiv.style.display = "block";
-        setTimeout(function () {
-            temmraryDiv.style.display = "none";
-        }, 2000)
-        cnt++;
-    } else if (positionThisProductInCart < 0) {
-        arrCart.push({
-            product_id: product_id,
-            quantity: 1
-        });
-        temmraryDiv.style.display = "block";
-        setTimeout(function () {
-            temmraryDiv.style.display = "none";
-        }, 2000)
-        cnt++;
-    } else {
-        alert("Item is already in cart");
-    }
-    addCartToHTML();
-    addCartToMemory();
-}
-
-const addCartToMemory = () => {
-    localStorage.setItem('cart', JSON.stringify(arrCart));
-}
-const addCartToHTML = () => {
+function listCartAsHTML()
+{
+    debugger;
     let totalPrice = document.querySelector('.cart-total');
-    listCartHTML.innerHTML = '';
     let totalQuantity = 0;
-    let total = 0;
-
-    if (arrCart.length > 0) {
-        totalPrice.innerHTML="0"
+    let total=0;
+    totalPrice.innerHTML="0"
+    iconCartSpan.innerHTML=arrCart.length;
 
         arrCart.forEach(item => {
 
@@ -131,8 +61,6 @@ const addCartToHTML = () => {
               </div>
               `;
 
-            //cnt orders
-            iconCartSpan.innerText = cnt;
             console.log(products[item.product_id - 1].price * item.quantity);
 
         })
@@ -146,6 +74,89 @@ const addCartToHTML = () => {
                 }
             })
         }
+}
+
+
+//cart events
+iconCart.addEventListener("click", showCart);
+arrowBack.addEventListener("click", hideCart);
+closeCart.addEventListener("click", clearCart);
+
+function showCart() {
+    cart.classList.add("show");
+    lyercartOverlay.classList.add("show");
+}
+
+function hideCart() {
+    console.log("hello");
+    lyercartOverlay.classList.remove("show");
+    cart.classList.remove("show");
+}
+function clearCart(e) {
+    arrCart = [];
+    addCartToMemory();
+    addCartToHTML();
+
+  
+  };
+  
+// to make sure Dom[html code] loded 
+var product_Id;
+window.addEventListener("load", function () {
+    var addCartLink = document.querySelectorAll(".addCart");
+    for (var i = 0; i < addCartLink.length; i++) {
+        addCartLink[i].addEventListener("click", function (event) {
+            event.preventDefault();
+            product_Id = parseInt(event.target.parentElement.parentElement.parentElement.parentElement.classList[3].split('=')[1]);      
+            addToCart(product_Id);
+        
+        })
+    }
+
+})
+
+//**   add to cart    / */
+
+var cnt=0;
+const addToCart = (product_id) => {
+
+    //findindex fun return index of ele if it extist in arr else if rturn -1;
+    let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == product_id);
+    if (arrCart.length <= 0) {
+        arrCart = [{
+            product_id: product_id,
+            quantity: 1,
+        }];
+        temmraryDiv.style.display = "block";
+        setTimeout(function () {
+            temmraryDiv.style.display = "none";
+        }, 2000)
+        cnt++;
+    } else if (positionThisProductInCart < 0) {
+        arrCart.push({
+            product_id: product_id,
+            quantity: 1
+        });
+        temmraryDiv.style.display = "block";
+        setTimeout(function () {
+            temmraryDiv.style.display = "none";
+        }, 2000)
+        cnt++;
+    } else {
+        alert("Item is already in cart");
+    }
+    addCartToHTML();
+    addCartToMemory();
+}
+
+const addCartToMemory = () => {
+    localStorage.setItem('cart', JSON.stringify(arrCart));
+}
+const addCartToHTML = () => {
+    listCartHTML.innerHTML = '';
+
+    if (arrCart.length > 0) {
+        listCartAsHTML();
         //console.log(itemsFromCart);
 
     }else{
