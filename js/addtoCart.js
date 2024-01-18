@@ -1,4 +1,4 @@
-import { GetProducts, products } from "./custom.js";
+import { products } from "./custom.js";
 
 let listProductHtml = document.getElementById("products-Landing");
 let listCartHTML = document.querySelector('.cart-body');
@@ -10,6 +10,8 @@ let arrowBack = document.querySelector(".arrowBack");
 let cart = document.querySelector(".cart");
 let lyercartOverlay = document.querySelector(".cart-overlay");
 let temmraryDiv = document.querySelector(".addedSuccess");
+let totalPrice = document.querySelector('.cart-total');
+
 
 let arrCart = [];
 if(localStorage.getItem("cart")!=null)
@@ -20,7 +22,6 @@ if(localStorage.getItem("cart")!=null)
 
 function listCartAsHTML()
 {
-    let totalPrice = document.querySelector('.cart-total');
     let totalQuantity = 0;
     let total=0;
     totalPrice.innerHTML="0"
@@ -93,13 +94,24 @@ function hideCart() {
 }
 function clearCart(e) {
     arrCart = [];
-    addCartToMemory();
-    addCartToHTML();
+    totalPrice.innerHTML="0"
+    var msg=document.createElement("span");
+    msg.innerHTML="your cart is empty";
+    msg.classList.add("cartEmpty");
+    console.log(msg);
+    try{
+        addCartToMemory();
+        addCartToHTML();
+    }
+    finally{
+        listCartHTML.appendChild(msg);
+        console.log(listCartHTML);
+    }
 
   
   };
   
-// to make sure Dom[html code] loded 
+// to make sure Dom[html code] loaded
 var product_Id;
 window.addEventListener("load", function () {
     var addCartLink = document.querySelectorAll(".addCart");
@@ -230,4 +242,4 @@ const updateCart = (itemDeleted) => {
 
 
 
-export {arrCart}
+//export {arrCart}

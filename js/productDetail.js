@@ -1,3 +1,6 @@
+
+import {products} from "./custom.js";
+
 window.addEventListener("load", function () {
     const searchParams = new URLSearchParams(window.location.search);
 
