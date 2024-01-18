@@ -1,5 +1,5 @@
 import { users } from "../sign-up/sign-up.js";
-
+import { isValidEmail, isValidPassword, isValidName } from "./profile.js";
 let allUsers = JSON.parse(localStorage.getItem("users"));
 
 let selectedUser = {
@@ -87,6 +87,22 @@ function saveEditing()
     let email = document.getElementById("edit_email").value;
     let pass = document.getElementById("edit_pass").value;
     let role = document.querySelector('input[name="userType"]:checked').value;
+
+    //validate the data
+
+    //the containers in which the data will be displayed
+    const firstNameMessage = document.getElementById('nameMessage');
+    const emailMessage = document.getElementById('emailMessage');
+    const passwordMessage = document.getElementById('passwordMessage');
+
+    //check if the data is valid
+    const isFirstNameValid = isValidName(name, firstNameMessage);
+    const isEmailValid = isValidEmail(email, emailMessage);
+    const isPasswordValid = isValidPassword(pass, passwordMessage);
+
+    if (!isFirstNameValid || !isEmailValid || !isPasswordValid) {
+        return;
+    }
 
     //make a new user with the updated data
     let user = new users(selectedUser.userID, name, pass, email, role);

@@ -11,19 +11,9 @@ export class users
     }
 }
 
-let usersArray = [new users(0, "admin", 1234567, "admin@gmail.com", "admin")];
-
-if(localStorage.getItem("users") != null)
-{
-    usersArray = JSON.parse(localStorage.getItem("users"));
-}
-
-localStorage.setItem("users", JSON.stringify(usersArray));
-
-document.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("load", function () {
     function handleFormSubmit(event) {
         event.preventDefault();
-
         // Validate the form before proceeding
         var validationMessages = validateForm();
 
@@ -59,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Attach the form submission handler to the form
-    var signUpForm = document.getElementById('signupForm');
+    let signUpForm = document.getElementById('signupForm');
     signUpForm.addEventListener('submit', handleFormSubmit);
 });
 

@@ -1,3 +1,18 @@
+import { users } from "../sign-up/sign-up.js";
+
+let usersArray = [];
+
+if(localStorage.getItem("users") != null)
+{
+    usersArray = JSON.parse(localStorage.getItem("users"));
+    console.log("hello");
+} else {
+    usersArray = [new users(0, "admin", 1234567, "admin@gmail.com", "admin")];
+    console.log("hi");
+}
+
+localStorage.setItem("users", JSON.stringify(usersArray));
+
 document.addEventListener("DOMContentLoaded", function () {
     let submit = document.getElementById("submit");
     submit.addEventListener("click", login);
