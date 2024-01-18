@@ -666,6 +666,31 @@ a:focus {
   -ms-flex-align: center;
   align-items: center;
 }
+.product-title, .rating, .product-description, .price, .vote, .sizes {
+  margin-bottom: 15px; }
+
+.product-title, .price, .sizes, .colors {
+  text-transform: UPPERCASE;
+  font-weight: bold; }
+
+.checked, .price span {
+  color: #ff9f1a; }
+
+.img_list {
+  border: 1px solid black;
+  margin: 3%;
+  padding: 0.5%;
+}
+
+.view_img {
+  border: 1px solid black;
+  margin: 7%;
+  padding: 1%;
+}
+.img_list:hover{
+  border: 2px solid black;
+    
+}
 
 .subscribe_section .subscribe_form form input {
   width: 100%;
@@ -1397,3 +1422,4 @@ form input[type="submit"]:focus {
   padding: 10px;
   color: #eb3f3f;
 }
+/*end products page*/
