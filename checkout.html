@@ -22,129 +22,184 @@
     <!-- responsive style -->
     <link href="css/responsive.css" rel="stylesheet" />
     <style>
+        :root {
+            --color1: #ab4e68;
+            --color2: #b07156;
+            --color3: #533745;
+            --color4: #9d9171;
+            --color5: #c4a287;
+            --color6: #4a646c;
+            --color7: #333;
+            --color8: #fff;
+            --transition: all 0.3s ease-in-out;
+        }
+
         body {
             font-family: Arial;
             font-size: 17px;
             padding: 8px;
-            background-color: #f2f2f2;
+            background-color: #f1f1f2;
 
         }
 
         * {
             box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+
+        .sideForm {
+            background-color: white;
+            margin-top: 15px;
+            padding: 31px 5px;     
+           }
+
+        .header_section {
+            background-color: white;
+            /* position: sticky; */
         }
 
         .row {
-            display: -ms-flexbox;
-            /* IE10 */
+            margin-bottom: 50px;
+        }
+
+        /* .cart {
+            position: fixed;
+            inset-block: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
+            max-width: 420px;
+            padding: 20px;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            transform: translateX(100%);
+            transition: var(--transition);
+            background: var(--color8);
+        } */
+
+
+        .cart-header {
+            position: relative;
+            text-align: center;
+            padding-block: 10px;
+            border-bottom: 1px solid #ddd;
             display: flex;
-            -ms-flex-wrap: wrap;
-            /* IE10 */
-            flex-wrap: wrap;
-            margin: 0 -16px;
+            align-items: center;
         }
 
-        .col-25 {
-            -ms-flex: 25%;
-            /* IE10 */
-            flex: 25%;
+
+
+        .cart-header h2 {
+            margin: 0px auto;
+            width: 50%;
+            font-size: 2.2rem;
         }
 
-        .col-50 {
-            -ms-flex: 50%;
-            /* IE10 */
-            flex: 50%;
+        .ordersBody {
+            display: grid;
+            align-content: start;
+            gap: 20px;
+            padding-block: 20px;
+            overflow: auto;
         }
 
-        .col-75 {
-            -ms-flex: 75%;
-            /* IE10 */
-            flex: 75%;
+        .orderItem {
+            display: flex;
+            gap: 10px;
         }
 
-        .col-25,
-        .col-50,
-        .col-75 {
-            padding: 0 16px;
+        .orderItem img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
         }
 
-        .container {
-            /* background-color: #f2f2f2; */
-            padding: 5px 20px 15px 20px;
-            border: 1px solid lightgrey;
-            border-radius: 3px;
+        .orderItem-detail {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
 
-        input[type=text] {
-            width: 100%;
-            margin-bottom: 20px;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
+        .orderItem-detail h3 {
+            font-size: 1rem;
+            color: var(--color4);
         }
 
-        label {
-            margin-bottom: 10px;
-            display: block;
+        .orderItem-detail h5 {
+            color: var(--color6);
         }
 
-        .icon-container {
-            margin-bottom: 20px;
-            padding: 7px 0;
-            font-size: 24px;
+        /* .cart-item-amount {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.25rem;
+        } */
+
+        
+
+   
+        .orderItem-amount .qty {
+            width: 2rem;
+            text-align: center;
         }
 
-        .btn {
-            background-color: #04AA6D;
+      
+
+        .cart-footer {
+            border-top: 1px solid #ddd;
+            padding-block: 10px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .cart-footer div {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1.25rem;
+        }
+
+        .cart-footer strong {
+            font-weight: 500;
+            color: var(--color4);
+        }
+
+        .cart-footer button {
+            padding-block: 10px;
+            text-transform: uppercase;
+        }
+
+     
+
+        .checkout {
+            background-color: var(--color1);
+            color: var(--color8);
+            grid-column: span 2;
+        }
+
+        .checkout a {
             color: white;
-            padding: 12px;
-            margin: 10px 0;
-            border: none;
-            width: 100%;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 17px;
+
         }
 
-        .btn:hover {
-            background-color: #45a049;
-        }
-
-        a {
-            color: #2196F3;
-        }
-
-        hr {
-            border: 1px solid lightgrey;
-        }
-
-        span.price {
-            float: right;
-            color: grey;
-        }
-.orders{
-    background-color:white;
- 
-}
-.sideForm{
-    background-color: white;
-}
-
-
-        /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
-        @media (max-width: 800px) {
-            .row {
-                flex-direction: column-reverse;
-            }
-
-            .col-25 {
-                margin-bottom: 20px;
-            }
+        .orders {
+            background-color: white;
+            max-width: 100%;
+            margin-top: 15px;
+            margin-left: 30px;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
         }
     </style>
 </head>
 
-<body >
+<body>
     <div class="">
         <!-- header section strats -->
         <header class="header_section">
@@ -165,7 +220,8 @@
     <!-- from -->
     <div class="container ">
         <div class="row ">
-            <form class="row  needs-validation col-7 sideForm" novalidate>
+            
+            <form class="row  needs-validation col-7 sideForm bg-opacity-25 rounded-corners " novalidate>
 
                 <div class="col-md-4">
                     <label for="validationCustom01" class="form-label">First name</label>
@@ -237,7 +293,7 @@
                 </div>
                 <div class="row col-4 ml-auto mt-2">
                     <div class="col-6 ml-auto">
-                        <button class="btn btn-primary bg-light" type="submit">cancel</button>
+                        <button class="btn btn-light" type="submit">cancel</button>
                     </div>
                     <div class="col-6 ">
                         <button class="btn btn-primary " type="submit">Save</button>
@@ -245,14 +301,26 @@
                 </div>
 
             </form>
-            <div class="row col-5  orders">
-                <div class="cart-item" data-id="">
-                    <div class="cart-item-detail">
-                      
-                        </div>
-                    </div>
+
+            <div class=" col-5 orders">
+                <div class="cart-header">
+                    <h2>orders</h2>
                 </div>
+
+                <div class="ordersBody">
+                    
+                </div>
+                <div class="cart-footer">
+                    <div>
+                        <strong>Total</strong>
+                        <span class="cart-total">0</span>
+                    </div>
+                  <button class="checkout " disabled><a href="#">CONFIRM ORDER</a></button>
+                
+                </div>
+
             </div>
+
 
         </div>
 
@@ -334,6 +402,8 @@
     <script src="js/popper.min.js"></script>
     <!-- bootstrap js -->
     <script src="js/bootstrap.js"></script>
+   <script src="js/checkout.js" type="module"></script>
+
     <!-- custom js -->
     <script>
         // var form = document.forms[0];
@@ -341,7 +411,7 @@
         //     e.preventDefault();
         // })
 
-        localStorage 
+
     </script>
 
 </body>

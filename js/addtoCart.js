@@ -95,6 +95,8 @@ const addCartToHTML = () => {
     let total = 0;
 
     if (arrCart.length > 0) {
+        totalPrice.innerHTML="0"
+
         arrCart.forEach(item => {
 
             //     console.log(item);
@@ -102,14 +104,16 @@ const addCartToHTML = () => {
             total=item.quantity*products[item.product_id - 1].price;
             let newItem = document.createElement('div');
             newItem.classList.add('item');
-          //  console.log(products);
+            //  console.log(products);
+          //  console.log(totalPrice=Number(totalPrice)+products[item.product_id - 1].price * item.quantity);
+          totalPrice.innerHTML=Number(totalPrice.innerHTML)+products[item.product_id - 1].price * item.quantity
             let info = products[product_Id];
             //    console.log(info['images'][0]);
             listCartHTML.appendChild(newItem);
             newItem.innerHTML =
                 `
                 <div class="cart-item" data-id="${item.product_id}">
-                <img src="${products[item.product_id - 1].images[0]}" />
+                <img src="${products[item.product_id - 1].images[0]}"/>
                 <div class="cart-item-detail">
                   <h3>${products[item.product_id - 1].productName}</h3>
                   <h5>${products[item.product_id - 1].price}</h5>
@@ -214,3 +218,6 @@ const updateCart = (itemDeleted) => {
     }
 }
 
+
+
+export {arrCart}
