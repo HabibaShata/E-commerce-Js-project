@@ -1,11 +1,8 @@
-
 window.addEventListener("load", function () {
     const searchParams = new URLSearchParams(window.location.search);
 
     // Get the value of the 'productId' parameter
     const productId = searchParams.get('productId');
-
-    const products = JSON.parse(localStorage.getItem("products"));
 
     const product = products.find(x => x.productId == productId);
 
