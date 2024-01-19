@@ -30,7 +30,7 @@ window.addEventListener("load", function () {
 </div>
 </div> 
 `
-totalPrice.innerHTML=parseInt(total)+parseInt(totalPrice.innerHTML); 
+totalPrice.innerHTML=total+parseInt(totalPrice.innerHTML)+"$"; 
 //console.log(totalPrice.innerHTML);
     });
 
