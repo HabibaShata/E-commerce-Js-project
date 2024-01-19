@@ -1423,8 +1423,13 @@ form input[type="submit"]:focus {
   color: #eb3f3f;
 }
 /*end products page*/
-
-
 .arrowBack {
   cursor: pointer;
+}
+
+/*  [your cart is empty ]*/
+.cartEmpty{
+  margin-top: 5%;
+  font-size: 19px;
+  color: gray;text-align: center;
 }
