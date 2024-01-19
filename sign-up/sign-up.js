@@ -12,11 +12,12 @@ export class users
 
 window.addEventListener("load", function () {
     // Attach the form submission handler to the form
-    let signUpForm = document.getElementById('signupForm');
+    let signUpForm = document.querySelector('.signupForm');
     signUpForm.addEventListener('submit', handleFormSubmit);
 });
 
 function handleFormSubmit(event) {
+    debugger;
     event.preventDefault();
     // Validate the form before proceeding
     let validationMessages = validateForm();
@@ -58,6 +59,7 @@ function handleFormSubmit(event) {
         {
             return;
         }
+
         window.location.href =(`../${role}.html`) ;
     }
 }
