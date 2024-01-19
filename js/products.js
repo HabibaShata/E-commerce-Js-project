@@ -39,7 +39,7 @@ window.addEventListener("load", function () {
                   </button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                      <ul class="navbar-nav">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                            <a class="nav-link" href="customer.html">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item dropdown">
@@ -50,7 +50,7 @@ window.addEventListener("load", function () {
                               <li><a href="#" id="logOut">Log out</a></li>
                            </ul>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item active">
                            <a class="nav-link" href="product.html">Products</a>
                         </li>
                         <li class="nav-item">
@@ -74,10 +74,8 @@ window.addEventListener("load", function () {
             document.getElementById("homeLink").setAttribute("href", "customer.html");
             document.getElementById("loggedInUser").innerHTML = "Welcome, " + JSON.parse(localStorage.getItem("loggedInUser")).userName;
         }
-
-        
     } else {
-        loggedInUser.innerHTML = "Account";
+        document.getElementById("loggedInUser").innerHTML = "Account";
         //add the list items to the dropdown menu
         let userDropDown = document.getElementById("user-DropDown");
         userDropDown.innerHTML = `
