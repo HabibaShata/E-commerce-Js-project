@@ -46,9 +46,20 @@ containerDivCartIsEmpty.append(btnStratShopping);
 console.log(containerDivCartIsEmpty);
 
 let arrCart = [];
+let loggedInUser = null;
+
+if(localStorage.getItem("loggedInUser"))
+{
+    loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+}
+
 if (localStorage.getItem("cart") != null) {
-    arrCart = JSON.parse(localStorage.getItem("cart"));
-    listCartAsHTML();
+    //check if the loggedinuser is the admin or seller so don't perform the following
+    if(!(loggedInUser && (loggedInUser.userRole == "admin"|| loggedInUser.userRole == "seller")))
+    {
+        arrCart = JSON.parse(localStorage.getItem("cart"));
+        listCartAsHTML();
+    }
 }
 
 function listCartAsHTML() {
@@ -108,9 +119,14 @@ function listCartAsHTML() {
 
 
 //cart events
-iconCart.addEventListener("click", showCart);
-arrowBack.addEventListener("click", hideCart);
-closeCart.addEventListener("click", clearCart);
+//check if the loggedinuser is the admin or seller so don't perform the following
+if(!(loggedInUser && (loggedInUser.userRole == "admin"|| loggedInUser.userRole == "seller")))
+{
+    iconCart.addEventListener("click", showCart);
+    arrowBack.addEventListener("click", hideCart);
+    closeCart.addEventListener("click", clearCart);
+}
+
 
 function showCart() {
     console.log(arrCart.length);
@@ -164,7 +180,7 @@ window.addEventListener("load", function () {
 //**   add to cart    / */
 
 var cnt = 0;
- export const addToCart = (product_id) => {
+export const addToCart = (product_id) => {
 
     //findindex fun return index of ele if it extist in arr else if rturn -1;
     let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == product_id);
@@ -216,19 +232,24 @@ const addCartToHTML = () => {
     }
 }
 
-listCartHTML.addEventListener('click', (event) => {
-    let positionClick = event.target;
-    //console.log(event.target.dataset.btn);
-    if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
-        let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
-        console.log(product_Id);
-        let type = 'decr';
-        if (event.target.dataset.btn == "incr") {
-            type = 'incr';
+//check if the loggedinuser is the admin or seller so don't perform the following
+if(!(loggedInUser && (loggedInUser.userRole == "admin"|| loggedInUser.userRole == "seller")))
+{
+    listCartHTML.addEventListener('click', (event) => {
+        let positionClick = event.target;
+        //console.log(event.target.dataset.btn);
+        if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
+            let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
+            console.log(product_Id);
+            let type = 'decr';
+            if (event.target.dataset.btn == "incr") {
+                type = 'incr';
+            }
+            changeQuantityCart(product_id, type);
         }
-        changeQuantityCart(product_id, type);
-    }
-})
+    })
+}
+
 const changeQuantityCart = (product_id, type) => {
     let positionItemInCart = arrCart.findIndex((value) => value.product_id == product_id);
     // console.log(positionItemInCart);
@@ -286,7 +307,5 @@ const updateCart = (itemDeleted) => {
 
     }
 }
-
-
 
 export * from './addtoCart.js';  // This exports everything from addtoCart.js
