@@ -1,19 +1,4 @@
-//Demo
-{/* <thead>
-<tr>
-<th class="align-top">
-<div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0">
-<input type="checkbox" class="custom-control-input" id="all-items">
-<label class="custom-control-label" for="all-items"></label>
-</div>
-</th>
-<th>Photo</th>
-<th class="max-width">Name</th>
-<th class="sortable">Date</th>
-<th> </th>
-<th>Actions</th>
-</tr>
-</thead> */}
+
 
 window.addEventListener("load",function(){
 
