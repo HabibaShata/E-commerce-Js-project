@@ -82,7 +82,7 @@ function GetProducts(maxNumber, productsList) {
            <div class="box">
               <div class="option_container">
                    <div class="options">
-                      <a href="" class="option1 addCart">
+                      <a href="#" class="option1 addCart">
                       Add to cart
                       </a>
                       <a href="productDetails.html?productId=${products[i].productId}" class="option2">

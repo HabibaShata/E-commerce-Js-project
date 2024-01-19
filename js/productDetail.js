@@ -1,6 +1,9 @@
 
 import {products} from "./custom.js";
+import {addToCart} from "./addtoCart.js";
 
+// form-control btn btn-warning fa fa-shopping-cart iconAddToCart
+let iconAddToCart =document.querySelectorAll(".iconAddToCart ");
 window.addEventListener("load", function () {
     const searchParams = new URLSearchParams(window.location.search);
 
@@ -8,7 +11,10 @@ window.addEventListener("load", function () {
     const productId = searchParams.get('productId');
 
     const product = products.find(x => x.productId == productId);
-
+    console.log(productId);
+    iconAddToCart.addEventListener("click",function(){
+        addToCart(productId);
+    })
     FillDetail(product);
 
     FillImgList(product.images);

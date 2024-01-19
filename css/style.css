@@ -1428,8 +1428,40 @@ form input[type="submit"]:focus {
 }
 
 /*  [your cart is empty ]*/
+
+.wCartIsEmpty{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 69px;
+}
+/* i */
+.iconEmptyCart{
+  color: #a3a3a3e6;
+    display: inline-block;
+    width: 252px;
+    height: 153px;
+    margin: 0px auto;
+}
+/* span */
 .cartEmpty{
-  margin-top: 5%;
   font-size: 19px;
-  color: gray;text-align: center;
+  color: gray;
+  text-align: center;
+}
+/* a */
+.wCartIsEmpty a{
+  display: inline-block;
+  color: white;
+  background-color: var(--color1);
+  width: 39%;
+  margin: 20px auto;
+  padding: 10px 5px;
+  border-radius: 6px;
+}
+
+
+.wCartIsEmpty1{
+display: none;
+
 }
