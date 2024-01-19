@@ -106,7 +106,7 @@ function isValidName(name, messageElement) {
 // Function to validate email
 function isValidEmail(email, messageElement) {
   // Email must contain @ and a dot after @
-  if (!/@.*\..*/.test(email)) {
+  if (!/@.*\.[a-zA-Z]{2,}/.test(email)) {
     messageElement.innerText = 'Invalid email format. Make sure it contains "@" and a dot (.) after "@" (e.g., example@example.com).';
     return false;
   }

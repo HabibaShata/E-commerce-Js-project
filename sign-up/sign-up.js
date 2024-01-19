@@ -1,4 +1,3 @@
-
 import { isValidEmail, isValidPassword, isValidName } from "../js/profile.js";
 export class users
 {
@@ -12,46 +11,56 @@ export class users
 }
 
 window.addEventListener("load", function () {
-    function handleFormSubmit(event) {
-        event.preventDefault();
-        // Validate the form before proceeding
-        let validationMessages = validateForm();
-
-        if (validationMessages.length > 0) {
-            showValidationMessages(validationMessages);
-            return;
-        }
-
-        var role = document.getElementById('sellerBtn').checked ? 'seller' : 'customer';
-        var email = document.querySelector('input[name="email"]').value;
-        var password = document.querySelector('input[name="password"]').value;
-        var username = document.querySelector('input[name="username"]').value;
-
-        var usersArray = JSON.parse(localStorage.getItem('users')) || [];
-
-        var emailExists = usersArray.some(function (user) {
-            return user.email === email;
-        });
-
-        if (emailExists) {
-            showValidationMessages(['This email is already signed up. Please use a different email.']);
-        } else {
-            var user = new users(usersArray.length+1, username, password, email, role);
-
-            usersArray.push(user);
-
-            localStorage.setItem('users', JSON.stringify(usersArray));
-
-            localStorage.setItem("loggedInUser",JSON.stringify(user));
-
-            window.location.href =(`../${role}.html`) ;
-        }
-    }
-
     // Attach the form submission handler to the form
     let signUpForm = document.getElementById('signupForm');
     signUpForm.addEventListener('submit', handleFormSubmit);
 });
+
+function handleFormSubmit(event) {
+    event.preventDefault();
+    // Validate the form before proceeding
+    let validationMessages = validateForm();
+
+    if (validationMessages.length > 0) {
+        showValidationMessages(validationMessages);
+        return;
+    }
+
+    var role = document.getElementById('sellerBtn').checked ? 'seller' : 'customer';
+    var email = document.querySelector('input[name="email"]').value;
+    var password = document.querySelector('input[name="password"]').value;
+    var username = document.querySelector('input[name="username"]').value;
+
+    var usersArray = JSON.parse(localStorage.getItem('users')) || [];
+    var emailExists = usersArray.some(function (user) {
+        return user.userEmail.toLowerCase() === email.toLowerCase();
+    });
+
+    if (emailExists) {
+        showValidationMessages(['This email is already signed up. Please use a different email.']);
+    } else {
+        var user = new users(usersArray.length+1, username, password, email, role);
+
+        usersArray.push(user);
+
+        localStorage.setItem('users', JSON.stringify(usersArray));
+
+        localStorage.setItem("loggedInUser",JSON.stringify(user));
+
+        //check if the admin is the one who is trying to add a new user account then don't navigate
+        let loggedInUserRole;
+        if(localStorage.getItem("loggedInUser")!=null)
+        {
+            loggedInUserRole = JSON.parse(localStorage.getItem("loggedInUser")).userRole;
+        }
+
+        if(loggedInUserRole == "admin")
+        {
+            return;
+        }
+        window.location.href =(`../${role}.html`) ;
+    }
+}
 
 function validateForm() {
     var email = document.querySelector('input[name="email"]').value;
@@ -106,3 +115,5 @@ function showValidationMessages(messages) {
     //     validationPopup.style.display = "none";
     // }, 2000);
 }
+
+export {validateForm, handleFormSubmit, showValidationMessages};

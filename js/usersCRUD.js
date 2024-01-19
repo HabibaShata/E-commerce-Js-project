@@ -1,4 +1,4 @@
-import { users } from "../sign-up/sign-up.js";
+import { users, handleFormSubmit, validateForm, showValidationMessages} from "../sign-up/sign-up.js";
 import { isValidEmail, isValidPassword, isValidName } from "./profile.js";
 let allUsers = JSON.parse(localStorage.getItem("users"));
 
@@ -117,4 +117,10 @@ function saveEditing()
 
     //reload the page
     location.reload();
+}
+
+function AddUser()
+{
+    let signUpForm = document.getElementById('signupForm');
+    signUpForm.addEventListener('submit', handleFormSubmit);
 }
