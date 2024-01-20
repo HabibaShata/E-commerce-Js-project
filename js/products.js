@@ -54,7 +54,7 @@ window.addEventListener("load", function () {
                            <a class="nav-link" href="product.html">Products</a>
                         </li>
                         <li class="nav-item">
-                           <a class="nav-link" href="blog_list.html">Orders</a>
+                           <a class="nav-link" href="orderHistory.html">Orders</a>
                         </li>     
                      </ul>
                   </div>
