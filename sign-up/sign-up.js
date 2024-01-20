@@ -46,8 +46,6 @@ function handleFormSubmit(event) {
 
         localStorage.setItem('users', JSON.stringify(usersArray));
 
-        localStorage.setItem("loggedInUser",JSON.stringify(user));
-
         //check if the admin is the one who is trying to add a new user account then don't navigate
         let loggedInUserRole;
         if(localStorage.getItem("loggedInUser")!=null)
@@ -59,6 +57,8 @@ function handleFormSubmit(event) {
         {
             return;
         }
+
+        localStorage.setItem("loggedInUser",JSON.stringify(user));
 
         window.location.href =(`../${role}.html`) ;
     }
