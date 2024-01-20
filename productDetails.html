@@ -21,9 +21,12 @@
     <link href="css/style.css" rel="stylesheet" />
     <!-- responsive style -->
     <link href="css/responsive.css" rel="stylesheet" />
- </head>
+</head>
 
 <body class="sub_page">
+    <div class="addedSuccess alert-success text-center py-2">
+        Product added successfully <i class="fa-solid fa-check"></i>
+    </div>
     <div class="hero_area">
         <!-- header section strats -->
         <header class="header_section">
@@ -54,7 +57,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="orderHistory.html">Orders History</a>
-                             </li>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="blog_list.html">Blog</a>
                             </li>
@@ -63,16 +66,16 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link  cartLogo" href="#">
-                                   <svg class="w-[28px] h-[28px] text-gray-800 dark:text-white  " aria-hidden="true"
-                                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
-                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                         stroke-width="2.2"
-                                         d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-9-4h10l2-7H3m2 7L3 4m0 0-.792-3H1" />
-                                   </svg>
-                                   <span id="cntOrders">0</span>
-                                   <span id="cart-word">cart</span>
+                                    <svg class="w-[28px] h-[28px] text-gray-800 dark:text-white  " aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2.2"
+                                            d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-9-4h10l2-7H3m2 7L3 4m0 0-.792-3H1" />
+                                    </svg>
+                                    <span id="cntOrders">0</span>
+                                    <span id="cart-word">cart</span>
                                 </a>
-                             </li>
+                            </li>
                             <!-- <form class="form-inline">
                                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
                                     <i class="fa fa-search" aria-hidden="true"></i>
@@ -85,6 +88,27 @@
         </header>
         <!-- end header section -->
     </div>
+    <!-- Add to cart  -->
+    <div class="cart-overlay"></div>
+
+    <div class="cart">
+        <div class="cart-header">
+            <a class="arrowBack"><i class="fa-solid fa-arrow-right"></i></a>
+            <h2>Your Cart</h2>
+        </div>
+        <div class="cart-body">
+
+        </div>
+        <div class="cart-footer">
+            <div>
+                <strong>Total</strong>
+                <span class="cart-total">0</span>
+            </div>
+            <button class="cart-clear">Clear Cart</button>
+            <button class="checkout"><a href="checkout.html">Checkout</a></button>
+        </div>
+    </div>
+    <!--  end Add to cart  -->
     <!-- inner page section -->
     <section>
         <div class="container">
@@ -92,11 +116,13 @@
                 <div class="row">
                     <div class="col">
                         <div class="row" style="align-items: center">
-                            <div id="imglist" class="col-lg-3 col-md-4 col-sm-5 col-5 d-flex flex-row flex-lg-column  align-items-start" style="margin: 2%;">
+                            <div id="imglist"
+                                class="col-lg-3 col-md-4 col-sm-5 col-5 d-flex flex-row flex-lg-column  align-items-start"
+                                style="margin: 2%;">
                             </div>
 
                             <div class="col-lg-8 col-md-9 " id="mainimg">
-                                    
+
                             </div>
                         </div>
                     </div>
@@ -117,93 +143,94 @@
                         <p class="product-description"></p>
                         <h4 class="price">current price: <span></span></h4>
                         <h6>Color :</h6>
-                       <select class="form-control" >
-                       
+                        <select class="form-control">
+
                         </select>
                         <br>
                         <h6>Quantity :</h6>
                         <input type="number" class="form-control text-center w-100" value="1" min="1">
 
                         <br>
-                        <button type="button" class="iconAddToCart">Add to card</button>
+                        <span class="btnIconAddToCart iconAddToCart"><i class="fa-solid fa-cart-shopping"></i> </span>
+                        <!-- <button type="button" class="form-control btn btn-warning fa fa-shopping-cart iconAddToCart">Add to card</button> -->
                     </div>
                 </div>
             </div>
     </section>
     <!-- end arrival section -->
-      <!-- footer start -->
-      <footer>
+    <!-- footer start -->
+    <footer>
         <div class="container">
-           <div class="row">
-              <div class="col-md-4">
-                  <div class="full">
-                     <div class="logo_footer">
-                       <a href="#"><img width="210" src="images/logo.png" alt="#" /></a>
-                     </div>
-                     <div class="information_f">
-                       <p><strong>ADDRESS:</strong> 28 White tower, Street Name New York City, USA</p>
-                       <p><strong>TELEPHONE:</strong> +91 987 654 3210</p>
-                       <p><strong>EMAIL:</strong> yourmain@gmail.com</p>
-                     </div>
-                  </div>
-              </div>
-              <div class="col-md-8">
-                 <div class="row">
-                    <div class="col-md-5">
-                       <div class="row">
-                          <div class="col-md-12">
-                          <div class="widget_menu">
-                             <h3>Menu</h3>
-                             <ul>
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="product.html">Products</a></li>
-                                <li><a href="about.html">About</a></li>
-                             </ul>
-                          </div>
-                       </div>   
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="full">
+                        <div class="logo_footer">
+                            <a href="#"><img width="210" src="images/logo.png" alt="#" /></a>
+                        </div>
+                        <div class="information_f">
+                            <p><strong>ADDRESS:</strong> 28 White tower, Street Name New York City, USA</p>
+                            <p><strong>TELEPHONE:</strong> +91 987 654 3210</p>
+                            <p><strong>EMAIL:</strong> yourmain@gmail.com</p>
+                        </div>
                     </div>
-                 </div>     
-                 <div class="col-md-7">
-                    <div class="widget_menu">
-                       <h3>Reach us on social media</h3>
-                       
-                       <div class="footer_social">
-                          <a href="">
-                          <i class="fa fa-facebook fa-lg" aria-hidden="true"></i>
-                          </a>
-                          <a href="">
-                          <i class="fa fa-twitter" aria-hidden="true"></i>
-                          </a>
-                          <a href="">
-                          <i class="fa fa-linkedin" aria-hidden="true"></i>
-                          </a>
-                          <a href="">
-                          <i class="fa fa-instagram" aria-hidden="true"></i>
-                          </a>
-                          <a href="">
-                          <i class="fa fa-pinterest" aria-hidden="true"></i>
-                          </a>
-                       </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="widget_menu">
+                                        <h3>Menu</h3>
+                                        <ul>
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="about.html">About</a></li>
+                                            <li><a href="product.html">Products</a></li>
+                                            <li><a href="about.html">About</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="widget_menu">
+                                <h3>Reach us on social media</h3>
+
+                                <div class="footer_social">
+                                    <a href="">
+                                        <i class="fa fa-facebook fa-lg" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="">
+                                        <i class="fa fa-twitter" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="">
+                                        <i class="fa fa-linkedin" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="">
+                                        <i class="fa fa-instagram" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="">
+                                        <i class="fa fa-pinterest" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                 </div>
-                 </div>
-              </div>
-           </div>
+                </div>
+            </div>
         </div>
-     </footer>
-     <!-- footer end -->
-   <!-- jQery -->
-   <script src="js/jquery-3.4.1.min.js"></script>
-   <!-- popper js -->
-   <script src="js/popper.min.js"></script>
-   <!-- bootstrap js -->
-   <script src="js/bootstrap.js"></script>
-   <!-- fontawesome -->
-   <script src="js/all.min.js"></script>
+    </footer>
+    <!-- footer end -->
+    <!-- jQery -->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <!-- popper js -->
+    <script src="js/popper.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="js/bootstrap.js"></script>
+    <!-- fontawesome -->
+    <script src="js/all.min.js"></script>
     <!-- custom js -->
     <script src="js/productDetail.js" type="module"></script>
-    <script type="module" src="js/addtoCart.js"></script>
+    <!-- <script src="js/addtoCart.js" type="module"></script> -->
 </body>
 
 </html>

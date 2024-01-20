@@ -144,6 +144,19 @@ window.addEventListener("load", function () {
 
             //Updating the displayed products with the filtered products
             document.getElementById("all-products-section").innerHTML = allFilteredProducts;
+            var product_Id;
+            // window.addEventListener("load", function () {
+                var addCartLink = document.querySelectorAll(".addCart");
+                console.log(addCartLink);
+                for (var i = 0; i < addCartLink.length; i++) {
+                    addCartLink[i].addEventListener("click", function (event) {
+                        event.preventDefault();
+                        console.log(event.target);
+                        product_Id = parseInt(event.target.parentElement.parentElement.parentElement.parentElement.classList[3].split('=')[1]);
+                        addToCart(product_Id);
+        
+                    })
+                }
         }
     })
      

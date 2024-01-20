@@ -186,6 +186,7 @@ a:focus {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   font-weight: 700;
+  font-size: 12px;
 }
 
 .cart-word {
@@ -1464,4 +1465,14 @@ form input[type="submit"]:focus {
 .wCartIsEmpty1{
 display: none;
 
+}
+
+.btnIconAddToCart {
+  background-color: #ff9f1a;
+  display: inline-block;
+  width: 100%;
+  font-size: 22px;
+  padding: 10px 0px;
+  /* height: 26px; */
+  text-align: center;
 }

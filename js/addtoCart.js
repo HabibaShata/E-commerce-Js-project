@@ -3,14 +3,16 @@ import { products } from "./custom.js";
 let listProductHtml = document.getElementById("products-Landing");
 let listCartHTML = document.querySelector('.cart-body');
 let iconCart = document.querySelector('.cartLogo');
-let iconCartSpan = document.querySelector('.cartLogo #cntOrders');
+export let iconCartSpan = document.querySelector('.cartLogo #cntOrders');
 let closeCart = document.querySelector('.cart-clear');
 let checkOut = document.querySelector(".checkout");
 let arrowBack = document.querySelector(".arrowBack");
 let cart = document.querySelector(".cart");
 let lyercartOverlay = document.querySelector(".cart-overlay");
-let temmraryDiv = document.querySelector(".addedSuccess");
-let totalPrice = document.querySelector('.cart-total');
+export let temmraryDiv = document.querySelector(".addedSuccess");
+let totalPrice = document.querySelector(".cart-total");
+
+console.log(totalPrice);
 let footerCart = document.querySelector('.cart-footer');
 /**
 cart 
@@ -36,7 +38,7 @@ msg.classList.add("cartEmpty");
 // a
 var btnStratShopping = document.createElement("a");
 btnStratShopping.href="./product.html";
-btnStratShopping.innerHTML="StratShopping";
+btnStratShopping.innerHTML="Strat Shopping";
 
 // 
 containerDivCartIsEmpty.append(iconEmptyCart);
@@ -45,7 +47,7 @@ containerDivCartIsEmpty.append(btnStratShopping);
 
 console.log(containerDivCartIsEmpty);
 
-let arrCart = [];
+export let arrCart = [];
 let loggedInUser = null;
 
 if(localStorage.getItem("loggedInUser"))
@@ -71,6 +73,7 @@ function listCartAsHTML() {
     arrCart.forEach(item => {
 
         //     console.log(item);
+    
         totalQuantity = totalQuantity + item.quantity;
         total = item.quantity * products[item.product_id - 1].price;
         let newItem = document.createElement('div');
@@ -279,6 +282,7 @@ const updateCart = (itemDeleted) => {
     // let positionItemInCart = arrCart.findIndex((value) => value.product_id == itemDeleted);
     // console.log("index arrtCart", positionItemInCart);
     // console.log("id item deleted", itemDeleted);//index 
+    
     var conf = confirm(`Do you really want to remove  ${products[itemDeleted - 1].productName} from cart? `);
 
     if (conf) {
