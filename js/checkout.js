@@ -3,7 +3,7 @@
 
 var containerOreders=document.querySelector(".ordersBody");
 let totalPrice=document.querySelector(".cart-total");
-
+console.log(totalPrice);
 let cart = JSON.parse(localStorage.getItem('cart'))
 let products = JSON.parse(localStorage.getItem('products'))
 
