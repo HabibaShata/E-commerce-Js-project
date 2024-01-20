@@ -1,3 +1,4 @@
+
 import { users, handleFormSubmit, validateForm, showValidationMessages} from "../sign-up/sign-up.js";
 import { isValidEmail, isValidPassword, isValidName } from "./profile.js";
 let allUsers = JSON.parse(localStorage.getItem("users"));
@@ -17,7 +18,7 @@ window.addEventListener("load", function(){
     let tableHead = document.getElementsByTagName("thead")[0];
     let row = tableHead.insertRow(-1);
     for (const key in allUsers[0]) {
-        row.innerHTML += `<th class="col-2">${key}</th>`;
+    ;
     }
     row.innerHTML += `<th>Actions</th>`;
 
