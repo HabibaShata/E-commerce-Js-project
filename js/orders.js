@@ -66,7 +66,7 @@ function GetOrders() {
             <td>${order.date}</td>
             <td>${order.seller}</td>
             <td>${order.totalPrice}</td>
-            <td>${order.updateStatus}</td>
+            <td>${order.orderStatus}</td>
             <td> <a href="orderDetails.html?orderId=${order.id}">View Details</a></td>
             <td><span class="delete-icon" data-ordid="${order.id}">❌</span></td>`
                 $("tbody")[0].appendChild(createdtr);
@@ -123,7 +123,7 @@ function GetOrders() {
                 <td>${order.date}</td>
                 <td>${order.seller}</td>
                 <td>${order.totalPrice}</td>
-                <td>${order.updateStatus}</td>
+                <td>${order.orderStatus}</td>
                 <td> <a href="orderDetails.html?orderId=${order.id}">View Details</a></td>`
                 $("tbody")[0].appendChild(createdtr);
             });
