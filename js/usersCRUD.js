@@ -1,5 +1,5 @@
 
-import { users, handleFormSubmit, validateForm, showValidationMessages} from "../sign-up/sign-up.js";
+import { users, handleFormSubmit } from "../sign-up/sign-up.js";
 import { isValidEmail, isValidPassword, isValidName } from "./profile.js";
 let allUsers = JSON.parse(localStorage.getItem("users"));
 
@@ -9,34 +9,25 @@ let selectedUser = {
     userPassword: "",
     userEmail: "",
     userRole: ""
-}
+};
+
+let tableBody, tableHead;
+
+let usersFilter="all";
+
 
 window.addEventListener("load", function(){
     //Get the users from local storage and make a table with all users except for those whose userRole is admin
     //Display all users
-    let tableBody = document.getElementsByTagName("tbody")[0];
-    let tableHead = document.getElementsByTagName("thead")[0];
+    tableBody = document.getElementsByTagName("tbody")[0];
+    tableHead = document.getElementsByTagName("thead")[0];
+    //display table headers
     let row = tableHead.insertRow(-1);
     for (const key in allUsers[0]) {
-    ;
+        row.innerHTML += `<th>${key}</th>`;
     }
     row.innerHTML += `<th>Actions</th>`;
-
-    let rowTD;
-    let td;
-    allUsers.forEach(user => {
-        if(user.userRole!="admin")
-        {
-            rowTD = tableBody.insertRow(-1);
-            for (const key in user) {
-                td = rowTD.insertCell(-1);
-                td.innerHTML = user[key];
-            }
-            td = rowTD.insertCell(-1);
-            td.innerHTML = `<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>`;
-            td.innerHTML += `<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>`;
-        }
-    });
+    DisplayUsers(allUsers);
 
     //if clicked on edit or delete
     tableBody.addEventListener("click", function(event){
@@ -60,7 +51,70 @@ window.addEventListener("load", function(){
     document.getElementById("deleteBtn").addEventListener("click", DeleteRecord);
     //add the edit event to the edit button
     document.getElementById("saveEditing").addEventListener("click", saveEditing);
+    //Add search functionality
+    this.document.querySelector("input[type=search]").addEventListener("keyup", search);
+    //filtering event
+    this.document.querySelector(".filter-category").addEventListener("click", filter);
 })
+
+function DisplayUsers(usersArray)
+{
+    tableBody.innerHTML = "";
+    let rowTD;
+    let td;
+    usersArray.forEach(user => {
+        if(user.userRole!="admin")
+        {
+            rowTD = tableBody.insertRow(-1);
+            for (const key in user) {
+                td = rowTD.insertCell(-1);
+                td.innerHTML = user[key];
+            }
+            td = rowTD.insertCell(-1);
+            td.innerHTML = `<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>`;
+            td.innerHTML += `<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>`;
+        }
+    });
+}
+
+function search(e)
+{
+    let searchedArr;
+    if(usersFilter!="all") {
+        searchedArr = allUsers.filter(user=>user.userName.toLowerCase().indexOf(e.target.value)!=-1 && user.userRole == usersFilter);
+    } else {
+        searchedArr = allUsers.filter(user=>user.userName.toLowerCase().indexOf(e.target.value)!=-1);
+    }
+    
+    DisplayUsers(searchedArr);
+}
+
+//filter based on user Role (All - customers - sellers)
+function filter(e)
+{
+    if (e.target.nodeName=="BUTTON") {
+        let btns = document.querySelectorAll(".filter-category button");
+        btns.forEach(btn=>{btn.classList.remove("btn-primary"); btn.classList.add("btn-secondary");})
+
+        e.target.classList.add("btn-primary");
+        e.target.classList.remove("btn-secondary");
+    }
+    switch(e.target.innerHTML)
+    {
+        case "All":
+            DisplayUsers(allUsers);
+            usersFilter = "all";
+            break;
+        case "Customers":
+            DisplayUsers(allUsers.filter(user=>user.userRole=="customer"));
+            usersFilter = "customer";
+            break;
+        case "Sellers":
+            DisplayUsers(allUsers.filter(user=>user.userRole=="seller"));
+            usersFilter = "seller";
+            break;
+    }
+}
 
 function DeleteRecord()
 {

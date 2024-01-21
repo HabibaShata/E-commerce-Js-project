@@ -37,6 +37,7 @@ function handleFormSubmit(event) {
 
     if (emailExists) {
         showValidationMessages(['This email is already signed up. Please use a different email.']);
+        emailExists = false;
     } else {
         var user = new users(usersArray.length+1, username, password, email, role);
 
@@ -53,6 +54,7 @@ function handleFormSubmit(event) {
 
         if(loggedInUserRole == "admin")
         {
+            location.reload();
             return;
         }
 
