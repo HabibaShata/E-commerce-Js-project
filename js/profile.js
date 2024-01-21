@@ -1,11 +1,9 @@
 import { users as usersClass } from "../sign-up/sign-up.js";
 
-// profile.js
 window.addEventListener('load', function () {
 
   // Fetch user data from local storage
-
-  ////////////////////////////////////////////////////////////////////////////
+ 
   const userDataString = localStorage.getItem('loggedInUser');
   if (!userDataString) {
     alert('User data not found. Please create a customer first.');
@@ -16,6 +14,7 @@ window.addEventListener('load', function () {
 
   // Populate form with user data
   document.getElementById('firstName').value = userData.userName || '';
+  document.getElementById('role').value = userData.userRole || '';
   document.getElementById('email').value = userData.userEmail || '';
   document.getElementById('password').value = userData.userPassword || '';
 
@@ -65,6 +64,7 @@ window.addEventListener('load', function () {
     let updatedUserObj = new usersClass(userData.userID, updatedUserData.firstName, updatedUserData.password, updatedUserData.email, userData.userRole);
     // Update user data in local storage
     localStorage.setItem('loggedInUser', JSON.stringify(updatedUserObj));
+    
     ////////////////////////////////////////////////////////////////////////////////////
     //get all the users from the local storage
     let users = JSON.parse(localStorage.getItem('users'));
