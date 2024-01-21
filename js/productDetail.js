@@ -8,8 +8,6 @@ console.log(iconAddToCart);
 let cart = JSON.parse(localStorage.getItem('cart'));
 
 iconCartSpan.innerText = arrCart.length;
-console.log("helllllo");
-
 
 window.addEventListener("load", function () {
     const searchParams = new URLSearchParams(window.location.search);

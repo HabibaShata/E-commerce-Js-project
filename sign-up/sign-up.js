@@ -17,7 +17,6 @@ window.addEventListener("load", function () {
 });
 
 function handleFormSubmit(event) {
-    debugger;
     event.preventDefault();
     // Validate the form before proceeding
     let validationMessages = validateForm();
@@ -31,7 +30,6 @@ function handleFormSubmit(event) {
     var email = document.querySelector('input[name="email"]').value;
     var password = document.querySelector('input[name="password"]').value;
     var username = document.querySelector('input[name="username"]').value;
-
     var usersArray = JSON.parse(localStorage.getItem('users')) || [];
     var emailExists = usersArray.some(function (user) {
         return user.userEmail.toLowerCase() === email.toLowerCase();
