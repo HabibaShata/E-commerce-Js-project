@@ -41,7 +41,11 @@ window.addEventListener("load", function () {
         for (const key of productKeys) {
             let td = rowTD.insertCell(-1);
             td.classList = "text-nowrap";
-            td.innerHTML = key === "images" ? `<img src="${product[key]}" alt="Product Image">` : product[key];
+            if(key=="images")
+            {
+                console.log(product[key][0]);
+            }
+            td.innerHTML = key === "images" ? `<img src="${product[key][0]}" alt="Product Image">` : product[key];
         }
 
         let actionTd = rowTD.insertCell(-1);
