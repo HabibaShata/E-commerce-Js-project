@@ -48,13 +48,50 @@ window.addEventListener("load", function () {
         actionTd.classList = "text-center";
 
         let editButton = `<button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#user-form-modal">
-            <i class="fas fa-edit"></i> Edit
+            <i class="fas fa-edit"></i> 
         </button>`;
 
         let deleteButton = `<button class="btn btn-sm btn-outline-secondary badge" type="button">
-            <i class="fas fa-trash"></i> Delete
+            <i class="fas fa-trash"></i> 
         </button>`;
 
         actionTd.innerHTML = editButton + deleteButton;
     });
+
+    searchBar.addEventListener('input', function (event) {
+      handleSearch();
+    });
 });
+
+//search bar function 
+function getSearchValue() {
+    let searchBar = document.getElementById("searchBar");
+    return searchBar.value.toLowerCase();
+}
+
+function getRowText(row) {
+    return Array.from(row.children).map(function (cell) {
+        return cell.innerText.toLowerCase();
+    });
+}
+
+function isSearchValueInRowText(searchValue, rowText) {
+    return rowText.some(function (text) { 
+        return text.includes(searchValue); 
+    });
+}
+
+function handleSearch() {
+    let  searchValue = getSearchValue();
+    let allRows = document.getElementsByTagName("tr");
+
+    for (var i = 1; i < allRows.length; i++) {
+        let rowText = getRowText(allRows[i]);
+
+        if (isSearchValueInRowText(searchValue, rowText)) {
+            allRows[i].style.display = "table-row";
+        } else {
+            allRows[i].style.display = "none";
+        }
+    }
+}

@@ -43,19 +43,20 @@
                         <div class="e-panel card">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <h6 class="mr-2"><span>Users</span><small class="px-1">Be a wise leader</small></h6>
+                                    <h6 class="mr-2"><span>Admin</span><strong class="px-1">Be a wise leader</storng>
+                                    </h6>
                                 </div>
 
                                 <!-- Search bar section -->
                                 <div class="row">
                                     <div class="col-9">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="Search by Seller Name"
-                                                aria-describedby="search-seller">
-                                            <div class="input-group-append">
+                                            <input type="text" class="form-control" placeholder="Search "
+                                                aria-describedby="search-seller" id="searchBar">
+                                            <!-- <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button"
                                                     id="search-seller">Search</button>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -93,7 +94,6 @@
                                         <div class="col-12 col-lg-3 mb-3">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <!-- Replaced the "Add" button with a heading "Add Seller" -->
                                                     <h5 class="card-title">Add Seller</h5>
                                                     <hr class="my-3">
                                                     <form class="form" novalidate>
@@ -155,7 +155,7 @@
                 </div>
             </div>
 
-            <div class="modal fade" role="dialog" tabindex="-1" id="user-form-modal">
+            <div class="modal fade" role="dialog" tabindex="-1" id="userFormModal">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -166,59 +166,57 @@
                         </div>
                         <div class="modal-body">
                             <div class="py-1">
-                                <form class="form" novalidate>
+                                <form class="form" novalidate id="editForm">
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Product ID</label>
-                                                <input class="form-control" type="text" name="productId"
-                                                    placeholder="Edit Product ID">
+                                                <input class="form-control" type="text" name="productId" id="productId">
                                             </div>
                                             <div class="form-group">
                                                 <label>Product Name</label>
                                                 <input class="form-control" type="text" name="productName"
-                                                    placeholder="Edit Product Name">
+                                                    id="productName">
                                             </div>
                                             <div class="form-group">
                                                 <label>Category</label>
-                                                <input class="form-control" type="text" name="category"
-                                                    placeholder="Edit Category">
+                                                <input class="form-control" type="text" name="category" id="category">
                                             </div>
                                             <div class="form-group">
                                                 <label>Seller Name</label>
                                                 <input class="form-control" type="text" name="sellerName"
-                                                    placeholder="Edit Seller Name">
+                                                    id="sellerName">
                                             </div>
                                             <div class="form-group">
                                                 <label>Images</label>
-                                                <input class="form-control" type="text" name="images"
-                                                    placeholder="Edit Images">
+                                                <input class="form-control" type="text" name="images" id="images">
                                             </div>
                                             <div class="form-group">
                                                 <label>Price</label>
-                                                <input class="form-control" type="text" name="price"
-                                                    placeholder="Edit Price">
+                                                <input class="form-control" type="text" name="price" id="price">
                                             </div>
                                             <div class="form-group">
                                                 <label>Description</label>
                                                 <input class="form-control" type="text" name="description"
-                                                    placeholder="Edit Description">
+                                                    id="description">
                                             </div>
                                             <div class="form-group">
                                                 <label>Options</label>
-                                                <input class="form-control" type="text" name="options"
-                                                    placeholder="Edit Options">
+                                                <input class="form-control" type="text" name="options" id="options">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col d-flex justify-content-end">
-                                            <button class="btn btn-primary" type="submit">Save Changes</button>
+                                            <button class="btn btn-primary" type="submit" id="submitButton">Save
+                                                Changes</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
