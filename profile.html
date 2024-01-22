@@ -8,14 +8,20 @@
   <title>Profile Page</title>
 </head>
 <body>
+
   <div class="container mt-5 col-md-6">
     <h2 class="mb-2">Profile Page</h2>
     <form id="profileForm">
       <div class="mb-3">
         <label for="firstName" class="form-label">First Name:</label>
         <input type="text" class="form-control" id="firstName" maxlength="15" required>
-        <small id="firstNameMessage" class="form-text text-danger"></small>
+        <span id="firstNameMessage" class="form-text text-danger"></span>
       </div>
+      <div class="mb-3">
+        <label for="role" class="form-label">Role :</label>
+        <input type="text" class="form-control" id="role" maxlength="15" readonly>
+      </div>
+
       <div class="mb-3">
         <label for="email" class="form-label">Email:</label>
         <input type="email" class="form-control" id="email" maxlength="50" required>
@@ -36,7 +42,7 @@
       </div>
       </form>
   </div>
-
+  
   <script src="js/profile.js" type="module"></script>
 </body>
 </html>
