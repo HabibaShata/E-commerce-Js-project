@@ -3,7 +3,7 @@ let productKeys = ["productId", "productName", "category", "sellerName", "images
 let searchBar = document.getElementById("searchBar");
 let form = document.getElementById("editForm");
 let modalId = "userFormModal";
-let submitButton =document.getElementById("submitButton");
+let submitButton = document.getElementById("submitButton");
 
 // Function to get the search value from the search bar
 function getSearchValue() {
@@ -60,25 +60,100 @@ function populateFormFields(form, productData) {
     });
 }
 
-// Function to get edited values from the form
+// Validation functions for different fields
+function isValidProductName(name) {
+    return /^[A-Za-z\s]+$/.test(name);
+}
+
+function isValidCategory(category) {
+    return /^[A-Za-z\s]+$/.test(category);
+}
+
+function isValidSellerName(sellerName) {
+    return /^[A-Za-z\s]+$/.test(sellerName);
+}
+
+function isValidImageURL(url) {
+    return /\.(jpg|jpeg)$/i.test(url);
+}
+
+function isValidPrice(price) {
+    return /^\d+(\.\d+)?$/.test(price);
+}
+
+function displayValidationError(message, errorElementId) {
+    const errorElement = document.getElementById(errorElementId);
+    if (errorElement) {
+        errorElement.textContent = message;
+    }
+}
+
+function clearValidationErrors() {
+    // Clear all error messages
+    const errorMessages = document.querySelectorAll('.form-text.text-danger');
+    errorMessages.forEach(element => {
+        element.textContent = '';
+    });
+}
+// Function to get edited values from the form with validation
 function getEditedValues(form) {
-    console.log(form.productId.value)
+    clearValidationErrors(); // Clear previous errors
+
+    const productName = form.productName.value;
+    const category = form.category.value;
+    const sellerName = form.sellerName.value;
+    const images = form.images.value;
+    const price = form.price.value;
+    const description = form.description.value;
+    const options = form.options.value;
+
+    let isValid = true;
+
+    if (!isValidProductName(productName)) {
+        displayValidationError("Invalid product name. Only characters and spaces are allowed.", "nameMessage");
+        isValid = false;
+    }
+
+    if (!isValidCategory(category)) {
+        displayValidationError("Invalid category. Only characters and spaces are allowed.", "categoryMessage");
+        isValid = false;
+    }
+
+    if (!isValidSellerName(sellerName)) {
+        displayValidationError("Invalid seller name. Only characters and spaces are allowed.", "sellerMessage");
+        isValid = false;
+    }
+
+    if (!isValidImageURL(images)) {
+        displayValidationError("Invalid image URL. Only .jpg files are allowed.", "imagesMessage");
+        isValid = false;
+    }
+
+    if (!isValidPrice(price)) {
+        displayValidationError("Invalid price. Only numbers are allowed.", "priceMessage");
+        isValid = false;
+    }
+
+    if (!isValid) {
+        return null;
+    }
+
     return {
         productId: form.productId.value,
-        productName: form.productName.value,
-        category: form.category.value,
-        sellerName: form.sellerName.value,
-        images: form.images.value,
-        price: form.price.value,
-        description: form.description.value,
-        options: form.options.value,
+        productName,
+        category,
+        sellerName,
+        images,
+        price,
+        description,
+        options
     };
 }
+
 
 // Function to update product data in the table and local storage
 function updateProductData(updatedValues) {
     const productId = updatedValues.productId;
-
 
     // Update the product in local storage
     let allProducts = JSON.parse(localStorage.getItem("products")) || [];
@@ -119,7 +194,7 @@ window.addEventListener("load", function () {
     let existingProductIds = new Set();
 
     allProducts.forEach(product => {
-        // Check for duplicate product ids
+        // Check for duplicate product IDs
         if (existingProductIds.has(product.productId)) {
             console.error(`Duplicate product found with productId: ${product.productId}`);
             return;
@@ -132,16 +207,13 @@ window.addEventListener("load", function () {
         for (const key of productKeys) {
             let td = rowTD.insertCell(-1);
             td.classList = "text-nowrap";
-            if(key=="images")
-            {
-                console.log(product[key][0]);
-            }
             td.innerHTML = key === "images" ? `<img src="${product[key][0]}" alt="Product Image">` : product[key];
         }
 
         let actionTd = rowTD.insertCell(-1);
         actionTd.classList.add("text-center");
 
+        // Create edit and delete buttons
         let editButton = document.createElement("button");
         editButton.classList.add("btn", "btn-sm", "btn-outline-secondary", "badge");
         editButton.type = "button";
@@ -165,17 +237,22 @@ window.addEventListener("load", function () {
 
     // Event listener for form submission
     submitButton.addEventListener("click", (event) => {
-        console.log("hello")
         event.preventDefault();
         const editedValues = getEditedValues(form);
-        updateProductData(editedValues); 
 
+        if (editedValues) {
+            updateProductData(editedValues);
+        } else {
+            // Validation failed, handle accordingly
+            console.log("Validation failed. Product data not updated.");
+        }
     });
-    
 
+    // Function to disable the Product ID field in the form
     function disableProductIdField() {
         form.productId.disabled = true;
-    }
+        form.sellerName.disabled =true ;
+        }
 
     // Event listeners for edit buttons in each row
     const editButtons = document.querySelectorAll(`button[data-toggle='modal'][data-target='#${modalId}']`);
