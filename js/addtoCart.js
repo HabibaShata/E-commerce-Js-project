@@ -3,14 +3,16 @@ import { products } from "./custom.js";
 let listProductHtml = document.getElementById("products-Landing");
 let listCartHTML = document.querySelector('.cart-body');
 let iconCart = document.querySelector('.cartLogo');
-let iconCartSpan = document.querySelector('.cartLogo #cntOrders');
+export let iconCartSpan = document.querySelector('.cartLogo #cntOrders');
 let closeCart = document.querySelector('.cart-clear');
 let checkOut = document.querySelector(".checkout");
 let arrowBack = document.querySelector(".arrowBack");
 let cart = document.querySelector(".cart");
 let lyercartOverlay = document.querySelector(".cart-overlay");
-let temmraryDiv = document.querySelector(".addedSuccess");
-let totalPrice = document.querySelector('.cart-total');
+export let temmraryDiv = document.querySelector(".addedSuccess");
+let totalPrice = document.querySelector(".cart-total");
+
+console.log(totalPrice);
 let footerCart = document.querySelector('.cart-footer');
 /**
 cart 
@@ -23,7 +25,7 @@ cart
  */
 // cart is empty
 // let span = document.querySelector('.cartEmpty');
-var containerDivCartIsEmpty=document.createElement("div");
+var containerDivCartIsEmpty = document.createElement("div");
 containerDivCartIsEmpty.classList.add("wCartIsEmpty");
 // i
 var iconEmptyCart = document.createElement("i");
@@ -35,8 +37,8 @@ msg.innerHTML = "Your cart is empty!<br> Browse our categories and discover our 
 msg.classList.add("cartEmpty");
 // a
 var btnStratShopping = document.createElement("a");
-btnStratShopping.href="./product.html";
-btnStratShopping.innerHTML="StratShopping";
+btnStratShopping.href = "./product.html";
+btnStratShopping.innerHTML = "Strat Shopping";
 
 // 
 containerDivCartIsEmpty.append(iconEmptyCart);
@@ -45,19 +47,18 @@ containerDivCartIsEmpty.append(btnStratShopping);
 
 console.log(containerDivCartIsEmpty);
 
-let arrCart = [];
+export let arrCart = [];
 let loggedInUser = null;
 
-if(localStorage.getItem("loggedInUser"))
-{
+if (localStorage.getItem("loggedInUser")) {
     loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 }
 
 if (localStorage.getItem("cart") != null) {
     //check if the loggedinuser is the admin or seller so don't perform the following
-    if(!(loggedInUser && (loggedInUser.userRole == "admin"|| loggedInUser.userRole == "seller")))
-    {
+    if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
         arrCart = JSON.parse(localStorage.getItem("cart"));
+
         listCartAsHTML();
     }
 }
@@ -69,8 +70,8 @@ function listCartAsHTML() {
     iconCartSpan.innerHTML = arrCart.length;
 
     arrCart.forEach(item => {
+        console.log(arrCart);
 
-        //     console.log(item);
         totalQuantity = totalQuantity + item.quantity;
         total = item.quantity * products[item.product_id - 1].price;
         let newItem = document.createElement('div');
@@ -98,6 +99,16 @@ function listCartAsHTML() {
                     </span>
                     <i class="fa-solid fa-trash-can deleteItem"></i>
                   </div>
+              
+                  <p class="cart-item-color">Select Color: </p>
+                  <div class="options-color" data-id="${item.product_id}">
+                  <input type="radio" name="color" id="w-color" hidden checked value="${products[item.product_id - 1].options[0]}">
+                  <label for="w-color" class="color-radio-btn check" >${products[item.product_id - 1].options[0]}</label>
+                  <input type="radio" name="color" id="r-color" hidden value="${products[item.product_id - 1].options[1]}">
+                  <label for="r-color" class="color-radio-btn">${products[item.product_id - 1].options[1]}</label>
+                  <input type="radio" name="color" id="b-color" hidden value="${products[item.product_id - 1].options[2]}">
+                  <label for="b-color" class="color-radio-btn">${products[item.product_id - 1].options[2]}</label>
+                </div>
                 </div>
               </div>
               `;
@@ -115,13 +126,71 @@ function listCartAsHTML() {
             }
         })
     }
+    //color options
+    let allColors = document.querySelectorAll(".color-radio-btn");
+
+    for (var i = 0; i < allColors.length; i++) {
+        console.log(allColors);
+        // var idLabel;
+        allColors[i].addEventListener("click", function (e) {
+            var parentLabel = e.target.parentElement.children;
+            console.log(parentLabel);
+            for (let j = 0; j < parentLabel.length; j++) {  //all childern (label+input)
+
+                if (parentLabel[j].classList.contains("color-radio-btn") == true) { //filter childern => label only
+                    parentLabel[j].classList.remove("check");
+                } else {
+                    if (parentLabel[j].getAttribute("id") == e.target.getAttribute('for')) { //to get input of label ex => <label for="x"><input id="x" value ="" name=""> to get value of name & value
+                        console.log("key", parentLabel[j].name, "value ", parentLabel[j].value);
+                        let parentOption = e.target.parentElement.dataset.id; // To know who the parent of option. 
+                        let positionItemInCart = arrCart.findIndex((value) => value.product_id == parentOption);
+                        arrCart[positionItemInCart].colorOptions = parentLabel[j].value; // add color to arrCart
+                        console.log(arrCart);
+                        addCartToMemory();
+
+                        // console.log(arrCart);
+                        // console.log(parentOption);
+
+
+                    }
+
+                }
+            }
+            e.target.classList.add("check");
+            // console.log( e.target.getAttribute('for'));
+            // idLabel= e.target.getAttribute('for')
+
+        })
+    }
+    // let allColors = document.querySelectorAll(".color-radio-btn");
+
+    for (var i = 0; i < allColors.length; i++) {
+
+        let positionItemInCart = arrCart.findIndex((value) => value.product_id == allColors[i].parentElement.dataset.id);
+        // console.log("all color",allColors[i].innerHTML,arrCart[0].colorOptions);
+
+        //  console.log("index in arr",positionItemInCart); 
+        //    console.log("productId",allColors[i].parentElement.dataset.id,"product in CartArr ",arrCart[positionItemInCart]);
+
+        if (arrCart[positionItemInCart].colorOptions == allColors[i].innerHTML) {
+
+            // console.log(true);
+            var allchildern = allColors[i].parentElement.children;
+            for (let k = 0; k < allchildern.length; k++) {
+                allchildern[k].classList.remove("check");
+            }
+            allColors[i].classList.add("check");
+            console.log(allColors[i].innerHTML, arrCart);
+        }
+
+    }
+
 }
 
 
 //cart events
 //check if the loggedinuser is the admin or seller so don't perform the following
-if(!(loggedInUser && (loggedInUser.userRole == "admin"|| loggedInUser.userRole == "seller")))
-{
+if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
     iconCart.addEventListener("click", showCart);
     arrowBack.addEventListener("click", hideCart);
     closeCart.addEventListener("click", clearCart);
@@ -129,22 +198,19 @@ if(!(loggedInUser && (loggedInUser.userRole == "admin"|| loggedInUser.userRole =
 
 
 function showCart() {
-    console.log(arrCart.length);
-    if(arrCart.length==0){
-      
-        listCartHTML.prepend(containerDivCartIsEmpty);
-        footerCart.style.display="none";
+    if (arrCart.length == 0) {
 
+        listCartHTML.prepend(containerDivCartIsEmpty);
+        footerCart.style.display = "none";
     }
-    else{
-        footerCart.style.display="grid";
+    else {
+        footerCart.style.display = "grid";
     }
     cart.classList.add("show");
     lyercartOverlay.classList.add("show");
 }
 
 function hideCart() {
-    console.log("hello");
     lyercartOverlay.classList.remove("show");
     cart.classList.remove("show");
 }
@@ -157,7 +223,7 @@ function clearCart(e) {
     }
     finally {
         listCartHTML.prepend(containerDivCartIsEmpty);
-        footerCart.style.display="none";
+        footerCart.style.display = "none";
     }
 
 };
@@ -171,10 +237,8 @@ window.addEventListener("load", function () {
             event.preventDefault();
             product_Id = parseInt(event.target.parentElement.parentElement.parentElement.parentElement.classList[3].split('=')[1]);
             addToCart(product_Id);
-
         })
     }
-
 })
 
 //**   add to cart    / */
@@ -188,6 +252,7 @@ export const addToCart = (product_id) => {
         arrCart = [{
             product_id: product_id,
             quantity: 1,
+            colorOptions: "black",
         }];
         temmraryDiv.style.display = "block";
         setTimeout(function () {
@@ -198,7 +263,9 @@ export const addToCart = (product_id) => {
     } else if (positionThisProductInCart < 0) {
         arrCart.push({
             product_id: product_id,
-            quantity: 1
+            quantity: 1,
+            colorOptions: "black",
+
         });
         temmraryDiv.style.display = "block";
         setTimeout(function () {
@@ -233,8 +300,7 @@ const addCartToHTML = () => {
 }
 
 //check if the loggedinuser is the admin or seller so don't perform the following
-if(!(loggedInUser && (loggedInUser.userRole == "admin"|| loggedInUser.userRole == "seller")))
-{
+if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
     listCartHTML.addEventListener('click', (event) => {
         let positionClick = event.target;
         //console.log(event.target.dataset.btn);
@@ -247,11 +313,16 @@ if(!(loggedInUser && (loggedInUser.userRole == "admin"|| loggedInUser.userRole =
             }
             changeQuantityCart(product_id, type);
         }
+
     })
 }
 
 const changeQuantityCart = (product_id, type) => {
     let positionItemInCart = arrCart.findIndex((value) => value.product_id == product_id);
+    // let positionItemInCart2 = arrCart.findIndex((value) =>{} );
+
+
+
     // console.log(positionItemInCart);
     if (positionItemInCart >= 0) {
         //  let info = arrCart[positionItemInCart];
@@ -279,6 +350,7 @@ const updateCart = (itemDeleted) => {
     // let positionItemInCart = arrCart.findIndex((value) => value.product_id == itemDeleted);
     // console.log("index arrtCart", positionItemInCart);
     // console.log("id item deleted", itemDeleted);//index 
+
     var conf = confirm(`Do you really want to remove  ${products[itemDeleted - 1].productName} from cart? `);
 
     if (conf) {
@@ -296,13 +368,13 @@ const updateCart = (itemDeleted) => {
                 containerDeletedItem[i].remove();
             }
         }
-        if(arrCart.length==0){
+        if (arrCart.length == 0) {
             listCartHTML.prepend(containerDivCartIsEmpty);
-            footerCart.style.display="none";
+            footerCart.style.display = "none";
         }
         addCartToMemory();
         iconCartSpan.innerText = arrCart.length;
-       
+
         console.log(arrCart[positionItemInCart].quantity);
 
     }

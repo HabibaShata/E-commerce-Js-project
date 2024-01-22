@@ -220,3 +220,23 @@ table.table .avatar {
 .hero_area {
     min-height: auto;
 }
+
+.search-section {
+	height: 66px;
+	background-color: #4c7dbd;
+}
+
+.search-section .form-group
+{
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+}
+
+.filter-category {
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	align-items: center;
+}

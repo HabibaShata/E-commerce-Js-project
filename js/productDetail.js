@@ -1,9 +1,18 @@
 
-import {products} from "./custom.js";
-import {addToCart} from "./addtoCart.js";
+import { products } from "./custom.js";
+import { addToCart, iconCartSpan, arrCart,temmraryDiv } from "./addtoCart.js";
 
 // form-control btn btn-warning fa fa-shopping-cart iconAddToCart
-let iconAddToCart =document.querySelectorAll(".iconAddToCart ");
+//////////////////////////////////////////////////////////////////////////////////
+let iconAddToCart = document.querySelectorAll(".iconAddToCart ");
+console.log(iconAddToCart);
+let cart = JSON.parse(localStorage.getItem('cart'));
+
+iconCartSpan.innerText = arrCart.length;
+console.log("helllllo");
+
+///////////////////////////////////////////////////////////////////////////////////////
+
 window.addEventListener("load", function () {
     const searchParams = new URLSearchParams(window.location.search);
 
@@ -12,16 +21,23 @@ window.addEventListener("load", function () {
     const products = JSON.parse(localStorage.getItem('products'));
 
     const product = products.find(x => x.productId == productId);
-    console.log(productId);
-    iconAddToCart.addEventListener("click",function(){
-        addToCart(productId);
-    })
+
     FillDetail(product);
-
     FillImgList(product.images);
-
     FillMainImg(product.images[0]);
+
+    ////////////////////////////////////////////////////////////////////////////
+    console.log(productId);
+    console.log(iconAddToCart[0]);
+    console.log(arrCart);
+   
+    iconAddToCart[0].addEventListener("click", function (e) {
+        addToCart(productId);
+        console.log(e.target); 
+    })
+    ////////////////////////////////////////////////////////////////////////////
 })
+
 
 function FillDetail(product) {
     $('.product-title').text(product.productName);
@@ -49,8 +65,8 @@ function FillImgList(imges) {
     imges.forEach(item => {
         const creatimg = document.createElement('img');//<img>
         creatimg.src = item;
-        creatimg.addEventListener('click' ,function(event){
-            $('#mainimg img')[0].src=event.target.src;
+        creatimg.addEventListener('click', function (event) {
+            $('#mainimg img')[0].src = event.target.src;
         });
         creatimg.classList.add('img_list', 'card-img', 'top');
         imglist.appendChild(creatimg);

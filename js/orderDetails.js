@@ -8,15 +8,15 @@ $(function () {
     const order = orders.find(x => x.id == orderId);
 
     $('#id').text('#' + order.id);
-    $('#date').text('Date: '+order.date);
+    $('#date').text('Date: ' + order.date);
     $("#status").text(order.orderStatus);
-    $("#seller").text('Seller:  '+order.seller);
+    $("#seller").text('Seller:  ' + order.seller);
 
 
     order.items.forEach(item => {
-    var createdtr = document.createElement("tr");//<tr>
-    createdtr.innerHTML = 
-    `<td>
+        var createdtr = document.createElement("tr");//<tr>
+        createdtr.innerHTML =
+            `<td>
        <div class="d-flex mb-2">
            <div class="flex-shrink-0" style="margin: 2%;">
                <img src="${item.image}" width="45">
@@ -27,16 +27,18 @@ $(function () {
            </div>
        </div>
    </td>
+   <td>${item.seller} </td>
    <td class="text-end">${item.price}$</td>
    <td>${item.quantity}</td>
    <td>${item.quantity * item.price}$</td> `
 
-   $("tbody")[0].appendChild(createdtr);
+        $("tbody")[0].appendChild(createdtr);
     })
 
     $("#shipping").text(order.shipping + '$');
     $("#total").text(order.totalPrice + '$');
     $("#subtotal").text((order.totalPrice - order.shipping) + '$');
 
-    $("#address").text(order.clientAddress);
+    const completeAddress = `${order.clientAddress.firstName} ${order.clientAddress.lastName}<br>${order.clientAddress.address}<br>${order.clientAddress.additionalInformation ? order.clientAddress.additionalInformation + "<br>" : ""}${order.clientAddress.region}, ${order.clientAddress.city}<br>Phone: ${order.clientAddress.phoneNumber}`;
+    $("#address").html(completeAddress);
 })

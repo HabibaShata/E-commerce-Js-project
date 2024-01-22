@@ -17,7 +17,6 @@ window.addEventListener("load", function () {
 });
 
 function handleFormSubmit(event) {
-    debugger;
     event.preventDefault();
     // Validate the form before proceeding
     let validationMessages = validateForm();
@@ -31,7 +30,6 @@ function handleFormSubmit(event) {
     var email = document.querySelector('input[name="email"]').value;
     var password = document.querySelector('input[name="password"]').value;
     var username = document.querySelector('input[name="username"]').value;
-
     var usersArray = JSON.parse(localStorage.getItem('users')) || [];
     var emailExists = usersArray.some(function (user) {
         return user.userEmail.toLowerCase() === email.toLowerCase();
@@ -39,14 +37,13 @@ function handleFormSubmit(event) {
 
     if (emailExists) {
         showValidationMessages(['This email is already signed up. Please use a different email.']);
+        emailExists = false;
     } else {
         var user = new users(usersArray.length+1, username, password, email, role);
 
         usersArray.push(user);
 
         localStorage.setItem('users', JSON.stringify(usersArray));
-
-        localStorage.setItem("loggedInUser",JSON.stringify(user));
 
         //check if the admin is the one who is trying to add a new user account then don't navigate
         let loggedInUserRole;
@@ -57,8 +54,11 @@ function handleFormSubmit(event) {
 
         if(loggedInUserRole == "admin")
         {
+            location.reload();
             return;
         }
+
+        localStorage.setItem("loggedInUser",JSON.stringify(user));
 
         window.location.href =(`../${role}.html`) ;
     }
