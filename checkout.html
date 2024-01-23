@@ -222,19 +222,19 @@
     <div class="container ">
         <div class="row ">
 
-            <form class="row  needs-validation col-7 sideForm bg-opacity-25 rounded-corners " novalidate>
+            <form id="addressForm" class="row  needs-validation col-7 sideForm bg-opacity-25 rounded-corners " novalidate>
 
                 <div class="col-md-4">
-                    <label for="validationCustom01" class="form-label">First name</label>
-                    <input type="text" class="form-control" id="validationCustom01" value="firstName">
-
-                </div>
-                <div class="col-md-4">
-                    <label for="validationCustom02" class="form-label">Last name</label>
-                    <input type="text" class="form-control" id="validationCustom02" value="LastName">
+                    <label for="firstName" class="form-label">First name</label>
+                    <input type="text" class="form-control" id="firstName" value="firstName">
 
                 </div>
                 <div class="col-md-4">
+                    <label for="lastName" class="form-label">Last name</label>
+                    <input type="text" class="form-control" id="lastName" value="LastName">
+
+                </div>
+                <!-- <div class="col-md-4">
                     <label for="validationCustomUsername" class="form-label">Username</label>
                     <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
@@ -242,33 +242,33 @@
                             aria-describedby="inputGroupPrepend" required>
 
                     </div>
-                </div>
+                </div> -->
                 <div class="col-md-6">
-                    <label for="validationCustom03" class="form-label">phone Number</label>
-                    <input type="text" class="form-control" id="validationCustom03">
+                    <label for="phone" class="form-label">phone Number</label>
+                    <input type="text" class="form-control" id="phone">
 
                 </div>
                 <div class="col-md-6">
-                    <label for="validationCustom03" class="form-label">Additional Number</label>
-                    <input type="text" class="form-control" id="validationCustom03">
+                    <label for="additionalphone" class="form-label">Additional Number</label>
+                    <input type="text" class="form-control" id="additionalphone">
 
                 </div>
                 <div class="col-md-12">
-                    <label for="validationCustom03" class="form-label">Adreess</label>
-                    <input type="text" class="form-control" id="validationCustom03" required>
+                    <label for="adreess" class="form-label">Adreess</label>
+                    <input type="text" class="form-control" id="adreess" required>
                     <div class="invalid-feedback">
                         Please provide a valid city.
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <label for="validationCustom03" class="form-label">Additional Information</label>
-                    <input type="text" class="form-control" id="validationCustom03">
+                    <label for="info" class="form-label">Additional Information</label>
+                    <input type="text" class="form-control" id="info">
 
                 </div>
 
                 <div class="col-md-6">
-                    <label for="validationCustom04" class="form-label">Region</label>
-                    <select class="form-select form-control" id="validationCustom04" required>
+                    <label for="region" class="form-label">Region</label>
+                    <select class="form-select form-control" id="region" required>
                         <option selected disabled value="">Cairo</option>
                         <option>Aswan</option>
                         <option>Egypt</option>
@@ -280,8 +280,8 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="validationCustom04" class="form-label">City</label>
-                    <select class="form-select form-control" id="validationCustom04" required>
+                    <label for="city" class="form-label">City</label>
+                    <select class="form-select form-control" id="city" required>
                         <option selected disabled value="">Cairo</option>
                         <option>Aswan</option>
                         <option>Egypt</option>
@@ -293,9 +293,9 @@
                     </div>
                 </div>
                 <div class="row col-4 ml-auto mt-2">
-                    <div class="col-6 ml-auto">
+                    <!-- <div class="col-6 ml-auto">
                         <button class="btn btn-light" type="submit">cancel</button>
-                    </div>
+                    </div> -->
                     <div class="col-6 ">
                         <button class="btn btn-primary " type="submit">Save</button>
                     </div>
@@ -316,7 +316,7 @@
                         <strong>Total</strong>
                         <span class="cart-total">0</span>
                     </div>
-                    <button class="checkout " disabled><a href="#">CONFIRM ORDER</a></button>
+                    <button class="checkout">CONFIRM ORDER</button>
 
                 </div>
 
