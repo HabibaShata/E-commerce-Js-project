@@ -1,9 +1,20 @@
 //import { cart as arrCart} from "./addtoCart"
 
+if(localStorage.getItem("loggedInUser"))
+{
+    let role = JSON.parse(localStorage.getItem("loggedInUser")).userRole;
+    if(role != "customer")
+    {
+        location.replace("../Login/login.html");
+    }
+}
+else
+{
+    location.replace("../Login/login.html");
+}
 
 var containerOreders = document.querySelector(".ordersBody");
 let totalPrice = document.querySelector(".cart-total");
-console.log(totalPrice);
 let cart = JSON.parse(localStorage.getItem('cart'))
 let products = JSON.parse(localStorage.getItem('products'))
 

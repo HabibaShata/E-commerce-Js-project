@@ -1,4 +1,5 @@
 import { users as usersClass } from "../sign-up/sign-up.js";
+const userDataString = localStorage.getItem('loggedInUser');
 
 // profile.js
 window.addEventListener('load', function () {
@@ -6,11 +7,10 @@ window.addEventListener('load', function () {
   // Fetch user data from local storage
 
   ////////////////////////////////////////////////////////////////////////////
-  const userDataString = localStorage.getItem('loggedInUser');
-  if (!userDataString) {
-    alert('User data not found. Please create a customer first.');
-    return;
-  }
+//   if (!userDataString ) {
+//     alert('User data not found. Please create a customer first.');
+//     return;
+// }
 
   const userData = JSON.parse(userDataString);
 

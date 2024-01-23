@@ -61,7 +61,7 @@ window.addEventListener("load", function () {
                </nav>
             `;
         }
-        else 
+        else
         {
             //add the list items to the dropdown menu
             let userDropDown = document.getElementById("user-DropDown");
@@ -73,6 +73,10 @@ window.addEventListener("load", function () {
             //change the a href to the customer page
             document.getElementById("homeLink").setAttribute("href", "customer.html");
             document.getElementById("loggedInUser").innerHTML = "Welcome, " + JSON.parse(localStorage.getItem("loggedInUser")).userName;
+            if(JSON.parse(loggedInUser).userRole=="customer")
+            {
+                document.querySelector("#orderHistory").style.display = "block";
+            }
         }
     } else {
         document.getElementById("loggedInUser").innerHTML = "Account";

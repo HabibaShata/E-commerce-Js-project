@@ -1,4 +1,3 @@
-
 import { users, handleFormSubmit } from "../sign-up/sign-up.js";
 import { isValidEmail, isValidPassword, isValidName } from "./profile.js";
 let allUsers = JSON.parse(localStorage.getItem("users"));
@@ -83,7 +82,7 @@ function search(e)
     if(usersFilter!="all") {
         searchedArr = allUsers.filter(user=>user.userName.toLowerCase().indexOf(e.target.value)!=-1 && user.userRole == usersFilter);
     } else {
-        searchedArr = allUsers.filter(user=>user.userName.toLowerCase().indexOf(e.target.value)!=-1);
+        searchedArr = a0llUsers.filter(user=>user.userName.toLowerCase().indexOf(e.target.value)!=-1);
     }
     
     DisplayUsers(searchedArr);
