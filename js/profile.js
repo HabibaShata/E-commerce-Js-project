@@ -87,12 +87,17 @@ window.addEventListener('load', function () {
   if(userData.userRole == "seller")
   {
       var sellerProducts = JSON.parse(this.localStorage.getItem('products'))
-                              .filter((product) => product.sellerName == userData.userName);
+                              // .filter((product) => product.sellerName == userData.userName);
+                              .filter((product) => product.sellerName == "Seller2");
+
       var sellerProductscategories = sellerProducts.map((product) => product.category);
       var ProductsInCategory=[];
+      var colors=[];
+
       for(var i=0; i<sellerProductscategories.length;i++)
       {
         ProductsInCategory[i]=0;
+        colors[i] ='rgb('+Math.random()*255+','+Math.random()*255+','+Math.random()*255+')';
         sellerProducts.forEach(product =>
         {
             if(product.category == sellerProductscategories[i])
@@ -100,8 +105,8 @@ window.addEventListener('load', function () {
         });  
       }
 
-      const createdChart = document.getElementById("myChart1");
-      new Chart(createdChart, {type: 'bar',
+      const createdChart1 = document.getElementById("myChart1");
+      new Chart(createdChart1, {type: 'bar',
         data: {
           labels: sellerProductscategories,
           datasets: [{
@@ -117,6 +122,22 @@ window.addEventListener('load', function () {
               beginAtZero: true
             }
           }
+        }
+      });
+  
+      const createdChart2 = document.getElementById("myChart2");
+      new Chart(createdChart2, {type: 'pie',
+        data: {
+          labels: sellerProductscategories,
+          datasets: [{
+            label: 'Products in each category',
+            data: ProductsInCategory,
+            backgroundColor: colors,
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
         }
       });
   
