@@ -21,7 +21,7 @@ class Product
         this.images = _images;
         this.price = _price;
         this.description = _description;
-        this.options = _options;
+      this.options = _options;
     }
 }
 
