@@ -1,4 +1,5 @@
 import { isValidEmail, isValidPassword, isValidName } from "../js/profile.js";
+
 export class users
 {
     constructor(userID, userName, userPassword, userEmail, userRole) {

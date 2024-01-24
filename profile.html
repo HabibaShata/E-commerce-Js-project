@@ -5,11 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.css" integrity="sha512-r0fo0kMK8myZfuKWk9b6yY8azUnHCPhgNz/uWDl2rtMdWJlk7gmd9socvGZdZzICwAkMgfTkVrplDahQ07Gi0A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="js/profile.js" type="module"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <title>Profile Page</title>
 </head>
 <body>
-
-  <div class="container mt-5 col-md-6">
+  <div class="container mt-5 col-md-6 col-sm-9">
     <h2 class="mb-2">Profile Page</h2>
     <form id="profileForm">
       <div class="mb-3">
@@ -41,8 +42,18 @@
         <a class="btn btn-outline-primary" href="index.html">Back</a> 
       </div>
       </form>
-  </div>
-  
-  <script src="js/profile.js" type="module"></script>
+
+      <div>
+        <canvas id="myChart1"></canvas>
+      </div>
+
+      <div>
+        <canvas id="myChart2"></canvas>
+      </div>
+      
+      <div>
+        <canvas id="myChart3"></canvas>
+      </div>
+    </div>
 </body>
 </html>

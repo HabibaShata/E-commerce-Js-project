@@ -6,8 +6,8 @@
 // }
 
 // getYear();
-
 //Product class function
+
 class Product
 {
     constructor(_productId, _productName, _category, _sellerName, _quantity, _quantity_sold, _images, _price, _description, _options)

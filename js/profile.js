@@ -3,13 +3,12 @@ const userDataString = localStorage.getItem('loggedInUser');
 
 window.addEventListener('load', function () {
 
-  // Fetch user data from local storage
-
   ////////////////////////////////////////////////////////////////////////////
 //   if (!userDataString ) {
 //     alert('User data not found. Please create a customer first.');
 //     return;
 // }
+
 
   const userData = JSON.parse(userDataString);
 
@@ -84,7 +83,46 @@ window.addEventListener('load', function () {
       successMessage.innerText = '';
     }, 3000);
   });
-});
+
+  if(userData.userRole == "seller")
+  {
+      var sellerProducts = JSON.parse(this.localStorage.getItem('products'))
+                              .filter((product) => product.sellerName == userData.userName);
+      var sellerProductscategories = sellerProducts.map((product) => product.category);
+      var ProductsInCategory=[];
+      for(var i=0; i<sellerProductscategories.length;i++)
+      {
+        ProductsInCategory[i]=0;
+        sellerProducts.forEach(product =>
+        {
+            if(product.category == sellerProductscategories[i])
+              ProductsInCategory[i]+=1;
+        });  
+      }
+
+      const createdChart = document.getElementById("myChart1");
+      new Chart(createdChart, {type: 'bar',
+        data: {
+          labels: sellerProductscategories,
+          datasets: [{
+            label: 'products in each category',
+            data: ProductsInCategory,
+            borderWidth: 5
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+  
+  }
+
+ });
 
 // Function to validate first name and last name
 function isValidName(name, messageElement) {
