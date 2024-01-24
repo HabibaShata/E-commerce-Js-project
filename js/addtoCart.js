@@ -12,7 +12,6 @@ let lyercartOverlay = document.querySelector(".cart-overlay");
 export let temmraryDiv = document.querySelector(".addedSuccess");
 let totalPrice = document.querySelector(".cart-total");
 
-console.log(totalPrice);
 let footerCart = document.querySelector('.cart-footer');
 /**
 cart 
