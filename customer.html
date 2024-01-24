@@ -39,7 +39,7 @@
                         <li class="nav-item active">
                            <a class="nav-link" href="customer.html">Home <span class="sr-only">(current)</span></a>
                         </li>
-                       <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label" id="welcome-user"> <span class="caret"></span></a>
                            <ul class="dropdown-menu" id="user-DropDown">
                               <li><a href="profile.html">Profile</a></li>
@@ -55,7 +55,7 @@
                         <li class="nav-item">
                            <a class="nav-link" href="about.html">About</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id="cartListItem" style="display: none;">
                            <a class="nav-link  cartLogo" href="#">
                               <svg class="w-[28px] h-[28px] text-gray-800 dark:text-white  " aria-hidden="true"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
@@ -67,18 +67,17 @@
                               <span id="cart-word">cart</span>
                            </a>
                         </li>
-
-                        <li class="nav-item customerServiceBtn">
-                           <a class="nav-link customerServiceLogo" id="btnCS" href="#">
-                              <i class="fa-solid fa-comment"></i>
-                           </a>
-                        </li>
                      </ul>
                   </div>
                </nav>
             </div>
          </header>
          <!-- end header section -->
+         <li class="customerServiceBtn" id="btnCS" style="display: none;">
+            <a class="customerServiceLogo">
+               <i class="fa-solid fa-comment"></i>
+            </a>
+         </li>
          <!-- slider section -->
          <section class="slider_section ">
             <div class="slider_bg_box">
@@ -421,33 +420,6 @@
          </div>
       </section>
       <!-- end why section -->
-      
-      <!-- arrival section -->
-      <!-- <section class="arrival_section">
-         <div class="container">
-            <div class="box">
-               <div class="arrival_bg_box">
-                  <img src="images/arrival-bg.png" alt="">
-               </div>
-               <div class="row">
-                  <div class="col-md-6 ml-auto">
-                     <div class="heading_container remove_line_bt">
-                        <h2>
-                           #NewArrivals
-                        </h2>
-                     </div>
-                     <p style="margin-top: 20px;margin-bottom: 30px;">
-                        Vitae fugiat laboriosam officia perferendis provident aliquid voluptatibus dolorem, fugit ullam sit earum id eaque nisi hic? Tenetur commodi, nisi rem vel, ea eaque ab ipsa, autem similique ex unde!
-                     </p>
-                     <a href="">
-                     Shop Now
-                     </a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </section> -->
-      <!-- end arrival section -->
 
       <!-- Add to cart  -->
       <div class="cart-overlay"></div>
@@ -475,9 +447,9 @@
       <div class="customerService-overlay cart-overlay"></div>
 
       <div class="customerService cart">
-         <div class="customerService-header cart-header">
-            <a class="arrowBackCS"><i class="fa-solid fa-arrow-right"></i></a>
-               <h2>Your customerService</h2>
+         <div class="customerService-header cart-header flex-row-reverse justify-content-between">
+            <a class="arrowBackCS"><i class="fa-solid fa-arrow-left"></i></a>
+            <h2>Your customerService</h2>
          </div>
          <div class="customerService-body cart-body">
          

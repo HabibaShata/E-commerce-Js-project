@@ -1516,10 +1516,10 @@ display: none;
 /* start customerService */
 .customerServiceBtn {
     position: fixed;
-    right: 100px;
-    bottom: 100px;
-    width: 50px;
-    height: 50px;
+    right: 50px;
+    bottom: 50px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     border: 2px solid gold;
     display: flex;
@@ -1527,6 +1527,41 @@ display: none;
     justify-content: center;
     background-color: #737373;
     z-index: 500;
+    animation: wiggle 2s linear infinite;
+    cursor: pointer;
 }
 
-.customerServiceBtn 
+.customerServiceBtn svg {
+  color: white;
+  font-size: 25px;
+  transition: all 0.3s;
+}
+
+.customerServiceBtn:hover svg {
+  color: gold;
+  transform: scale(1.2);
+}
+
+@keyframes wiggle {
+  0%, 7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-15deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+  }
+  25% {
+    transform: rotateZ(-10deg);
+  }
+  30% {
+    transform: rotateZ(6deg);
+  }
+  35% {
+    transform: rotateZ(-4deg);
+  }
+  40%, 100% {
+    transform: rotateZ(0);
+  }
+}
