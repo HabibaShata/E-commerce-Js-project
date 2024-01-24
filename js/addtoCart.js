@@ -12,7 +12,6 @@ let lyercartOverlay = document.querySelector(".cart-overlay");
 export let temmraryDiv = document.querySelector(".addedSuccess");
 let totalPrice = document.querySelector(".cart-total");
 
-console.log(totalPrice);
 let footerCart = document.querySelector('.cart-footer');
 /**
 cart 
@@ -198,7 +197,6 @@ if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole
 
 
 function showCart() {
-    console.log(arrCart.length);
     if (arrCart.length == 0) {
 
         listCartHTML.prepend(containerDivCartIsEmpty);
@@ -212,7 +210,6 @@ function showCart() {
 }
 
 function hideCart() {
-    console.log("hello");
     lyercartOverlay.classList.remove("show");
     cart.classList.remove("show");
 }
@@ -239,11 +236,8 @@ window.addEventListener("load", function () {
             event.preventDefault();
             product_Id = parseInt(event.target.parentElement.parentElement.parentElement.parentElement.classList[3].split('=')[1]);
             addToCart(product_Id);
-
         })
     }
-
-
 })
 
 //**   add to cart    / */

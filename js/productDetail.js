@@ -3,6 +3,7 @@ import { products } from "./custom.js";
 import { addToCart, iconCartSpan, arrCart,temmraryDiv } from "./addtoCart.js";
 
 // form-control btn btn-warning fa fa-shopping-cart iconAddToCart
+//////////////////////////////////////////////////////////////////////////////////
 let iconAddToCart = document.querySelectorAll(".iconAddToCart ");
 console.log(iconAddToCart);
 let cart = JSON.parse(localStorage.getItem('cart'));
@@ -10,6 +11,7 @@ let cart = JSON.parse(localStorage.getItem('cart'));
 iconCartSpan.innerText = arrCart.length;
 console.log("helllllo");
 
+///////////////////////////////////////////////////////////////////////////////////////
 
 window.addEventListener("load", function () {
     const searchParams = new URLSearchParams(window.location.search);
@@ -20,22 +22,20 @@ window.addEventListener("load", function () {
 
     const product = products.find(x => x.productId == productId);
 
-    console.log(productId);
+    FillDetail(product);
+    FillImgList(product.images);
+    FillMainImg(product.images[0]);
 
+    ////////////////////////////////////////////////////////////////////////////
+    console.log(productId);
     console.log(iconAddToCart[0]);
     console.log(arrCart);
    
-    FillDetail(product);
-
-    FillImgList(product.images);
-
-    FillMainImg(product.images[0]);
     iconAddToCart[0].addEventListener("click", function (e) {
         addToCart(productId);
-        console.log(e.target);
-   
-    
+        console.log(e.target); 
     })
+    ////////////////////////////////////////////////////////////////////////////
 })
 
 

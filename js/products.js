@@ -54,14 +54,14 @@ window.addEventListener("load", function () {
                            <a class="nav-link" href="product.html">Products</a>
                         </li>
                         <li class="nav-item">
-                           <a class="nav-link" href="blog_list.html">Orders</a>
+                           <a class="nav-link" href="orderHistory.html">Orders</a>
                         </li>     
                      </ul>
                   </div>
                </nav>
             `;
         }
-        else 
+        else
         {
             //add the list items to the dropdown menu
             let userDropDown = document.getElementById("user-DropDown");
@@ -73,6 +73,10 @@ window.addEventListener("load", function () {
             //change the a href to the customer page
             document.getElementById("homeLink").setAttribute("href", "customer.html");
             document.getElementById("loggedInUser").innerHTML = "Welcome, " + JSON.parse(localStorage.getItem("loggedInUser")).userName;
+            if(JSON.parse(loggedInUser).userRole=="customer")
+            {
+                document.querySelector("#orderHistory").style.display = "block";
+            }
         }
     } else {
         document.getElementById("loggedInUser").innerHTML = "Account";
