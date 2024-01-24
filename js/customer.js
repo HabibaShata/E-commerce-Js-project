@@ -6,7 +6,7 @@ if(loggedInUser == null){
     window.location.href = "index.html";
 } else {
     //If the user role is customer then display the cart and the customer service buttons
-    if (loggedInUser.userRole == "customer") {
+    if (JSON.parse(loggedInUser).userRole == "customer") {
         document.getElementById("cartListItem").style.display = "block";
         document.getElementById("btnCS").style.display = "block";
     }
@@ -16,3 +16,7 @@ window.addEventListener("load", function(){
     this.document.getElementById("welcome-user").innerHTML ="Welcome, " +  JSON.parse(localStorage.getItem("loggedInUser")).userName;
     LogOut();
 })
+
+function sendMessage() {
+    
+}

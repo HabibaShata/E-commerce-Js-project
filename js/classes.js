@@ -1,9 +1,8 @@
-class CustomerMessages {
-    constructor(customerName, messageContent, messageSentDate) {
+export class CustomerMessages {
+    constructor(id, customerName, messageContent, messageSentDate) {
+        this.messageId = id;
         this.customerName = customerName;
         this.messageContent = messageContent;
         this.messageSentDate = messageSentDate;   
     }
 }
-
-export * from './classes.js';

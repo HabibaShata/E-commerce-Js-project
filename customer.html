@@ -73,11 +73,13 @@
             </div>
          </header>
          <!-- end header section -->
+         <!-- customer-service-btn -->
          <li class="customerServiceBtn" id="btnCS" style="display: none;">
             <a class="customerServiceLogo">
                <i class="fa-solid fa-comment"></i>
             </a>
          </li>
+         <!--end customer-service-btn -->
          <!-- slider section -->
          <section class="slider_section ">
             <div class="slider_bg_box">
@@ -449,10 +451,21 @@
       <div class="customerService cart">
          <div class="customerService-header cart-header flex-row-reverse justify-content-between">
             <a class="arrowBackCS"><i class="fa-solid fa-arrow-left"></i></a>
-            <h2>Your customerService</h2>
+            <h4>Tell us what you think</h>
          </div>
          <div class="customerService-body cart-body">
-         
+            <div class="form-group mb-0">
+               <label for="message">Your message</label>
+               <textarea name="message" id="message" class="form-control" style="resize: none;"></textarea>
+            </div>
+
+            <div class="alert alert-danger mb-0 mt-2" id="alert-msg">Tell us what is wrong...</div>
+
+            <div class="form-group">
+               <div class="btn btn-primary ml-auto d-block" id="btnSubmit" style="cursor: pointer;">Send</div>
+            </div>
+
+            <div class="alert alert-success" id="success-msg" style="display: none;">Your message is sent successfully</div>
          </div>
       </div>
       <!--  end customer Service  -->
@@ -475,98 +488,6 @@
             </div>
          </div>
       </section>
-      <!-- end product section -->
-      <!-- client section -->
-      <!-- <section class="client_section layout_padding">
-         <div class="container">
-            <div class="heading_container heading_center">
-               <h2>
-                  Customer's Testimonial
-               </h2>
-            </div>
-            <div id="carouselExample3Controls" class="carousel slide" data-ride="carousel">
-               <div class="carousel-inner">
-                  <div class="carousel-item active">
-                     <div class="box col-lg-10 mx-auto">
-                        <div class="img_container">
-                           <div class="img-box">
-                              <div class="img_box-inner">
-                                 <img src="images/client.jpg" alt="">
-                              </div>
-                           </div>
-                        </div>
-                        <div class="detail-box">
-                           <h5>
-                              Anna Trevor
-                           </h5>
-                           <h6>
-                              Customer
-                           </h6>
-                           <p>
-                              Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
-                           </p>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="carousel-item">
-                     <div class="box col-lg-10 mx-auto">
-                        <div class="img_container">
-                           <div class="img-box">
-                              <div class="img_box-inner">
-                                 <img src="images/client.jpg" alt="">
-                              </div>
-                           </div>
-                        </div>
-                        <div class="detail-box">
-                           <h5>
-                              Anna Trevor
-                           </h5>
-                           <h6>
-                              Customer
-                           </h6>
-                           <p>
-                              Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
-                           </p>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="carousel-item">
-                     <div class="box col-lg-10 mx-auto">
-                        <div class="img_container">
-                           <div class="img-box">
-                              <div class="img_box-inner">
-                                 <img src="images/client.jpg" alt="">
-                              </div>
-                           </div>
-                        </div>
-                        <div class="detail-box">
-                           <h5>
-                              Anna Trevor
-                           </h5>
-                           <h6>
-                              Customer
-                           </h6>
-                           <p>
-                              Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
-                           </p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="carousel_btn_box">
-                  <a class="carousel-control-prev" href="#carouselExample3Controls" role="button" data-slide="prev">
-                  <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
-                  <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselExample3Controls" role="button" data-slide="next">
-                  <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                  <span class="sr-only">Next</span>
-                  </a>
-               </div>
-            </div>
-         </div>
-      </section> -->
-      <!-- end client section -->
       <!-- footer start -->
       <footer>
          <div class="container">
@@ -645,7 +566,7 @@
       <!-- fontawesome -->
       <script src="js/all.min.js"></script>
       <!-- customer-service -->
-      <script src="js/customerService.js"></script>
+      <script src="js/customerService.js" type="module"></script>
       <!-- custom js -->
       <script src="js/custom.js" type="module"></script>
       <!-- customer js -->
