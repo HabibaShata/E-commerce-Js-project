@@ -1,5 +1,5 @@
-import { products as arr } from "./custom.js";
-import { arrCart } from "./addtoCart.js";
+//import { products as arr } from "./custom.js";
+//import { arrCart } from "./addtoCart.js";
 
 var tbody = document.querySelector("tbody")
 var btnAdd = document.querySelector(".add-new");
@@ -39,67 +39,6 @@ function updateLocalStorage(arrOfproduct) {
 window.addEventListener("load", function () {
     creatTableofData();
 
-    /* Deleteeeeeeee*/
-    // select icon delete 
-   /* var deleteButtons = document.querySelectorAll('.delete');
-    var deleteConfirmBtn = document.querySelector('.Delete'); //confirm btn
-    var actualItemDeleted;
-    let positionThisProductInProduct;
-    var trdeleted;
-    var idProduct;
-    console.log(deleteButtons);
-    console.log(deleteConfirmBtn);
-    deleteButtons.forEach(function (button) {
-        button.addEventListener('click', function (e) {
-            // Show the Bootstrap modal
-            actualItemDeleted = e.target.parentElement;
-            trdeleted = $(actualItemDeleted).closest('tr');
-            console.log(trdeleted[0]);
-            console.log(e.target.parentElement);
-            console.log(e.target.parentElement.dataset.id);// id product
-            idProduct = e.target.parentElement.dataset.id;
-
-            $('#myModal').modal('show');
-        });
-        deleteConfirmBtn.addEventListener('click', function () {
-
-            //delete item from html and product arr
-            // console.log(actualItemDeleted);
-    
-    
-            let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == idProduct);
-            positionThisProductInProduct = arrOfproduct.findIndex((value) => {
-                console.log("id", value["productId"], "id", idProduct, arrOfproduct[idProduct - 1]["productId"]);
-                return value["productId"] == arrOfproduct[idProduct - 1]["productId"];
-            });
-    
-            if (positionThisProductInCart == -1 && positionThisProductInProduct !== -1) {//  item not exist in cart  
-                // console.log(products);
-                // console.log(positionThisProductInProduct);
-                //   console.log(products[positionThisProductInProduct]);
-                // Check if the element is found (index is not -1)
-                arrOfproduct.splice(positionThisProductInProduct, 1);
-                localStorage.setItem("products", JSON.stringify(arrOfproduct));
-                //  console.log(products);
-                $(trdeleted).remove()
-    
-                // console.log("done");
-            } else {
-    
-                alert("item already in cart");
-                console.log("item already in cart");
-            }
-    
-    
-    
-            // Hide the modal after deletion
-            $('#myModal').removeClass('fade');
-            // Hide the modal after deletion
-            $('#myModal').modal('hide');
-        });
-    });
-*/
-   
 
 })
 function creatTableofData() {
@@ -283,27 +222,69 @@ function closeModal() {
     $('#myModal2').modal('hide');
 }
 
+    /* Deleteeeeeeee*/
+    // select icon delete 
+   /* var deleteButtons = document.querySelectorAll('.delete');
+    var deleteConfirmBtn = document.querySelector('.Delete'); //confirm btn
+    var actualItemDeleted;
+    let positionThisProductInProduct;
+    var trdeleted;
+    var idProduct;
+    console.log(deleteButtons);
+    console.log(deleteConfirmBtn);
+    deleteButtons.forEach(function (button) {
+        button.addEventListener('click', function (e) {
+            // Show the Bootstrap modal
+            actualItemDeleted = e.target.parentElement;
+            trdeleted = $(actualItemDeleted).closest('tr');
+            console.log(trdeleted[0]);
+            console.log(e.target.parentElement);
+            console.log(e.target.parentElement.dataset.id);// id product
+            idProduct = e.target.parentElement.dataset.id;
 
+            $('#myModal').modal('show');
+        });
+        deleteConfirmBtn.addEventListener('click', function () {
 
-// delete 
-// function delet(){
-//
+            //delete item from html and product arr
+            // console.log(actualItemDeleted);
+    
+    
+            let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == idProduct);
+            positionThisProductInProduct = arrOfproduct.findIndex((value) => {
+                console.log("id", value["productId"], "id", idProduct, arrOfproduct[idProduct - 1]["productId"]);
+                return value["productId"] == arrOfproduct[idProduct - 1]["productId"];
+            });
+    
+            if (positionThisProductInCart == -1 && positionThisProductInProduct !== -1) {//  item not exist in cart  
+                // console.log(products);
+                // console.log(positionThisProductInProduct);
+                //   console.log(products[positionThisProductInProduct]);
+                // Check if the element is found (index is not -1)
+                arrOfproduct.splice(positionThisProductInProduct, 1);
+                localStorage.setItem("products", JSON.stringify(arrOfproduct));
+                //  console.log(products);
+                $(trdeleted).remove()
+    
+                // console.log("done");
+            } else {
+    
+                alert("item already in cart");
+                console.log("item already in cart");
+            }
+    
+    
+    
+            // Hide the modal after deletion
+            $('#myModal').removeClass('fade');
+            // Hide the modal after deletion
+            $('#myModal').modal('hide');
+        });
+    });
+*/
+   
 
-
-
-// }
-// sort 
-// ///////// creat table
-
-
-
-
-
-
-
-
-
-//             sort                    //  
+// 
 /*
 document.getElementsByTagName("thead")[0].addEventListener("click", function (e) {
   
