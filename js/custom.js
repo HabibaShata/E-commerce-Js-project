@@ -51,7 +51,7 @@ localStorage.setItem("products", JSON.stringify(products));
 
 // client section owl carousel
 $(function () {
-
+   
    let productCards = GetProducts(9);
    if (document.getElementById("products-Landing")) {
       document.getElementById("products-Landing").innerHTML = productCards;   
