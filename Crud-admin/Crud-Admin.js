@@ -1,6 +1,6 @@
 
 
-let allProducts = JSON.parse(localStorage.getItem("products"))
+//let allProducts = JSON.parse(localStorage.getItem("products"))
 
  let selectedProduct={
  productId : 1,
@@ -49,16 +49,40 @@ window.addEventListener("load", function () {
         }
 
         let actionTd = rowTD.insertCell(-1);
+        console.log(actionTd);
         actionTd.classList = "text-center";
 
-        let editButton = `<button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#user-form-modal">
-            <i class="fas fa-edit"></i> Edit
-        </button>`;
+        let editButton = `
+            <i class="btn btn-sm btn-outline-secondary badge fas fa-edit Edit"></i> 
+        `;
 
-        let deleteButton = `<button class="btn btn-sm btn-outline-secondary badge" type="button">
-            <i class="fas fa-trash"></i> Delete
-        </button>`;
+        let deleteButton = `
+        <a href="#myModal" class="trigger-btn" data-toggle="modal"><i class="btn btn-sm btn-outline-secondary badge fa-solid fa-trash-can deleteItem"></i></a>
+        
+
+        `;
 
         actionTd.innerHTML = editButton + deleteButton;
     });
+    deleteBueditButtontton.addEventListener("click",function(){
+        console.log("#######");
+    })
 });
+
+
+// var tbody=document.querySelector("tbody");
+// console.log(tbody);
+// tbody.addEventListener("click",function(e){
+//     if(e.target.classList.contains("deleteItem")){
+//         // console.log( document.querySelector(".Delete"));
+//         document.querySelector(".Delete").addEventListener("click",function(){
+//             console.log("#####");
+//         })
+//         //  document.querySelector(".Delete").addEventListener("click",function(){
+//         //        console.log("doneeeeeeeeeee");
+//         //  })
+//         e.target.parentElement;
+//     }
+// // console.log(e.target.classList.contains("deleteItem"));
+//   console.log(e.target.parentElement );
+// })

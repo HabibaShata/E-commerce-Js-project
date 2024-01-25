@@ -1,13 +1,17 @@
 //import { cart as arrCart} from "./addtoCart"
 
+//import { arrCart } from "./addtoCart";
+
 
 var containerOreders = document.querySelector(".ordersBody");
 let totalPrice = document.querySelector(".cart-total");
+let btnCheckout = document.querySelector(".checkout a");
 console.log(totalPrice);
 let cart = JSON.parse(localStorage.getItem('cart'))
 let products = JSON.parse(localStorage.getItem('products'))
 
 window.addEventListener("load", function () {
+
     var total = 0;
     cart.forEach(order => {
         total = products[order["product_id"] - 1].price * order["quantity"];
@@ -34,8 +38,30 @@ window.addEventListener("load", function () {
         //console.log(totalPrice.innerHTML);
     });
 
-
 })
+btnCheckout.addEventListener("click", function (e) {
+    e.preventDefault();
+    cart.forEach((v) => {
+      //  console.log(products[v.product_id - 1]);
+
+        products[v.product_id - 1].quantity_sold =parseInt(v.quantity);
+        products[v.product_id - 1].quantity = parseInt(products[v.product_id - 1].quantity)-parseInt(products[v.product_id - 1].quantity_sold);
+       //add modifiy countity to cart 
+        v.quantity_sold=parseInt(v.quantity);
+        v.quantity=products[v.product_id - 1].quantity;
+
+       localStorage.setItem('products', JSON.stringify(products));
+       localStorage.setItem('cart', JSON.stringify(cart));
+
+       // console.log(v.product_id);//id product
+    })
+   
+        //localStorage.setItem('cart', JSON.stringify(cart));
+       // localStorage.setItem('cart', JSON.stringify(cart));
+    
+})
+
+
 // console.log(order["product_id"]);//  idProduct
 
 // cart.forEach(order => {
