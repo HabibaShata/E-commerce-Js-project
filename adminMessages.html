@@ -54,13 +54,23 @@
                            <a class="nav-link" href="customer.html">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item dropdown">
-                           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label" id="welcome-user"> <span class="caret"></span></a>
+                           <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="nav-label" id="welcome-user"><span class="caret"></span>
+                           </button>
+                           <ul class="dropdown-menu" id="user-DropDown">
+                             <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                             <li><a class="dropdown-item" href="usersCRUD.html">Users</a></li>
+                             <li><a class="dropdown-item" href="#">Log out</a></li>
+                           </ul>
+                        </li>
+                        <!-- <li class="nav-item dropdown">
+                           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><span class="nav-label" id="welcome-user"><span class="caret"></span></a>
                            <ul class="dropdown-menu" id="user-DropDown">
                               <li><a href="profile.html">Profile</a></li>
                               <li><a href="usersCRUD.html">Users</a></li>
                               <li><a href="#" id="logOut">Log out</a></li>
                            </ul>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                            <a class="nav-link" href="Crud-Admin.html">Products</a>
                         </li>

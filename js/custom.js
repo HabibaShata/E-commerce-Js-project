@@ -77,7 +77,7 @@ function GetProducts(maxNumber, productsList) {
    for (let i = 0; i < maxNumber; i++) {
       productCards +=
       
-         `<div class="col-sm-6 col-md-4 col-lg-4 data-id=${products[i].productId}">
+         `<div class="col-sm-6 col-md-6 col-lg-4 data-id=${products[i].productId}">
 
            <div class="box">
               <div class="option_container">
@@ -93,7 +93,10 @@ function GetProducts(maxNumber, productsList) {
                 <div class="img-box">
                    <img src="${products[i].images[0]}" alt="">
                 </div>
-                <div class="detail-box">
+                <div class="detail-box" style="display: flex !important;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column !important;">
                    <h5>
                       ${products[i].productName}
                    </h5>
