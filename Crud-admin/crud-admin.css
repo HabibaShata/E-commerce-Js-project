@@ -1,5 +1,5 @@
 body {
-    margin-top: 20px;
+    /* margin-top: 20px; */
     background-color: #FDFEFE;
     color: #2C3E50;
 }
@@ -14,8 +14,11 @@ body {
 }
 
 .container-fluid {
+
     background-color: #FDFEFE;
+    overflow-y: hidden;
 }
+
 
 .card,
 .e-panel,
@@ -54,10 +57,10 @@ body {
     background-color: #FDFEFE;
 }
 
-.modal-footer {
+/* .modal-footer {
     background-color: #333333;
     border-top: 1px solid #2C3E50;
-}
+} */
 
 .e-tabs {
     background-color: #333333;
@@ -72,4 +75,9 @@ body {
     background-color: #FFA500;
     border-color: #FFA500;
     color: #FDFEFE;
+}
+
+
+td.text-nowrap{
+    padding: 0px;
 }

@@ -57,10 +57,13 @@ address = address==null?[]:address;
 
 var containerOreders = document.querySelector(".ordersBody");
 let totalPrice = document.querySelector(".cart-total");
+let btnCheckout = document.querySelector(".checkout a");
+console.log(totalPrice);
 let cart = JSON.parse(localStorage.getItem('cart'))
 let products = JSON.parse(localStorage.getItem('products'))
 
 window.addEventListener("load", function () {
+
     var total = 0;
     cart.forEach(order => {
         total = products[order["product_id"] - 1].price * order["quantity"];

@@ -110,13 +110,14 @@ if (localStorage.getItem("loggedInUser")) {
 }
 
 function listCartAsHTML() {
+    
     let totalQuantity = 0;
     let total = 0;
     totalPrice.innerHTML = "0"
     iconCartSpan.innerHTML = arrCart.length;
 
     arrCart.forEach(item => {
-        console.log(arrCart);
+        // console.log(arrCart);
 
         totalQuantity = totalQuantity + item.quantity;
         total = item.quantity * products[item.product_id - 1].price;
@@ -159,7 +160,7 @@ function listCartAsHTML() {
               </div>
               `;
 
-        console.log(products[item.product_id - 1].price * item.quantity);
+        // console.log(products[item.product_id - 1].price * item.quantity);
 
     })
     //delete clicked item 
@@ -176,7 +177,7 @@ function listCartAsHTML() {
     let allColors = document.querySelectorAll(".color-radio-btn");
 
     for (var i = 0; i < allColors.length; i++) {
-        console.log(allColors);
+        // console.log(allColors);
         // var idLabel;
         allColors[i].addEventListener("click", function (e) {
             var parentLabel = e.target.parentElement.children;
@@ -276,6 +277,11 @@ window.addEventListener("load", function () {
             addToCart(product_Id);
         })
     }
+    
+//     if(JSON.parse(localStorage.getItem('products'))!=null){
+//         products = JSON.parse(localStorage.getItem('products'));
+//        console.log("trueeeeeeeeeeeeee");
+//    }
 })
 
 //**   add to cart    / */
@@ -285,10 +291,12 @@ export const addToCart = (product_id) => {
 
     //findindex fun return index of ele if it extist in arr else if rturn -1;
     let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == product_id);
+   console.log(positionThisProductInCart);
     if (arrCart.length <= 0) {
         arrCart = [{
             product_id: product_id,
             quantity: 1,
+            quantity_sold: 0,
             colorOptions: "black",
         }];
         temmraryDiv.style.display = "block";
@@ -301,6 +309,7 @@ export const addToCart = (product_id) => {
         arrCart.push({
             product_id: product_id,
             quantity: 1,
+            quantity_sold:0,
             colorOptions: "black",
 
         });
@@ -336,6 +345,24 @@ const addCartToHTML = () => {
     }
 }
 
+//check if the loggedinuser is the admin or seller so don't perform the following
+if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
+    listCartHTML.addEventListener('click', (event) => {
+        let positionClick = event.target;
+        //console.log(event.target.dataset.btn);
+        if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
+            let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
+            // console.log(product_Id);
+            let type = 'decr';
+            if (event.target.dataset.btn == "incr") {
+                type = 'incr';
+            }
+            changeQuantityCart(product_id, type);
+        }
+
+    })
+}
+
 const changeQuantityCart = (product_id, type) => {
     let positionItemInCart = arrCart.findIndex((value) => value.product_id == product_id);
     // let positionItemInCart2 = arrCart.findIndex((value) =>{} );
@@ -345,7 +372,14 @@ const changeQuantityCart = (product_id, type) => {
         //  let info = arrCart[positionItemInCart];
         switch (type) {
             case 'incr':
-                arrCart[positionItemInCart].quantity = arrCart[positionItemInCart].quantity + 1;
+                if(arrCart[positionItemInCart].quantity <products[arrCart[positionItemInCart].product_id-1].quantity){
+                    arrCart[positionItemInCart].quantity = arrCart[positionItemInCart].quantity + 1;
+                }else{
+                    alert("out of sotck");
+                }
+
+                // console.log("arr =>",arrCart[positionItemInCart],"product info ",products[arrCart[positionItemInCart].product_id-1]);
+                // arrCart[positionItemInCart].quantity=products[arrCart[positionItemInCart].product_id-1].quantity;
                 break;
 
             default:
