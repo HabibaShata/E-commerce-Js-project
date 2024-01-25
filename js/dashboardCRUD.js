@@ -19,11 +19,10 @@ var checkboxes = document.querySelectorAll('.color-checkbox');
 // console.log(_price);
 // first thing when window loaded 
 let arrOfproduct;
-
 if (localStorage.getItem("products") !== null) {
     console.log("Local storage exists.");
     arrOfproduct = JSON.parse(localStorage.getItem("products"));
-    creatTableofData();
+    //creatTableofData();
 } else {
     console.log("Local storage does not exist. Using default array.");
     arrOfproduct = arr;
@@ -42,7 +41,7 @@ window.addEventListener("load", function () {
 
     /* Deleteeeeeeee*/
     // select icon delete 
-    var deleteButtons = document.querySelectorAll('.delete');
+   /* var deleteButtons = document.querySelectorAll('.delete');
     var deleteConfirmBtn = document.querySelector('.Delete'); //confirm btn
     var actualItemDeleted;
     let positionThisProductInProduct;
@@ -99,7 +98,7 @@ window.addEventListener("load", function () {
             $('#myModal').modal('hide');
         });
     });
-
+*/
    
 
 })
@@ -298,9 +297,6 @@ function closeModal() {
 
 
 
-function addToLocalStorage(products) {
-    localStorage.setItem("products", JSON.stringify(products));
-}
 
 
 
