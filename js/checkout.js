@@ -5,7 +5,7 @@
 let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 if (!loggedInUser) {
     location.href = "../Login/login.html";
-} else if (loggedInUser.role != "customer") { //if the user is not a customer then go back
+} else if (loggedInUser.userRole != "customer") { //if the user is not a customer then go back
     history.back();
 }
 

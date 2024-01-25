@@ -37,14 +37,14 @@
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                      <ul class="navbar-nav">
                         <li class="nav-item active">
-                           <a class="nav-link" href="customer.html">Home <span class="sr-only">(current)</span></a>
+                           <a class="nav-link" href="customer.html" id="homeLink">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item dropdown">
-                           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label" id="welcome-user"> <span class="caret"></span></a>
+                           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label" id="welcome-user"> <span class="caret" id="loggedInUser"></span></a>
                            <ul class="dropdown-menu" id="user-DropDown">
                               <li><a href="profile.html">Profile</a></li>
                               <li class="nav-item">
-                                 <a class="nav-link" href="orderHistory.html">Orders History</a>
+                                 <a class="nav-link" href="orderHistory.html">Orders</a>
                               </li>
                               <li><a href="#" id="logOut">Log out</a></li>
                            </ul>
@@ -55,7 +55,7 @@
                         <li class="nav-item">
                            <a class="nav-link" href="about.html">About</a>
                         </li>
-                        <li class="nav-item" id="cartListItem" style="display: none;">
+                        <li class="nav-item" id="cartListItem">
                            <a class="nav-link  cartLogo" href="#">
                               <svg class="w-[28px] h-[28px] text-gray-800 dark:text-white  " aria-hidden="true"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
@@ -565,6 +565,8 @@
       <script src="js/bootstrap.js"></script>
       <!-- fontawesome -->
       <script src="js/all.min.js"></script>
+      <!-- addToCart -->
+      <script src="js/addtoCart.js" type="module"></script>
       <!-- customer-service -->
       <script src="js/customerService.js" type="module"></script>
       <!-- custom js -->

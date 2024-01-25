@@ -1,3 +1,15 @@
+import { renderingNavBar, LogOut } from "./general-methods.js"; 
+
+let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+if (!loggedInUser || loggedInUser.userRole != "customer") {
+    history.back();
+}
+
+window.addEventListener("load", function(){
+    renderingNavBar();
+    LogOut();
+});
+
 class Address {
     constructor(_firstName, _lastName, _username, _phoneNumber, _additionalNumber, _address, _additionalInformation, _region, _city) {
         this.firstName = _firstName;

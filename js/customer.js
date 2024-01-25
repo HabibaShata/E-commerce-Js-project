@@ -1,4 +1,5 @@
-import { LogOut } from "./products.js";
+import { LogOut } from "./general-methods.js";
+import { renderingNavBar } from "./general-methods.js";
 
 let loggedInUser = localStorage.getItem("loggedInUser");
 //if the user is not logged in then go back to index.html
@@ -13,10 +14,7 @@ if(loggedInUser == null){
 }
 
 window.addEventListener("load", function(){
+    renderingNavBar();
     this.document.getElementById("welcome-user").innerHTML ="Welcome, " +  JSON.parse(localStorage.getItem("loggedInUser")).userName;
     LogOut();
 })
-
-function sendMessage() {
-    
-}

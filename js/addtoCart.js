@@ -1,65 +1,112 @@
 import { products } from "./custom.js";
 
-let listProductHtml = document.getElementById("products-Landing");
-let listCartHTML = document.querySelector('.cart-body');
-let iconCart = document.querySelector('.cartLogo');
-export let iconCartSpan = document.querySelector('.cartLogo #cntOrders');
-let closeCart = document.querySelector('.cart-clear');
-let checkOut = document.querySelector(".checkout");
-let arrowBack = document.querySelector(".arrowBack");
-let cart = document.querySelector(".cart");
-let lyercartOverlay = document.querySelector(".cart-overlay");
-export let temmraryDiv = document.querySelector(".addedSuccess");
-let totalPrice = document.querySelector(".cart-total");
+    let listProductHtml;
+    let listCartHTML;
+    let iconCart;
+    export let iconCartSpan;
+    let closeCart;
+    let checkOut;
+    let arrowBack;
+    let cart;
+    let lyercartOverlay;
+    export let temmraryDiv;
+    let totalPrice;
 
-let footerCart = document.querySelector('.cart-footer');
-/**
-cart 
+    let footerCart;
+    var containerDivCartIsEmpty;
+    var iconEmptyCart;
+    var msg;
+    // a
+    var btnStratShopping;
 
-     <div class="wCartIsEmpty">
-         <i class="fa-solid fa-cart-plus iconEmptyCart"></i>
-         <span class="cartEmpty">Your cart is empty!<br> Browse our categories and discover our best deals!</span>
-           <a href="#">Start Shopping</a>
-      </div>
- */
-// cart is empty
-// let span = document.querySelector('.cartEmpty');
-var containerDivCartIsEmpty = document.createElement("div");
-containerDivCartIsEmpty.classList.add("wCartIsEmpty");
-// i
-var iconEmptyCart = document.createElement("i");
-iconEmptyCart.classList.add('fa-solid', 'fa-cart-plus');
-iconEmptyCart.classList.add("iconEmptyCart");
-// span
-var msg = document.createElement("span");
-msg.innerHTML = "Your cart is empty!<br> Browse our categories and discover our best deals!";
-msg.classList.add("cartEmpty");
-// a
-var btnStratShopping = document.createElement("a");
-btnStratShopping.href = "./product.html";
-btnStratShopping.innerHTML = "Strat Shopping";
+window.addEventListener("load", function () {
+    listProductHtml = document.getElementById("products-Landing");
+    listCartHTML = document.querySelector('.cart-body');
+    iconCart = document.querySelector('.cartLogo');
+    iconCartSpan = document.querySelector('.cartLogo #cntOrders');
+    closeCart = document.querySelector('.cart-clear');
+    checkOut = document.querySelector(".checkout");
+    arrowBack = document.querySelector(".arrowBack");
+    cart = document.querySelector(".cart");
+    lyercartOverlay = document.querySelector(".cart-overlay");
+    temmraryDiv = document.querySelector(".addedSuccess");
+    totalPrice = document.querySelector(".cart-total");
 
-// 
-containerDivCartIsEmpty.append(iconEmptyCart);
-containerDivCartIsEmpty.append(msg);
-containerDivCartIsEmpty.append(btnStratShopping);
+    footerCart = document.querySelector('.cart-footer');
+    /**
+    cart 
 
-console.log(containerDivCartIsEmpty);
+        <div class="wCartIsEmpty">
+            <i class="fa-solid fa-cart-plus iconEmptyCart"></i>
+            <span class="cartEmpty">Your cart is empty!<br> Browse our categories and discover our best deals!</span>
+            <a href="#">Start Shopping</a>
+        </div>
+    */
+    // cart is empty
+    // let span = document.querySelector('.cartEmpty');
+    containerDivCartIsEmpty = document.createElement("div");
+    containerDivCartIsEmpty.classList.add("wCartIsEmpty");
+    // i
+    iconEmptyCart = document.createElement("i");
+    iconEmptyCart.classList.add('fa-solid', 'fa-cart-plus');
+    iconEmptyCart.classList.add("iconEmptyCart");
+    // span
+    msg = document.createElement("span");
+    msg.innerHTML = "Your cart is empty!<br> Browse our categories and discover our best deals!";
+    msg.classList.add("cartEmpty");
+    // a
+    btnStratShopping = document.createElement("a");
+    btnStratShopping.href = "./product.html";
+    btnStratShopping.innerHTML = "Strat Shopping";
+
+    // 
+    containerDivCartIsEmpty.append(iconEmptyCart);
+    containerDivCartIsEmpty.append(msg);
+    containerDivCartIsEmpty.append(btnStratShopping);
+
+    console.log(containerDivCartIsEmpty);
+
+    if (localStorage.getItem("cart") != null) {
+        //check if the loggedinuser is the admin or seller so don't perform the following
+        if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
+            arrCart = JSON.parse(localStorage.getItem("cart"));
+    
+            listCartAsHTML();
+        }
+    }
+
+    //cart events
+    //check if the loggedinuser is the admin or seller so don't perform the following
+    if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
+        iconCart.addEventListener("click", showCart);
+        arrowBack.addEventListener("click", hideCart);
+        closeCart.addEventListener("click", clearCart);
+    }
+
+    //check if the loggedinuser is the admin or seller so don't perform the following
+    if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
+        listCartHTML.addEventListener('click', (event) => {
+            let positionClick = event.target;
+            //console.log(event.target.dataset.btn);
+            if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
+                let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
+                console.log(product_Id);
+                let type = 'decr';
+                if (event.target.dataset.btn == "incr") {
+                    type = 'incr';
+                }
+                changeQuantityCart(product_id, type);
+            }
+
+        })
+    }
+})
 
 export let arrCart = [];
 let loggedInUser = null;
 
 if (localStorage.getItem("loggedInUser")) {
     loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-}
-
-if (localStorage.getItem("cart") != null) {
-    //check if the loggedinuser is the admin or seller so don't perform the following
-    if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
-        arrCart = JSON.parse(localStorage.getItem("cart"));
-
-        listCartAsHTML();
-    }
 }
 
 function listCartAsHTML() {
@@ -187,15 +234,6 @@ function listCartAsHTML() {
 }
 
 
-//cart events
-//check if the loggedinuser is the admin or seller so don't perform the following
-if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
-    iconCart.addEventListener("click", showCart);
-    arrowBack.addEventListener("click", hideCart);
-    closeCart.addEventListener("click", clearCart);
-}
-
-
 function showCart() {
     if (arrCart.length == 0) {
 
@@ -296,24 +334,6 @@ const addCartToHTML = () => {
         listCartHTML.removeChild(items);
         // console.log(arrCart.length);
     }
-}
-
-//check if the loggedinuser is the admin or seller so don't perform the following
-if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
-    listCartHTML.addEventListener('click', (event) => {
-        let positionClick = event.target;
-        //console.log(event.target.dataset.btn);
-        if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
-            let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
-            console.log(product_Id);
-            let type = 'decr';
-            if (event.target.dataset.btn == "incr") {
-                type = 'incr';
-            }
-            changeQuantityCart(product_id, type);
-        }
-
-    })
 }
 
 const changeQuantityCart = (product_id, type) => {

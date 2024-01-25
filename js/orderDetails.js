@@ -1,6 +1,15 @@
+import { renderingNavBar, LogOut } from "./general-methods.js";
+
+let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+if (!loggedInUser || loggedInUser.userRole != "customer") {
+    history.back();
+}
 
 $(function () {
-
+     //implement the logout functionality
+    renderingNavBar();
+    LogOut();
+    
     const searchParams = new URLSearchParams(window.location.search);
 
     const orderId = searchParams.get('orderId');

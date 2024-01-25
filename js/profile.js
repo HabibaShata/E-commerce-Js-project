@@ -9,6 +9,11 @@ window.addEventListener('load', function () {
 //     return;
 // }
 
+//back btn
+this.document.querySelector("#backBtn").addEventListener("click", function () {
+  history.back();
+})
+
 
   const userData = JSON.parse(userDataString);
 
