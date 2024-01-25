@@ -58,6 +58,7 @@ address = address == null ? [] : address;
 var containerOreders = document.querySelector(".ordersBody");
 let totalPrice = document.querySelector(".cart-total");
 let btnCheckout = document.querySelector(".checkout a");
+
 console.log(totalPrice);
 let cart = JSON.parse(localStorage.getItem('cart'))
 let products = JSON.parse(localStorage.getItem('products'))
@@ -157,17 +158,22 @@ function createOrder(userAddress) {
     orderItems.forEach(x => {
         const item = $(x); // Wrap the raw DOM element in a jQuery object
 
-        const productId = item.data('id');
-        const productName = item.find('.name').text().replace('Name: ', '');
-        const image = item.find('img').attr('src');
-        const option = item.find('.color').text().replace('color: ', '');
-        const quantity = parseInt(item.find('.quantity').text().replace('quantity: ', ''), 10);
-        const totalPrice = parseFloat(item.find('.orderItem-price').text().replace('price: ', '').replace('$', ''));
-        const price = totalPrice / quantity;
-        const seller = item.find('.seller').text().replace('seller: ', '');
+    const productId = item.data('id');
+    const productName = item.find('.name').text().replace('Name: ', '');
+    const image = item.find('img').attr('src');
+    const option = item.find('.color').text().replace('color: ', '');
+    const quantity = parseInt(item.find('.quantity').text().replace('quantity: ', ''), 10);
+    const totalPrice = parseFloat(item.find('.orderItem-price').text().replace('price: ', '').replace('$', ''));
+    const price = totalPrice/quantity;
+    const seller = item.find('.seller').text().replace('seller: ', '');
+    
+    items.push(new Item(productId, productName, image, option, quantity, price, totalPrice, seller));
 
-        items.push(new Item(productId, productName, image, option, quantity, price, totalPrice, seller));
-    })
+    //products[productId-1].quantity=parseInt(products[productId-1].quantity)-quantity ;
+    // products[productId-1].quantity_sold = parseInt(products[productId-1].quantity_sold)+parseInt(quantity);
+    localStorage.setItem("products",JSON.stringify(products));
+
+})
 
     const newOrder =
         new Order(
@@ -187,7 +193,30 @@ function createOrder(userAddress) {
     window.location.href = `orderDetails.html?orderId=${lastOrderId}`
 
 }
+// -----  first validate ---
 
+// btnCheckout.addEventListener("click", function (e) {
+//     event.preventDefault();
+//     debugger;
+//     cart.forEach((v) => {
+//    console.log("8777778888888");
+//       //  console.log(products[v.product_id - 1]);
+
+//         products[v.product_id - 1].quantity_sold +=parseInt(v.quantity);
+//         products[v.product_id - 1].quantity -= parseInt(v.quantity);
+//        //add modifiy countity to cart 
+  
+
+//        localStorage.setItem('products', JSON.stringify(products));
+
+//        // console.log(v.product_id);//id product
+//     })
+//     localStorage.setItem('cart', JSON.stringify([]));
+   
+//         //localStorage.setItem('cart', JSON.stringify(cart));
+//        // localStorage.setItem('cart', JSON.stringify(cart));
+    
+// })
 
 // console.log(order["product_id"]);//  idProduct
 
