@@ -320,8 +320,6 @@ const changeQuantityCart = (product_id, type) => {
     let positionItemInCart = arrCart.findIndex((value) => value.product_id == product_id);
     // let positionItemInCart2 = arrCart.findIndex((value) =>{} );
 
-
-
     // console.log(positionItemInCart);
     if (positionItemInCart >= 0) {
         //  let info = arrCart[positionItemInCart];

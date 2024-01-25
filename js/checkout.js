@@ -1,6 +1,15 @@
 //import { Item } from "../orders.js";
 //import { cart as arrCart} from "./addtoCart"
 
+//Check if the user is a guuest then navigate to the log in page
+let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+if (!loggedInUser) {
+    location.href = "../Login/login.html";
+} else if (loggedInUser.role != "customer") { //if the user is not a customer then go back
+    history.back();
+}
+
+
 class Item {
     constructor(_productId, _productName, _image, _option, _quantity, _price, _totalPrice, _seller) {
         this.productId = _productId;
@@ -44,8 +53,6 @@ class Address {
 
 let address = JSON.parse(localStorage.getItem("address"));
 address = address==null?[]:address;
-const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-
 
 
 var containerOreders = document.querySelector(".ordersBody");
