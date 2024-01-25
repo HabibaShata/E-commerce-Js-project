@@ -13,9 +13,9 @@ let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 if (loggedInUser) {
     if(loggedInUser.userRole == "admin")
     {
-        location.replace("../dashordAdmin.html");
+        location.replace("../dashboardAdmin.html");
     } else if (loggedInUser.userRole == "seller") {
-        location.replace("../DashordSeller.html");
+        location.replace("../dashboardSeller.html");
     } else { //display the sellers name if the loggedinuser is a customer or a guest
         displaySellersFilter();
     }

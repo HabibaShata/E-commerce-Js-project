@@ -41,7 +41,7 @@ export function renderingNavBar()
 						</ul>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="dashbordAdmin.html">Products</a>
+						<a class="nav-link" href="dashboardAdmin.html">Products</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="orderHistory.html">Orders</a>

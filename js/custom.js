@@ -21,7 +21,7 @@ class Product
         this.images = _images;
         this.price = _price;
         this.description = _description;
-      this.options = _options;
+        this.options = _options;
     }
 }
 
@@ -122,4 +122,4 @@ function myMap() {
     var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 }
 
-export { GetProducts, products };
+export { GetProducts, products, Product };
