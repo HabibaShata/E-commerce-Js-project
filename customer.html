@@ -12,6 +12,8 @@
       <meta name="author" content="" />
       <link rel="shortcut icon" href="images/favicon.png" type="">
       <title>E-commerce Home page</title>
+      <!-- loader -->
+      <link rel="stylesheet" href="loader/dist/loader.css">
       <!-- bootstrap core css -->
       <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
       <!-- font awesome style -->
@@ -22,6 +24,21 @@
       <link href="css/responsive.css" rel="stylesheet" />
    </head>
    <body>
+      <!-- start-loader -->
+      <div id="loader">
+         <div class="pl">
+            <div class="pl__outer-ring"></div>
+            <div class="pl__inner-ring"></div>
+            <div class="pl__track-cover"></div>
+            <div class="pl__ball">
+               <div class="pl__ball-texture"></div>
+               <div class="pl__ball-outer-shadow"></div>
+               <div class="pl__ball-inner-shadow"></div>
+               <div class="pl__ball-side-shadows"></div>
+            </div>
+         </div>
+      </div>
+      <!-- end-loader -->
       <div class="addedSuccess alert-success text-center py-2"> 
          Product added successfully
       </div>
@@ -573,5 +590,8 @@
       <script src="js/custom.js" type="module"></script>
       <!-- customer js -->
       <script src="js/customer.js" type="module"></script>
+      <!-- loader -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLWL5N9CSM"></script>
+    <script src="loader/dist/loader.js"></script>
    </body>
 </html>

@@ -11,7 +11,9 @@
       <meta name="description" content="" />
       <meta name="author" content="" />
       <link rel="shortcut icon" href="images/favicon.png" type="">
-      <title>E-commerce HTML Template</title>
+      <title>Admin Homepage</title>
+      <!-- loader -->
+      <link rel="stylesheet" href="loader/dist/loader.css">
       <!-- bootstrap core css -->
       <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
       <!-- font awesome style -->
@@ -24,12 +26,27 @@
       <link href="css/responsive.css" rel="stylesheet" />
    </head>
    <body>
+      <!-- start-loader -->
+      <div id="loader">
+         <div class="pl">
+            <div class="pl__outer-ring"></div>
+            <div class="pl__inner-ring"></div>
+            <div class="pl__track-cover"></div>
+            <div class="pl__ball">
+               <div class="pl__ball-texture"></div>
+               <div class="pl__ball-outer-shadow"></div>
+               <div class="pl__ball-inner-shadow"></div>
+               <div class="pl__ball-side-shadows"></div>
+            </div>
+         </div>
+      </div>
+      <!-- end-loader -->
       <div class="hero_area">
          <!-- header section strats -->
          <header class="header_section">
             <div class="container">
                <div class="content">
-                  
+
                </div>
                <!-- <nav class="navbar navbar-expand-lg custom_nav-container ">
                   <a class="navbar-brand" href="index.html"><img width="250" src="images/logo.png" alt="#" /></a>
@@ -175,5 +192,8 @@
       <script src="js/customer.js" type="module"></script>
       <!-- Admin -->
       <script src="js/admin.js" type="module"></script>
+      <!-- loader -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLWL5N9CSM"></script>
+    <script src="loader/dist/loader.js"></script>
    </body>
 </html>
