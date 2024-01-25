@@ -27,7 +27,7 @@ function handleFormSubmit(event) {
         return;
     }
 
-    var role = document.getElementById('sellerBtn').checked ? 'seller' : 'customer';
+    //var role = document.getElementById('sellerBtn').checked ? 'seller' : 'customer';
     var email = document.querySelector('input[name="email"]').value;
     var password = document.querySelector('input[name="password"]').value;
     var username = document.querySelector('input[name="username"]').value;

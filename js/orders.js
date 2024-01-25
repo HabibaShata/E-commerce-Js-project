@@ -1,7 +1,7 @@
 import { renderingNavBar, LogOut } from "./general-methods.js"; 
 
 let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-if (!loggedInUser || loggedInUser.userRole != "customer") {
+if (!loggedInUser) {
     history.back();
 }
 

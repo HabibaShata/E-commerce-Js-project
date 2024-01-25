@@ -8,6 +8,14 @@ import { renderingNavBar, LogOut } from "./general-methods.js";
 let categories = ["All", "Jewellery", "Accessories", "Artwork", "Pet-supplies", "Sweets"];
 let filter = "All";
 
+let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+if (loggedInUser) {
+    if(loggedInUser.userRole == "admin")
+    {
+        location.replace("../dashordAdmin.html");
+    }
+}
+
 function searchProductsByName(productName) {
     //filter the array according to the name
 
