@@ -44,9 +44,12 @@ let products = [
    new Product(13, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p9.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
    new Product(14, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p12.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
 ]
+// checking if the key  is not exist in the localStorage we will set the arr;
+if(!localStorage.getItem("products")){
+   //add the products to the local storage
+   localStorage.setItem("products", JSON.stringify(products));
+}
 
-//add the products to the local storage
-localStorage.setItem("products", JSON.stringify(products));
 
 
 // client section owl carousel

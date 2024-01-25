@@ -1,7 +1,7 @@
-import { products } from "./custom.js";
-
+//import { products } from "./custom.js";
+ let products=JSON.parse(localStorage.getItem("products"));
     let listProductHtml;
-    let listCartHTML;
+    var  listCartHTML;
     let iconCart;
     export let iconCartSpan;
     let closeCart;
@@ -345,23 +345,23 @@ const addCartToHTML = () => {
     }
 }
 
-//check if the loggedinuser is the admin or seller so don't perform the following
-if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
-    listCartHTML.addEventListener('click', (event) => {
-        let positionClick = event.target;
-        //console.log(event.target.dataset.btn);
-        if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
-            let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
-            // console.log(product_Id);
-            let type = 'decr';
-            if (event.target.dataset.btn == "incr") {
-                type = 'incr';
-            }
-            changeQuantityCart(product_id, type);
-        }
+// //check if the loggedinuser is the admin or seller so don't perform the following
+// if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
+//     listCartHTML.addEventListener('click', (event) => {
+//         let positionClick = event.target;
+//         //console.log(event.target.dataset.btn);
+//         if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
+//             let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
+//             // console.log(product_Id);
+//             let type = 'decr';
+//             if (event.target.dataset.btn == "incr") {
+//                 type = 'incr';
+//             }
+//             changeQuantityCart(product_id, type);
+//         }
 
-    })
-}
+//     })
+// }
 
 const changeQuantityCart = (product_id, type) => {
     let positionItemInCart = arrCart.findIndex((value) => value.product_id == product_id);

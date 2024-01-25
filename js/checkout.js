@@ -52,7 +52,7 @@ class Address {
 }
 
 let address = JSON.parse(localStorage.getItem("address"));
-address = address==null?[]:address;
+address = address == null ? [] : address;
 
 
 var containerOreders = document.querySelector(".ordersBody");
@@ -96,7 +96,7 @@ window.addEventListener("load", function () {
         if (userAddress != null && userAddress != undefined) {
             createOrder(userAddress);
         } else {
-        alert('Please Fill the Address and Save it')
+            alert('Please Fill the Address and Save it')
         }
     })
 
@@ -111,7 +111,7 @@ window.addEventListener("load", function () {
         const additionalphone = $('#additionalphone').val();
         const adreess = $('#adreess').val();
         const info = $('#info').val();
-        const region = $('#region').find(":selected").text();        ;
+        const region = $('#region').find(":selected").text();;
         const city = $('#city').val();
 
         const addressObject = new Address(firstName, lastName, loggedInUser.userName, phone, additionalphone, adreess, info, region, city);
@@ -143,31 +143,31 @@ function createOrder(userAddress) {
     );
 
     let orders = JSON.parse(localStorage.getItem("orders"));
-    orders= orders==null?[]:orders;
+    orders = orders == null ? [] : orders;
     let lastOrderId = 1;
     if (orders.length > 0) {
-        lastOrderId = orders[orders.length - 1].id+1;
+        lastOrderId = orders[orders.length - 1].id + 1;
     }
 
-var cartTotal = parseInt($('.cart-total').text().replace('$', ''));
+    var cartTotal = parseInt($('.cart-total').text().replace('$', ''));
 
-var items=[]
+    var items = []
 
-const orderItems = $('.orderItem').toArray();
-orderItems.forEach(x=>{
-    const item = $(x); // Wrap the raw DOM element in a jQuery object
+    const orderItems = $('.orderItem').toArray();
+    orderItems.forEach(x => {
+        const item = $(x); // Wrap the raw DOM element in a jQuery object
 
-    const productId = item.data('id');
-    const productName = item.find('.name').text().replace('Name: ', '');
-    const image = item.find('img').attr('src');
-    const option = item.find('.color').text().replace('color: ', '');
-    const quantity = parseInt(item.find('.quantity').text().replace('quantity: ', ''), 10);
-    const totalPrice = parseFloat(item.find('.orderItem-price').text().replace('price: ', '').replace('$', ''));
-    const price = totalPrice/quantity;
-    const seller = item.find('.seller').text().replace('seller: ', '');
-    
-    items.push(new Item(productId, productName, image, option, quantity, price, totalPrice, seller));
-})
+        const productId = item.data('id');
+        const productName = item.find('.name').text().replace('Name: ', '');
+        const image = item.find('img').attr('src');
+        const option = item.find('.color').text().replace('color: ', '');
+        const quantity = parseInt(item.find('.quantity').text().replace('quantity: ', ''), 10);
+        const totalPrice = parseFloat(item.find('.orderItem-price').text().replace('price: ', '').replace('$', ''));
+        const price = totalPrice / quantity;
+        const seller = item.find('.seller').text().replace('seller: ', '');
+
+        items.push(new Item(productId, productName, image, option, quantity, price, totalPrice, seller));
+    })
 
     const newOrder =
         new Order(
@@ -177,14 +177,14 @@ orderItems.forEach(x=>{
             userAddress,
             new Date().toLocaleDateString(),
             10,
-            cartTotal+10,
+            cartTotal + 10,
             "New",
             items
         );
-        orders.push(newOrder);
+    orders.push(newOrder);
 
     localStorage.setItem("orders", JSON.stringify(orders));
-    window.location.href=`orderDetails.html?orderId=${lastOrderId}`
+    window.location.href = `orderDetails.html?orderId=${lastOrderId}`
 
 }
 

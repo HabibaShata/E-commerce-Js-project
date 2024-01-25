@@ -1,5 +1,5 @@
-import { products as arr } from "./custom.js";
-import { arrCart } from "./addtoCart.js";
+// import { products as arr } from "./custom.js";
+// import { arrCart } from "./addtoCart.js";
 
 var tbody = document.querySelector("tbody")
 var btnAdd = document.querySelector(".add-new");
@@ -19,14 +19,15 @@ var checkboxes = document.querySelectorAll('.color-checkbox');
 // console.log(_price);
 // first thing when window loaded 
 let arrOfproduct;
-if (localStorage.getItem("products") !== null) {
-    console.log("Local storage exists.");
-    arrOfproduct = JSON.parse(localStorage.getItem("products"));
-    //creatTableofData();
-} else {
-    console.log("Local storage does not exist. Using default array.");
-    arrOfproduct = arr;
-}
+// if (localStorage.getItem("products")) {
+//     console.log("Local storage exists.");
+arrOfproduct = JSON.parse(localStorage.getItem("products"));
+//     //creatTableofData();
+// } 
+// else {
+//     console.log("Local storage does not exist. Using default array.");
+//     arrOfproduct = arr;
+// }
 
 
 // console.log(arrOfproduct);
@@ -103,7 +104,6 @@ window.addEventListener("load", function () {
 
 })
 function creatTableofData() {
-    //  let products = JSON.parse(localStorage.getItem("products"));
 
     tbody.innerHTML = ''
     arrOfproduct.forEach(product => {
@@ -298,12 +298,7 @@ function closeModal() {
 
 
 
-
-
-
-
-
-//             sort                    //  
+//  sort  //  
 /*
 document.getElementsByTagName("thead")[0].addEventListener("click", function (e) {
   
