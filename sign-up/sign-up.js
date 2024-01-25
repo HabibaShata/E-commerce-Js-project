@@ -1,4 +1,5 @@
 import { isValidEmail, isValidPassword, isValidName } from "../js/profile.js";
+
 export class users
 {
     constructor(userID, userName, userPassword, userEmail, userRole) {
@@ -37,6 +38,7 @@ function handleFormSubmit(event) {
 
     if (emailExists) {
         showValidationMessages(['This email is already signed up. Please use a different email.']);
+        emailExists = false;
     } else {
         var user = new users(usersArray.length+1, username, password, email, role);
 
@@ -53,6 +55,7 @@ function handleFormSubmit(event) {
 
         if(loggedInUserRole == "admin")
         {
+            location.reload();
             return;
         }
 

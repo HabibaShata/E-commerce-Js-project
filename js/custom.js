@@ -6,8 +6,8 @@
 // }
 
 // getYear();
-
 //Product class function
+
 class Product
 {
     constructor(_productId, _productName, _category, _sellerName, _quantity, _quantity_sold, _images, _price, _description, _options)
@@ -21,7 +21,7 @@ class Product
         this.images = _images;
         this.price = _price;
         this.description = _description;
-        this.options = _options;
+      this.options = _options;
     }
 }
 
@@ -51,7 +51,7 @@ localStorage.setItem("products", JSON.stringify(products));
 
 // client section owl carousel
 $(function () {
-
+   
    let productCards = GetProducts(9);
    if (document.getElementById("products-Landing")) {
       document.getElementById("products-Landing").innerHTML = productCards;   

@@ -213,14 +213,57 @@ window.addEventListener("load", function () {
         let actionTd = rowTD.insertCell(-1);
         actionTd.classList.add("text-center");
 
-        let editButton = `<button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#user-form-modal">
-            <i class="fas fa-edit"></i> Edit
-        </button>`;
+        // Create edit and delete buttons
+        let editButton = document.createElement("button");
+        editButton.classList.add("btn", "btn-sm", "btn-outline-secondary", "badge");
+        editButton.type = "button";
+        editButton.dataset.toggle = "modal";
+        editButton.dataset.target = `#${modalId}`;
+        editButton.innerHTML = "<i class='fas fa-edit'></i>";
 
-        let deleteButton = `<button class="btn btn-sm btn-outline-secondary badge" type="button">
-            <i class="fas fa-trash"></i> Delete
-        </button>`;
+        let deleteButton = document.createElement("button");
+        deleteButton.classList.add("btn", "btn-sm", "btn-outline-secondary", "badge");
+        deleteButton.type = "button";
+        deleteButton.innerHTML = "<i class='fas fa-trash'></i>";
 
-        actionTd.innerHTML = editButton + deleteButton;
+        actionTd.appendChild(editButton);
+        actionTd.appendChild(deleteButton);
+    });
+
+    // Event listener for search bar input
+    searchBar.addEventListener('input', function (event) {
+        handleSearch();
+    });
+
+    // Event listener for form submission
+    submitButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        const editedValues = getEditedValues(form);
+
+        if (editedValues) {
+            updateProductData(editedValues);
+        } else {
+            // Validation failed, handle accordingly
+            console.log("Validation failed. Product data not updated.");
+        }
+    });
+
+    // Function to disable the Product ID field in the form
+    function disableProductIdField() {
+        form.productId.disabled = true;
+        form.sellerName.disabled =true ;
+        }
+
+    // Event listeners for edit buttons in each row
+    const editButtons = document.querySelectorAll(`button[data-toggle='modal'][data-target='#${modalId}']`);
+
+    editButtons.forEach(editButton => {
+        editButton.addEventListener("click", () => {
+            const row = editButton.closest("tr");
+            const productData = getProductData(row);
+            populateFormFields(form, productData);
+            disableProductIdField();
+            document.getElementById(modalId).style.display = "block";
+        });
     });
 });

@@ -1,21 +1,25 @@
 import { users as usersClass } from "../sign-up/sign-up.js";
+const userDataString = localStorage.getItem('loggedInUser');
 
-// profile.js
 window.addEventListener('load', function () {
 
-  // Fetch user data from local storage
-
   ////////////////////////////////////////////////////////////////////////////
-  const userDataString = localStorage.getItem('loggedInUser');
-  if (!userDataString) {
-    alert('User data not found. Please create a customer first.');
-    return;
-  }
+//   if (!userDataString ) {
+//     alert('User data not found. Please create a customer first.');
+//     return;
+// }
+
+//back btn
+this.document.querySelector("#backBtn").addEventListener("click", function () {
+  history.back();
+})
+
 
   const userData = JSON.parse(userDataString);
 
   // Populate form with user data
   document.getElementById('firstName').value = userData.userName || '';
+  document.getElementById('role').value = userData.userRole || '';
   document.getElementById('email').value = userData.userEmail || '';
   document.getElementById('password').value = userData.userPassword || '';
 
@@ -65,6 +69,7 @@ window.addEventListener('load', function () {
     let updatedUserObj = new usersClass(userData.userID, updatedUserData.firstName, updatedUserData.password, updatedUserData.email, userData.userRole);
     // Update user data in local storage
     localStorage.setItem('loggedInUser', JSON.stringify(updatedUserObj));
+    
     ////////////////////////////////////////////////////////////////////////////////////
     //get all the users from the local storage
     let users = JSON.parse(localStorage.getItem('users'));
@@ -83,7 +88,46 @@ window.addEventListener('load', function () {
       successMessage.innerText = '';
     }, 3000);
   });
-});
+
+  if(userData.userRole == "seller")
+  {
+      var sellerProducts = JSON.parse(this.localStorage.getItem('products'))
+                              .filter((product) => product.sellerName == userData.userName);
+      var sellerProductscategories = sellerProducts.map((product) => product.category);
+      var ProductsInCategory=[];
+      for(var i=0; i<sellerProductscategories.length;i++)
+      {
+        ProductsInCategory[i]=0;
+        sellerProducts.forEach(product =>
+        {
+            if(product.category == sellerProductscategories[i])
+              ProductsInCategory[i]+=1;
+        });  
+      }
+
+      const createdChart = document.getElementById("myChart1");
+      new Chart(createdChart, {type: 'bar',
+        data: {
+          labels: sellerProductscategories,
+          datasets: [{
+            label: 'products in each category',
+            data: ProductsInCategory,
+            borderWidth: 5
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+  
+  }
+
+ });
 
 // Function to validate first name and last name
 function isValidName(name, messageElement) {
