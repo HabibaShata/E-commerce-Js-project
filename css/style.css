@@ -1605,3 +1605,16 @@ display: none;
     font-weight: bold;
     top: -12px;
 }
+
+/*products*/
+.filter-body .sellers-list {
+  background-color: #f7f8f9;
+  padding: 20px;
+  margin-top: 50px;
+}
+
+.filter-header {
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--main-color);
+}

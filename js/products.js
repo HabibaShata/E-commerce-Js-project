@@ -8,12 +8,56 @@ import { renderingNavBar, LogOut } from "./general-methods.js";
 let categories = ["All", "Jewellery", "Accessories", "Artwork", "Pet-supplies", "Sweets"];
 let filter = "All";
 
+//checking authorization (navigate the user *by force* according to his role)
 let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 if (loggedInUser) {
     if(loggedInUser.userRole == "admin")
     {
         location.replace("../dashordAdmin.html");
+    } else if (loggedInUser.userRole == "seller") {
+        location.replace("../DashordSeller.html");
+    } else { //display the sellers name if the loggedinuser is a customer or a guest
+        displaySellersFilter();
     }
+}
+
+function displaySellersFilter() {
+    //get the sellers' names container in products.html
+    let sellersList = document.querySelector(".sellers-list");
+    //get all users whose role are sellers
+    let sellers = JSON.parse(localStorage.getItem("users")).filter(user=>user.userRole== "seller");
+    //display the sellers' names
+    sellers.forEach(seller => {
+        sellersList.innerHTML += `
+        <div class="form-group">
+        <li class="d-flex align-items-center justify-content-center"><span class="w-50">${seller.userName}</span> <input type="checkbox" value="${seller.userName}" class="mb-0 w-50"></li>
+        </div>
+        `;
+    });
+
+    //add the event listener to the checkboxes
+    sellersList.addEventListener("click", function (e) {
+        if(e.target.nodeName == "INPUT")
+        {
+            //get the checked checkboxes
+            let checkedSellersInputs = Array.from(sellersList.querySelectorAll("input:checked"));
+            //check if the no checkbox is checked then display all products
+            if(checkedSellersInputs.length == 0)
+            {
+                document.getElementById("all-products-section").innerHTML = GetProducts(-1);
+                return;
+            } else {
+                //save the checked checkboxes values into an array
+                let checkedSellers = checkedSellersInputs.map(input=>input.value);
+                //filter the products to get the products which seller exists within the checkedSellers array
+                let filteredProducts = products.filter(product => checkedSellers.includes(product.sellerName));
+                //display the products according to the checked checkboxes
+                document.getElementById("all-products-section").innerHTML = GetProducts(filteredProducts.length, filteredProducts);
+            }
+        }
+    })
+
+    //
 }
 
 function searchProductsByName(productName) {

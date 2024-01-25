@@ -29,17 +29,17 @@ class Product
 
 //random data
 let products = [
-   new Product(1, "Jewellery", "jewellery", "Lacasa Store", 10, 0, ["images/p1.png", "images/p2.png", "images/p3.png"], 50.0, "Lorem ipsum dolor sit amet, consect", ["Red", "White", "Black"]),
-   new Product(2, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p2.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(3, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p3.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(4, "Artwork", "jewellery", "Zara Store", 20, 0, ["images/p4.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(5, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p5.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(6, "Artwork", "jewellery", "Zara Store", 20, 0, ["images/p6.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(7, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p7.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(8, "Artwork", "jewellery", "Zara Store", 20, 0, ["images/p8.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(9, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p9.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(10, "Artwork", "jewellery", "Zara Store", 20, 0, ["images/p10.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(11, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p11.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
+   new Product(1, "Jewellery", "jewellery", "Omar123", 10, 0, ["images/p1.png", "images/p2.png", "images/p3.png"], 50.0, "Lorem ipsum dolor sit amet, consect", ["Red", "White", "Black"]),
+   new Product(2, "Artwork", "artwork", "Omar123", 20, 0, ["images/p2.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
+   new Product(3, "Artwork", "artwork", "Ahmed", 20, 0, ["images/p3.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
+   new Product(4, "Artwork", "jewellery", "Ahmed", 20, 0, ["images/p4.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
+   new Product(5, "Artwork", "artwork", "Ahmed", 20, 0, ["images/p5.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
+   new Product(6, "Artwork", "jewellery", "Omar123", 20, 0, ["images/p6.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
+   new Product(7, "Artwork", "artwork", "Ahmed", 20, 0, ["images/p7.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
+   new Product(8, "Artwork", "jewellery", "Aly", 20, 0, ["images/p8.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
+   new Product(9, "Artwork", "artwork", "Aly", 20, 0, ["images/p9.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
+   new Product(10, "Artwork", "jewellery", "Aly", 20, 0, ["images/p10.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
+   new Product(11, "Artwork", "artwork", "Aly", 20, 0, ["images/p11.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
    new Product(12, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p12.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
    new Product(13, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p9.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
    new Product(14, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p12.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
@@ -51,7 +51,7 @@ localStorage.setItem("products", JSON.stringify(products));
 
 // client section owl carousel
 $(function () {
-   
+
    let productCards = GetProducts(9);
    if (document.getElementById("products-Landing")) {
       document.getElementById("products-Landing").innerHTML = productCards;   
