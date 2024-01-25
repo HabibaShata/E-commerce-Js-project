@@ -7,6 +7,8 @@ import { renderingNavBar, LogOut } from "./general-methods.js";
 
 let categories = ["All", "Jewellery", "Accessories", "Artwork", "Pet-supplies", "Sweets"];
 let filter = "All";
+let checkedSellers = [];
+let sellersList; //sellers' names container in products.html
 
 //checking authorization (navigate the user *by force* according to his role)
 let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -16,14 +18,12 @@ if (loggedInUser) {
         location.replace("../dashboardAdmin.html");
     } else if (loggedInUser.userRole == "seller") {
         location.replace("../dashboardSeller.html");
-    } else { //display the sellers name if the loggedinuser is a customer or a guest
-        displaySellersFilter();
     }
 }
 
 function displaySellersFilter() {
     //get the sellers' names container in products.html
-    let sellersList = document.querySelector(".sellers-list");
+    sellersList = document.querySelector(".sellers-list");
     //get all users whose role are sellers
     let sellers = JSON.parse(localStorage.getItem("users")).filter(user=>user.userRole== "seller");
     //display the sellers' names
@@ -36,8 +36,12 @@ function displaySellersFilter() {
     });
 
     //add the event listener to the checkboxes
-    sellersList.addEventListener("click", function (e) {
-        if(e.target.nodeName == "INPUT")
+    sellersList.addEventListener("click", filterBySellerNameAndCategory)
+}
+
+function filterBySellerNameAndCategory(e)
+{
+    if(e.target.nodeName == "INPUT")
         {
             //get the checked checkboxes
             let checkedSellersInputs = Array.from(sellersList.querySelectorAll("input:checked"));
@@ -48,16 +52,19 @@ function displaySellersFilter() {
                 return;
             } else {
                 //save the checked checkboxes values into an array
-                let checkedSellers = checkedSellersInputs.map(input=>input.value);
+                checkedSellers = checkedSellersInputs.map(input=>input.value);
                 //filter the products to get the products which seller exists within the checkedSellers array
-                let filteredProducts = products.filter(product => checkedSellers.includes(product.sellerName));
+                let filteredProducts = [];
+                if (filter != "All") {
+                    filteredProducts = products.filter(product => checkedSellers.includes(product.sellerName) && product.category == filter);
+                } else {
+                    filteredProducts = products.filter(product => checkedSellers.includes(product.sellerName));
+                }
+                
                 //display the products according to the checked checkboxes
                 document.getElementById("all-products-section").innerHTML = GetProducts(filteredProducts.length, filteredProducts);
             }
         }
-    })
-
-    //
 }
 
 function searchProductsByName(productName) {
@@ -65,10 +72,24 @@ function searchProductsByName(productName) {
 
     let searchedArr = products.filter(function (product) {
         if (filter != "All") {
-            return product.productName.toLowerCase().includes(productName.toLowerCase()) && product.category == filter;
+            //if the user checked the checkboxes then filter the products by seller name and category and the searched input
+            if(checkedSellers.length > 0) {
+                return product.productName.toLowerCase().includes(productName.toLowerCase()) && product.category == filter && checkedSellers.includes(product.sellerName);
+            }
+            else
+            { //if the user didn't check the checkboxes then filter the products by category and the searched input
+                return product.productName.toLowerCase().includes(productName.toLowerCase()) && product.category == filter;
+            }
         }
+        //the category is not selected then filter by seller name and search input or only by search input
         else {
-            return product.productName.toLowerCase().includes(productName.toLowerCase());
+            if(checkedSellers.length > 0) {
+                return product.productName.toLowerCase().includes(productName.toLowerCase()) && checkedSellers.includes(product.sellerName);
+            }
+            else
+            {
+                return product.productName.toLowerCase().includes(productName.toLowerCase());
+            }
         }
     });
     //update the products display with the searched array
@@ -77,6 +98,8 @@ function searchProductsByName(productName) {
 
 window.addEventListener("load", function () {
     if(this.location.href.indexOf("product.html")!=-1) {
+        //display the sellers name if the loggedinuser is a customer or a guest
+        displaySellersFilter();
         //making the navbar
         renderingNavBar();
         //categories
