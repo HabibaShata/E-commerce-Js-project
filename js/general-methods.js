@@ -67,8 +67,21 @@ export function renderingNavBar()
             {
                 document.querySelector("#orderHistory").style.display = "block";
 				document.querySelector("#cartListItem").style.display = "block";
-            }
+            } 
+			
         }
+		else 
+		{
+			//add the list items to the dropdown menu
+            let userDropDown = document.getElementById("user-DropDown");
+            userDropDown.innerHTML = `
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="orderHistory.html" id="orderHistory">Orders</a></li>
+            <li><a href="#" id="logOut">Log out</a></li>
+            `;
+			document.getElementById("homeLink").setAttribute("href", "seller.html");
+			document.getElementById("loggedInUser").innerHTML = "Welcome, " + JSON.parse(localStorage.getItem("loggedInUser")).userName;
+		}
     } else {
         document.getElementById("loggedInUser").innerHTML = "Account";
         //add the list items to the dropdown menu
