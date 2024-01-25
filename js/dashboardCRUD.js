@@ -1,6 +1,8 @@
 // import { products as arr } from "./custom.js";
 // import { arrCart } from "./addtoCart.js";
 
+import { Product }  from "./custom.js";
+
 var tbody = document.querySelector("tbody")
 var btnAdd = document.querySelector(".add-new");
 var submit = document.querySelector(".submitLink");
@@ -11,7 +13,6 @@ var closex = document.querySelector(".clsBtn");
 var _ProductName = document.getElementById("ProductName");
 var _price = document.getElementById("price");
 var _Quntity = document.getElementById("Quntity");
-var _sellerName = document.getElementById("sellerName");
 var description = document.getElementById("description");
 var category = document.getElementById("category");
 var _productImage = document.getElementById("productImage");
@@ -106,26 +107,28 @@ window.addEventListener("load", function () {
 function creatTableofData() {
 
     tbody.innerHTML = ''
-    arrOfproduct.forEach(product => {
+    //print the products from end to start (newest first)
+    for (let index = arrOfproduct.length-1; index >= 0; index--) {
+        var element = arrOfproduct[index];
         tbody.innerHTML += `
           <tr>
-          <td>${product.productId}</td>
-          <td>${product.productName}</td>
-          <td><img src="${product["images"][0]}"/></td>
-          <td>${product.sellerName}</td>
-          <td>${product.category}</td>
-          <td>${product.price}</td>
+          <td>${element.productId}</td>
+          <td>${element.productName}</td>
+          <td><img src="${element["images"][0]}"/></td>
+          <td>${element.sellerName}</td>
+          <td>${element.category}</td>
+          <td>${element.price}</td>
           <td>
               <a href="#" class="view" title="View" data-toggle="tooltip"><i
                       class="material-icons">&#xE417;</i></a>
               <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                       class="material-icons">&#xE254;</i></a>
-              <a href="#"  title="Delete"  data-id="${product.productId}" class="trigger-btn"><i
+              <a href="#"  title="Delete"  data-id="${element.productId}" class="trigger-btn"><i
                       class="delete material-icons text-danger">&#xE872;</i></a>
           </td>
          </tr>`
 
-    });
+    }
 }
 
 // add 
@@ -150,13 +153,6 @@ function vaildData() {
         //return false;  
     } else {
         document.getElementById("ProductName").classList.remove("is-invalid");
-    }
-    if (!istextvalid(_sellerName.value)) {
-        document.getElementById("sellerName").classList.toggle("is-invalid");
-        isnotvalidForm = false;
-        //return false;
-    } else {
-        document.getElementById("sellerName").classList.remove("is-invalid");
     }
     if (!isnumbervalid(_Quntity.value)) {
         document.getElementById("Quntity").classList.add("is-invalid");
@@ -241,19 +237,7 @@ function Add() {
     // console.log(imgesInput);
     var lastID = Math.max(...arrOfproduct.map(product => product.productId), 0); // to get max id 
 
-    var newProduct = {
-        productId: lastID + 1,
-        productName: _ProductName.value,
-        category: category.value,
-        sellerName: _sellerName.value,
-        quantity: _Quntity.value,
-        quantity_sold: "0",
-        images: imgesInput,
-        price: _price.value,
-        description: description.value,
-        options: selectedValues,
-    };
-
+    var newProduct = new Product(lastID + 1, _ProductName.value, category.value, JSON.parse(localStorage.getItem(loggedInUser)).userName, _Quntity.value, "0", imgesInput, _price.value, description.value, selectedValues);
 
     // console.log(newProduct);
     // console.log(newProduct["images"]);
