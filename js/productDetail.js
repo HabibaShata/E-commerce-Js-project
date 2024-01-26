@@ -8,9 +8,6 @@ let iconAddToCart = document.querySelectorAll(".iconAddToCart ");
 console.log(iconAddToCart);
 let cart = JSON.parse(localStorage.getItem('cart'));
 
-iconCartSpan.innerText = arrCart.length;
-console.log("helllllo");
-
 ///////////////////////////////////////////////////////////////////////////////////////
 
 window.addEventListener("load", function () {
