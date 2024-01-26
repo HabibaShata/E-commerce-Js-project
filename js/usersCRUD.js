@@ -33,9 +33,9 @@ window.addEventListener("load", function(){
         row.innerHTML += `<th>${key}</th>`;
     }
     row.innerHTML += `<th>Actions</th>`;
-    DisplayUsers();
+    DisplayUsers(allUsers);
     //display the pagination
-    displayPagination();
+    displayPagination(allUsers);
 
     //if clicked on edit or delete
     tableBody.addEventListener("click", function(event){
@@ -70,10 +70,10 @@ function DisplayUsers(usersArray)
     tableBody.innerHTML = "";
     let rowTD;
     let td;
-    let startIndex=start, endIndex=end;
+    let startIndex, endIndex;
 
     //if the usersArray is not send (==-1) then equal it to the allusers array
-    if(usersArray==null)
+    if(usersArray.length>end-start)
     {
         usersArray = allUsers;
         startIndex = start;
@@ -96,10 +96,10 @@ function DisplayUsers(usersArray)
     }
 }
 
-function displayPagination()
+function displayPagination(usersArray)
 {
     //get the number of buttons
-    numberOfBtns = Math.ceil(allUsers.length / numberOfUsersPerPage);
+    numberOfBtns = Math.ceil(usersArray.length / numberOfUsersPerPage);
     //get the pagination container
     let paginationContainer = document.querySelector(".pagination");
     //clear the container
@@ -158,7 +158,7 @@ function pagination(e) {
         end = pageNumber * numberOfUsersPerPage;
         start = end - numberOfUsersPerPage;
         //display the new set of users
-        DisplayUsers();
+        DisplayUsers(allUsers);
     }
 }
 
@@ -189,10 +189,12 @@ function filter(e)
     switch(e.target.innerHTML) //switch based on the button innerhtml
     {
         case "All"://display all users
+            displayPagination(allUsers);
             DisplayUsers(allUsers);
             usersFilter = "all";
             break;
         default:
+            debugger
             let userRole = e.target.innerHTML.toLowerCase().substring(0, e.target.innerHTML.length-1);
             //display only the users with the same userRole according to the current pagination page
             let filteredUsers = [];
