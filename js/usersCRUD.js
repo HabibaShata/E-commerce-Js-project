@@ -1,7 +1,6 @@
-
-import { users, handleFormSubmit, validateForm, showValidationMessages} from "../sign-up/sign-up.js";
+import { users, handleFormSubmit } from "../sign-up/sign-up.js";
 import { isValidEmail, isValidPassword, isValidName } from "./profile.js";
-let allUsers = JSON.parse(localStorage.getItem("users"));
+let allUsers = JSON.parse(localStorage.getItem("users")).filter(user=>user.userRole != "admin");
 
 let selectedUser = {
     userID: -1,
@@ -9,34 +8,34 @@ let selectedUser = {
     userPassword: "",
     userEmail: "",
     userRole: ""
-}
+};
+
+let tableBody, tableHead;
+
+let usersFilter="all";
+let roleFilter = "all";
+
+//pagination variables
+let numberOfUsersPerPage = 4;
+let pageNumber = 1;
+let start = 0;
+let end = numberOfUsersPerPage;
+let numberOfBtns = 0;
 
 window.addEventListener("load", function(){
     //Get the users from local storage and make a table with all users except for those whose userRole is admin
     //Display all users
-    let tableBody = document.getElementsByTagName("tbody")[0];
-    let tableHead = document.getElementsByTagName("thead")[0];
+    tableBody = document.getElementsByTagName("tbody")[0];
+    tableHead = document.getElementsByTagName("thead")[0];
+    //display table headers
     let row = tableHead.insertRow(-1);
     for (const key in allUsers[0]) {
-    ;
+        row.innerHTML += `<th>${key}</th>`;
     }
     row.innerHTML += `<th>Actions</th>`;
-
-    let rowTD;
-    let td;
-    allUsers.forEach(user => {
-        if(user.userRole!="admin")
-        {
-            rowTD = tableBody.insertRow(-1);
-            for (const key in user) {
-                td = rowTD.insertCell(-1);
-                td.innerHTML = user[key];
-            }
-            td = rowTD.insertCell(-1);
-            td.innerHTML = `<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>`;
-            td.innerHTML += `<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>`;
-        }
-    });
+    DisplayUsers(allUsers);
+    //display the pagination
+    displayPagination(allUsers);
 
     //if clicked on edit or delete
     tableBody.addEventListener("click", function(event){
@@ -60,7 +59,168 @@ window.addEventListener("load", function(){
     document.getElementById("deleteBtn").addEventListener("click", DeleteRecord);
     //add the edit event to the edit button
     document.getElementById("saveEditing").addEventListener("click", saveEditing);
+    //Add search functionality
+    this.document.querySelector("input[type=search]").addEventListener("keyup", search);
+    //filtering event
+    this.document.querySelector(".filter-category").addEventListener("click", filter);
 })
+
+function DisplayUsers(usersArray)
+{
+    tableBody.innerHTML = "";
+    let rowTD;
+    let td;
+    let startIndex, endIndex;
+
+    //if the usersArray is not send (==-1) then equal it to the allusers array
+    if(usersArray.length>end-start)
+    {
+        usersArray = allUsers;
+        startIndex = start;
+        endIndex = end;
+    } else { //if there is an array sent then display all of it (startIndex = 0 , endIndex = arraylength)
+        startIndex = 0;
+        endIndex = usersArray.length;
+    }
+
+    endIndex = endIndex > usersArray.length ? usersArray.length : endIndex;
+
+    for(let i = startIndex; i < endIndex; i++) {
+        var user = usersArray[i];
+        rowTD = tableBody.insertRow(-1);
+        for (const key in user) {
+            td = rowTD.insertCell(-1);
+            td.innerHTML = user[key];
+        }
+        td = rowTD.insertCell(-1);
+        td.innerHTML = `<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>`;
+        td.innerHTML += `<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>`;
+    }
+}
+
+function displayPagination(usersArray)
+{
+    //get the number of buttons
+    numberOfBtns = Math.ceil(usersArray.length / numberOfUsersPerPage);
+    //get the pagination container
+    let paginationContainer = document.querySelector(".pagination");
+    //clear the container
+    paginationContainer.innerHTML = "";
+    //add the previous button
+    paginationContainer.innerHTML += `<li class="page-item disabled"><a href="#">Previous</a></li>`;
+    //add the buttons
+    for (let i = 1; i <= numberOfBtns; i++) {
+        //if the current page number is the same as the button number, add the active class
+        if(i==pageNumber)
+        {
+            paginationContainer.innerHTML += `<li class="page-item active"><a href="#" class="page-link">${i}</a></li>`;
+        }
+        else
+        {
+            paginationContainer.innerHTML += `<li class="page-item"><a href="#" class="page-link">${i}</a></li>`;
+        }
+    }
+    //add the next button
+    paginationContainer.innerHTML += `<li class="page-item"><a href="#" class="page-link">Next</a></li>`;
+
+    //add the event listener to change the page number
+    paginationContainer.addEventListener("click", pagination)
+}
+
+function pagination(e) {
+    debugger
+    //if the user clicked on an LI item
+    if (e.target.nodeName == "A") {
+        //if the user clicked on the previous button
+        if (e.target.innerHTML == "Previous") {
+            //if the current page number is greater than 1, decrease the page number by 1
+            if (pageNumber > 1) {
+                pageNumber--;
+            } else return;
+        }//if the user clicked on the next button
+        else if(e.target.innerHTML == "Next")
+        {
+            //if the current page number is less than the number of buttons, increase the page number by 1
+            if (pageNumber < numberOfBtns) {
+                pageNumber++;
+            } else return;
+        }//if the user clicked on a button with a number 
+        else {
+            pageNumber = parseInt(e.target.innerHTML);
+        }
+        //give the active class to the button which innerhtml = pagenumber
+        let btns = document.querySelectorAll(".pagination li a");
+        btns.forEach(btn=>{
+            btn.parentNode.classList.remove("active");
+            if(btn.innerHTML == pageNumber){
+                btn.parentNode.classList.add("active");
+            }
+        });
+
+        //calculate the start and the end based on the page number and the number of users per page     
+        end = pageNumber * numberOfUsersPerPage;
+        start = end - numberOfUsersPerPage;
+        //display the new set of users
+        DisplayUsers(allUsers);
+    }
+}
+
+
+function search(e)
+{
+    let searchedArr;
+    if(usersFilter!="all") {
+        searchedArr = allUsers.filter(user=>user.userName.toLowerCase().indexOf(e.target.value.toLowerCase())!=-1 && user.userRole == usersFilter);
+    } else {
+        searchedArr = allUsers.filter(user=>user.userName.toLowerCase().indexOf(e.target.value.toLowerCase())!=-1);
+    }
+    
+    displayPagination(searchedArr);
+    DisplayUsers(searchedArr);
+}
+
+//filter based on user Role (All - customers - sellers)
+function filter(e)
+{
+    //check if the clicked item is of type button then start the filtering process
+    if (e.target.nodeName=="BUTTON") {
+        //get all the buttons 1- remove the active class from them, 2- add the active class to the clicked button 
+        let btns = document.querySelectorAll(".filter-category button");
+        btns.forEach(btn=>{btn.classList.remove("btn-primary"); btn.classList.add("btn-secondary");})
+        e.target.classList.add("btn-primary");
+        e.target.classList.remove("btn-secondary");
+    }
+    switch(e.target.innerHTML) //switch based on the button innerhtml
+    {
+        case "All"://display all users
+            displayPagination(allUsers);
+            DisplayUsers(allUsers);
+            usersFilter = "all";
+            break;
+        default:
+            let userRole = e.target.innerHTML.toLowerCase().substring(0, e.target.innerHTML.length-1);
+            //display only the users with the same userRole according to the current pagination page
+            let filteredUsers = [];
+            for(let i = 0; i < allUsers.length; i++) {
+                if(allUsers[i].userRole == userRole) {
+                    filteredUsers.push(allUsers[i]);
+                }
+            }
+            displayPagination(filteredUsers);
+            DisplayUsers(filteredUsers);
+            usersFilter = userRole;
+            break;
+        // case "Customers"://display only the customers
+            
+        //     DisplayUsers(allUsers.filter(user=>user.userRole=="customer"));
+        //     usersFilter = "customer";
+        //     break;
+        // case "Sellers"://display only the sellers
+        //     DisplayUsers(allUsers.filter(user=>user.userRole=="seller"));
+        //     usersFilter = "seller";
+        //     break;
+    }
+}
 
 function DeleteRecord()
 {

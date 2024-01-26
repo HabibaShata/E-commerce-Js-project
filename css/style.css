@@ -10,6 +10,7 @@
   --color7: #333;
   --color8: #fff;
   --transition: all 0.3s ease-in-out;
+  --main-color: #f7444e;
 }
 
 * {
@@ -1260,6 +1261,11 @@ form input[type="submit"]:focus {
   background: var(--color8);
 }
 
+.cart.customerService {
+  left: 0;
+  transform: translateX(-100%);
+}
+
 .cart.show {
   transform: none;
 }
@@ -1506,4 +1512,109 @@ display: none;
   padding: 10px 0px;
   /* height: 26px; */
   text-align: center;
+}
+
+/* start customerService */
+.customerServiceBtn {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid gold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--main-color);
+    z-index: 500;
+    animation: wiggle 2s linear infinite;
+    cursor: pointer;
+}
+
+.customerServiceBtn svg {
+  color: white;
+  font-size: 30px;
+  position: relative;
+  left: -5px;
+  top: -5px;
+  transition: all 0.3s;
+}
+
+.customerServiceBtn:hover svg {
+  color: gold;
+  transform: scale(1.2);
+}
+
+@keyframes wiggle {
+  0%, 7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-15deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+  }
+  25% {
+    transform: rotateZ(-10deg);
+  }
+  30% {
+    transform: rotateZ(6deg);
+  }
+  35% {
+    transform: rotateZ(-4deg);
+  }
+  40%, 100% {
+    transform: rotateZ(0);
+  }
+}
+
+.arrowBackCS {
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.arrowBackCS:hover {
+  transform: scale(1.2);
+}
+
+#message {
+  resize: none;
+  background-color: #ededed;
+  font-size: 18px;
+  color: black;
+  height: 100px;
+}
+
+#message:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+#alert-msg {
+  display: none;
+}
+
+/*admin customer service*/
+.messageCount {
+  position: relative;
+    left: -29px;
+    color: white;
+    font-weight: bold;
+    top: -12px;
+}
+
+/*products*/
+.filter-body .sellers-list {
+  background-color: #f7f8f9;
+  padding: 20px;
+  margin-top: 50px;
+}
+
+.filter-header {
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--main-color);
 }

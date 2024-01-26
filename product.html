@@ -12,6 +12,8 @@
       <meta name="author" content="" />
       <link rel="shortcut icon" href="images/favicon.png" type="">
       <title>E-commerce</title>
+      <!-- loader -->
+      <link rel="stylesheet" href="loader/dist/loader.css">
       <!-- bootstrap core css -->
       <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
       <!-- font awesome style -->
@@ -22,6 +24,20 @@
       <link href="css/responsive.css" rel="stylesheet" />
    </head>
    <body class="sub_page">
+      <div id="loader">
+         <div class="pl">
+            <div class="pl__outer-ring"></div>
+            <div class="pl__inner-ring"></div>
+            <div class="pl__track-cover"></div>
+            <div class="pl__ball">
+               <div class="pl__ball-texture"></div>
+               <div class="pl__ball-outer-shadow"></div>
+               <div class="pl__ball-inner-shadow"></div>
+               <div class="pl__ball-side-shadows"></div>
+            </div>
+         </div>
+      </div>
+
       <div class="addedSuccess alert-success text-center py-2"> 
          Product added successfully
       </div>
@@ -49,12 +65,12 @@
                               <a class="nav-link" href="product.html">Products <span class="sr-only">(current)</span></a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" href="orderHistory.html">Orders History</a>
+                              <a class="nav-link" href="orderHistory.html" style="display: none;" id="orderHistory">Orders History</a>
                            </li>
                            <li class="nav-item">
                               <a class="nav-link" href="about.html">About</a>
                            </li>
-                           <li class="nav-item">
+                           <li class="nav-item"  id="cartListItem">
                               <a class="nav-link  cartLogo" href="#">
                                  <svg class="w-[28px] h-[28px] text-gray-800 dark:text-white  " aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
@@ -96,7 +112,7 @@
          <!-- end categories section --> 
       </div>
 
-         <!-- Add to cart  -->
+   <!-- Add to cart  -->
    <div class="cart-overlay"></div>
 
    <div class="cart">
@@ -121,14 +137,31 @@
 
       <!-- product section -->
       <section class="product_section layout_padding">
-         <div class="container">
-            <div class="heading_container heading_center">
-               <h2 id="category-title">
-                  Our <span>products</span>
-               </h2>
-            </div>
-            <div class="row" id="all-products-section">
-               
+         <div class="container-fluid">
+            <div class="row">
+               <div class="side col-xs-12 col-md-4">
+                  <div class="heading_container heading_center">
+                     <h2 class="h3" id="category-title">
+                        Filter Products
+                     </h2>
+                  </div>
+                  <form class="filter-body">
+                     <ul class="list-unstyled sellers-list">
+                        <h4 class="text-center filter-header">By Seller</h4>
+                     </ul>
+                  </form>
+               </div>
+            
+               <div class="body col-xs-12 col-md-8">
+                  <div class="heading_container heading_center">
+                     <h2 id="category-title">
+                        Our <span>products</span>
+                     </h2>
+                  </div>
+                  <div class="row" id="all-products-section">
+                     
+                  </div>
+               </div>
             </div>
          </div>
       </section>
@@ -220,8 +253,12 @@
    <script src="js/bootstrap.js"></script>
    <!-- fontawesome -->
    <script src="js/all.min.js"></script>
-      <!-- custom js -->
-      <script src="js/products.js" type="module"></script>
-      <script src="js/addtoCart.js"  type="module"></script>
+   <!-- custom js -->
+   <script src="js/products.js" type="module"></script>
+   <!-- addtocart -->
+   <script src="js/addtoCart.js" type="module"></script>
+   <!-- loader -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLWL5N9CSM"></script>
+   <script src="loader/dist/loader.js"></script>
    </body>
 </html>

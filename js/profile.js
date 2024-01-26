@@ -1,14 +1,20 @@
 import { users as usersClass } from "../sign-up/sign-up.js";
+const userDataString = localStorage.getItem('loggedInUser');
 
 window.addEventListener('load', function () {
 
-  // Fetch user data from local storage
-  const userDataString = localStorage.getItem('loggedInUser');
+  ////////////////////////////////////////////////////////////////////////////
+//   if (!userDataString ) {
+//     alert('User data not found. Please create a customer first.');
+//     return;
+// }
 
-  if (!userDataString) {
-    alert('User data not found. Please create a customer first.');
-    return;
-  }
+//back btn
+//check if the url is profile.html
+if (location.href.includes("profile.html")) {
+  this.document.querySelector("#backBtn").addEventListener("click", function () {
+    history.back();
+  })
 
   const userData = JSON.parse(userDataString);
 
@@ -142,8 +148,8 @@ window.addEventListener('load', function () {
       });
   
   }
-
- });
+}
+});
 
 // Function to validate first name and last name
 function isValidName(name, messageElement) {

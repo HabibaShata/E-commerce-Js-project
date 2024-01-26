@@ -1,51 +1,124 @@
-import { products } from "./custom.js";
+//import { products } from "./custom.js";
+ let products=JSON.parse(localStorage.getItem("products"));
+    let listProductHtml;
+    var  listCartHTML;
+    let iconCart;
+    export let iconCartSpan;
+    let closeCart;
+    let checkOut;
+    let arrowBack;
+    let cart;
+    let lyercartOverlay;
+    export let temmraryDiv;
+    let totalPrice;
 
-let listProductHtml = document.getElementById("products-Landing");
-let listCartHTML = document.querySelector('.cart-body');
-let iconCart = document.querySelector('.cartLogo');
-export let iconCartSpan = document.querySelector('.cartLogo #cntOrders');
-let closeCart = document.querySelector('.cart-clear');
-let checkOut = document.querySelector(".checkout");
-let arrowBack = document.querySelector(".arrowBack");
-let cart = document.querySelector(".cart");
-let lyercartOverlay = document.querySelector(".cart-overlay");
-export let temmraryDiv = document.querySelector(".addedSuccess");
-let totalPrice = document.querySelector(".cart-total");
+    let footerCart;
+    var containerDivCartIsEmpty;
+    var iconEmptyCart;
+    var msg;
+    // a
+    var btnStratShopping;
 
-console.log(totalPrice);
-let footerCart = document.querySelector('.cart-footer');
-/**
-cart 
+window.addEventListener("load", function () {
+    listProductHtml = document.getElementById("products-Landing");
+    listCartHTML = document.querySelector('.cart-body');
+    iconCart = document.querySelector('.cartLogo');
+    iconCartSpan = document.querySelector('.cartLogo #cntOrders');
+    closeCart = document.querySelector('.cart-clear');
+    checkOut = document.querySelector(".checkout");
+    arrowBack = document.querySelector(".arrowBack");
+    cart = document.querySelector(".cart");
+    lyercartOverlay = document.querySelector(".cart-overlay");
+    temmraryDiv = document.querySelector(".addedSuccess");
+    totalPrice = document.querySelector(".cart-total");
 
-     <div class="wCartIsEmpty">
-         <i class="fa-solid fa-cart-plus iconEmptyCart"></i>
-         <span class="cartEmpty">Your cart is empty!<br> Browse our categories and discover our best deals!</span>
-           <a href="#">Start Shopping</a>
-      </div>
- */
-// cart is empty
-// let span = document.querySelector('.cartEmpty');
-var containerDivCartIsEmpty = document.createElement("div");
-containerDivCartIsEmpty.classList.add("wCartIsEmpty");
-// i
-var iconEmptyCart = document.createElement("i");
-iconEmptyCart.classList.add('fa-solid', 'fa-cart-plus');
-iconEmptyCart.classList.add("iconEmptyCart");
-// span
-var msg = document.createElement("span");
-msg.innerHTML = "Your cart is empty!<br> Browse our categories and discover our best deals!";
-msg.classList.add("cartEmpty");
-// a
-var btnStratShopping = document.createElement("a");
-btnStratShopping.href = "./product.html";
-btnStratShopping.innerHTML = "Strat Shopping";
+    footerCart = document.querySelector('.cart-footer');
+    /**
+    cart 
 
-// 
-containerDivCartIsEmpty.append(iconEmptyCart);
-containerDivCartIsEmpty.append(msg);
-containerDivCartIsEmpty.append(btnStratShopping);
+        <div class="wCartIsEmpty">
+            <i class="fa-solid fa-cart-plus iconEmptyCart"></i>
+            <span class="cartEmpty">Your cart is empty!<br> Browse our categories and discover our best deals!</span>
+            <a href="#">Start Shopping</a>
+        </div>
+    */
+    // cart is empty
+    // let span = document.querySelector('.cartEmpty');
+    containerDivCartIsEmpty = document.createElement("div");
+    containerDivCartIsEmpty.classList.add("wCartIsEmpty");
+    // i
+    iconEmptyCart = document.createElement("i");
+    iconEmptyCart.classList.add('fa-solid', 'fa-cart-plus');
+    iconEmptyCart.classList.add("iconEmptyCart");
+    // span
+    msg = document.createElement("span");
+    msg.innerHTML = "Your cart is empty!<br> Browse our categories and discover our best deals!";
+    msg.classList.add("cartEmpty");
+    // a
+    btnStratShopping = document.createElement("a");
+    btnStratShopping.href = "./product.html";
+    btnStratShopping.innerHTML = "Strat Shopping";
 
-console.log(containerDivCartIsEmpty);
+    // 
+    containerDivCartIsEmpty.append(iconEmptyCart);
+    containerDivCartIsEmpty.append(msg);
+    containerDivCartIsEmpty.append(btnStratShopping);
+
+    console.log(containerDivCartIsEmpty);
+
+    if (localStorage.getItem("cart") != null) {
+        //check if the loggedinuser is the admin or seller so don't perform the following
+        if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
+            arrCart = JSON.parse(localStorage.getItem("cart"));
+    
+            listCartAsHTML();
+        }
+    }
+
+    //cart events
+    //check if the loggedinuser is the admin or seller so don't perform the following
+    if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
+        iconCart.addEventListener("click", showCart);
+        arrowBack.addEventListener("click", hideCart);
+        closeCart.addEventListener("click", clearCart);
+    }
+
+    //check if the loggedinuser is the admin or seller so don't perform the following
+    if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
+        listCartHTML.addEventListener('click', (event) => {
+            let positionClick = event.target;
+            //console.log(event.target.dataset.btn);
+            if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
+                let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
+                console.log(product_Id);
+                let type = 'decr';
+                if (event.target.dataset.btn == "incr") {
+                    type = 'incr';
+                }
+                changeQuantityCart(product_id, type);
+            }
+
+        })
+    }
+
+    //check if the loggedinuser is the admin or seller so don't perform the following
+    if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
+        listCartHTML.addEventListener('click', (event) => {
+            let positionClick = event.target;
+            //console.log(event.target.dataset.btn);
+            if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
+                let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
+                // console.log(product_Id);
+                let type = 'decr';
+                if (event.target.dataset.btn == "incr") {
+                    type = 'incr';
+                }
+                changeQuantityCart(product_id, type);
+            }
+
+        })
+    }
+})
 
 export let arrCart = [];
 let loggedInUser = null;
@@ -54,23 +127,15 @@ if (localStorage.getItem("loggedInUser")) {
     loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 }
 
-if (localStorage.getItem("cart") != null) {
-    //check if the loggedinuser is the admin or seller so don't perform the following
-    if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
-        arrCart = JSON.parse(localStorage.getItem("cart"));
-
-        listCartAsHTML();
-    }
-}
-
 function listCartAsHTML() {
+    
     let totalQuantity = 0;
     let total = 0;
     totalPrice.innerHTML = "0"
     iconCartSpan.innerHTML = arrCart.length;
 
     arrCart.forEach(item => {
-        console.log(arrCart);
+        // console.log(arrCart);
 
         totalQuantity = totalQuantity + item.quantity;
         total = item.quantity * products[item.product_id - 1].price;
@@ -113,7 +178,7 @@ function listCartAsHTML() {
               </div>
               `;
 
-        console.log(products[item.product_id - 1].price * item.quantity);
+        // console.log(products[item.product_id - 1].price * item.quantity);
 
     })
     //delete clicked item 
@@ -130,7 +195,7 @@ function listCartAsHTML() {
     let allColors = document.querySelectorAll(".color-radio-btn");
 
     for (var i = 0; i < allColors.length; i++) {
-        console.log(allColors);
+        // console.log(allColors);
         // var idLabel;
         allColors[i].addEventListener("click", function (e) {
             var parentLabel = e.target.parentElement.children;
@@ -188,17 +253,7 @@ function listCartAsHTML() {
 }
 
 
-//cart events
-//check if the loggedinuser is the admin or seller so don't perform the following
-if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
-    iconCart.addEventListener("click", showCart);
-    arrowBack.addEventListener("click", hideCart);
-    closeCart.addEventListener("click", clearCart);
-}
-
-
 function showCart() {
-    console.log(arrCart.length);
     if (arrCart.length == 0) {
 
         listCartHTML.prepend(containerDivCartIsEmpty);
@@ -212,7 +267,6 @@ function showCart() {
 }
 
 function hideCart() {
-    console.log("hello");
     lyercartOverlay.classList.remove("show");
     cart.classList.remove("show");
 }
@@ -239,11 +293,13 @@ window.addEventListener("load", function () {
             event.preventDefault();
             product_Id = parseInt(event.target.parentElement.parentElement.parentElement.parentElement.classList[3].split('=')[1]);
             addToCart(product_Id);
-
         })
     }
-
-
+    
+//     if(JSON.parse(localStorage.getItem('products'))!=null){
+//         products = JSON.parse(localStorage.getItem('products'));
+//        console.log("trueeeeeeeeeeeeee");
+//    }
 })
 
 //**   add to cart    / */
@@ -253,10 +309,12 @@ export const addToCart = (product_id) => {
 
     //findindex fun return index of ele if it extist in arr else if rturn -1;
     let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == product_id);
+   console.log(positionThisProductInCart);
     if (arrCart.length <= 0) {
         arrCart = [{
             product_id: product_id,
             quantity: 1,
+            quantity_sold: 0,
             colorOptions: "black",
         }];
         temmraryDiv.style.display = "block";
@@ -269,6 +327,7 @@ export const addToCart = (product_id) => {
         arrCart.push({
             product_id: product_id,
             quantity: 1,
+            quantity_sold:0,
             colorOptions: "black",
 
         });
@@ -304,36 +363,41 @@ const addCartToHTML = () => {
     }
 }
 
-//check if the loggedinuser is the admin or seller so don't perform the following
-if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
-    listCartHTML.addEventListener('click', (event) => {
-        let positionClick = event.target;
-        //console.log(event.target.dataset.btn);
-        if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
-            let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
-            console.log(product_Id);
-            let type = 'decr';
-            if (event.target.dataset.btn == "incr") {
-                type = 'incr';
-            }
-            changeQuantityCart(product_id, type);
-        }
+// //check if the loggedinuser is the admin or seller so don't perform the following
+// if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
+//     listCartHTML.addEventListener('click', (event) => {
+//         let positionClick = event.target;
+//         //console.log(event.target.dataset.btn);
+//         if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
+//             let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
+//             // console.log(product_Id);
+//             let type = 'decr';
+//             if (event.target.dataset.btn == "incr") {
+//                 type = 'incr';
+//             }
+//             changeQuantityCart(product_id, type);
+//         }
 
-    })
-}
+//     })
+// }
 
 const changeQuantityCart = (product_id, type) => {
     let positionItemInCart = arrCart.findIndex((value) => value.product_id == product_id);
     // let positionItemInCart2 = arrCart.findIndex((value) =>{} );
-
-
 
     // console.log(positionItemInCart);
     if (positionItemInCart >= 0) {
         //  let info = arrCart[positionItemInCart];
         switch (type) {
             case 'incr':
-                arrCart[positionItemInCart].quantity = arrCart[positionItemInCart].quantity + 1;
+                if(arrCart[positionItemInCart].quantity <products[arrCart[positionItemInCart].product_id-1].quantity){
+                    arrCart[positionItemInCart].quantity = arrCart[positionItemInCart].quantity + 1;
+                }else{
+                    alert("out of sotck");
+                }
+
+                // console.log("arr =>",arrCart[positionItemInCart],"product info ",products[arrCart[positionItemInCart].product_id-1]);
+                // arrCart[positionItemInCart].quantity=products[arrCart[positionItemInCart].product_id-1].quantity;
                 break;
 
             default:

@@ -11,11 +11,13 @@
       <meta name="description" content="" />
       <meta name="author" content="" />
       <link rel="shortcut icon" href="images/favicon.png" type="">
-      <title>E-commerce HTML Template</title>
+      <title>Admin Homepage</title>
+      <!-- loader -->
+      <link rel="stylesheet" href="loader/dist/loader.css">
       <!-- bootstrap core css -->
       <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
       <!-- font awesome style -->
-      <link href="css/font-awesome.min.css" rel="stylesheet" />
+      <link href="css/all.min.css" rel="stylesheet" />
       <!-- Custom styles for this template -->
       <link href="css/style.css" rel="stylesheet" />
       <!-- Admin styles for this template -->
@@ -24,10 +26,28 @@
       <link href="css/responsive.css" rel="stylesheet" />
    </head>
    <body>
+      <!-- start-loader -->
+      <div id="loader">
+         <div class="pl">
+            <div class="pl__outer-ring"></div>
+            <div class="pl__inner-ring"></div>
+            <div class="pl__track-cover"></div>
+            <div class="pl__ball">
+               <div class="pl__ball-texture"></div>
+               <div class="pl__ball-outer-shadow"></div>
+               <div class="pl__ball-inner-shadow"></div>
+               <div class="pl__ball-side-shadows"></div>
+            </div>
+         </div>
+      </div>
+      <!-- end-loader -->
       <div class="hero_area">
          <!-- header section strats -->
          <header class="header_section">
             <div class="container">
+               <div class="content">
+
+               </div>
                <nav class="navbar navbar-expand-lg custom_nav-container ">
                   <a class="navbar-brand" href="index.html"><img width="250" src="images/logo.png" alt="#" /></a>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,50 +61,24 @@
                         <li class="nav-item dropdown">
                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label" id="welcome-user"> <span class="caret"></span></a>
                            <ul class="dropdown-menu" id="user-DropDown">
-                              <li><a href="#">Profile</a></li>
+                              <li><a href="profile.html">Profile</a></li>
                               <li><a href="usersCRUD.html">Users</a></li>
                               <li><a href="#" id="logOut">Log out</a></li>
                            </ul>
                         </li>
                         <li class="nav-item">
-                           <a class="nav-link" href="Crud-Admin.html">Products</a>
+                           <a class="nav-link" href="dashboardAdmin.html">Products</a>
                         </li>
                         <li class="nav-item">
-                           <a class="nav-link" href="blog_list.html">Orders</a>
+                           <a class="nav-link" href="orderHistory.html">Orders</a>
                         </li>     
                      </ul>
                   </div>
                </nav>
             </div>
          </header>
-         <!-- end header section -->
       </div>
-      <!-- arrival section -->
-      <!-- <section class="arrival_section">
-         <div class="container">
-            <div class="box">
-               <div class="arrival_bg_box">
-                  <img src="images/arrival-bg.png" alt="">
-               </div>
-               <div class="row">
-                  <div class="col-md-6 ml-auto">
-                     <div class="heading_container remove_line_bt">
-                        <h2>
-                           #NewArrivals
-                        </h2>
-                     </div>
-                     <p style="margin-top: 20px;margin-bottom: 30px;">
-                        Vitae fugiat laboriosam officia perferendis provident aliquid voluptatibus dolorem, fugit ullam sit earum id eaque nisi hic? Tenetur commodi, nisi rem vel, ea eaque ab ipsa, autem similique ex unde!
-                     </p>
-                     <a href="">
-                     Shop Now
-                     </a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </section> -->
-      <!-- end arrival section -->
+      <!-- end header section -->
       
       <!-- product section -->
       <section class="product_section layout_padding">
@@ -98,104 +92,23 @@
                
             </div>
             <div class="btn-box">
-               <a href="Crud-Admin.html">
+               <a href="dashboardAdmin.html">
                View All products
                </a>
             </div>
          </div>
       </section>
-      <!-- end product section -->
-      <!-- client section -->
-      <!-- <section class="client_section layout_padding">
-         <div class="container">
-            <div class="heading_container heading_center">
-               <h2>
-                  Customer's Testimonial
-               </h2>
-            </div>
-            <div id="carouselExample3Controls" class="carousel slide" data-ride="carousel">
-               <div class="carousel-inner">
-                  <div class="carousel-item active">
-                     <div class="box col-lg-10 mx-auto">
-                        <div class="img_container">
-                           <div class="img-box">
-                              <div class="img_box-inner">
-                                 <img src="images/client.jpg" alt="">
-                              </div>
-                           </div>
-                        </div>
-                        <div class="detail-box">
-                           <h5>
-                              Anna Trevor
-                           </h5>
-                           <h6>
-                              Customer
-                           </h6>
-                           <p>
-                              Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
-                           </p>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="carousel-item">
-                     <div class="box col-lg-10 mx-auto">
-                        <div class="img_container">
-                           <div class="img-box">
-                              <div class="img_box-inner">
-                                 <img src="images/client.jpg" alt="">
-                              </div>
-                           </div>
-                        </div>
-                        <div class="detail-box">
-                           <h5>
-                              Anna Trevor
-                           </h5>
-                           <h6>
-                              Customer
-                           </h6>
-                           <p>
-                              Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
-                           </p>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="carousel-item">
-                     <div class="box col-lg-10 mx-auto">
-                        <div class="img_container">
-                           <div class="img-box">
-                              <div class="img_box-inner">
-                                 <img src="images/client.jpg" alt="">
-                              </div>
-                           </div>
-                        </div>
-                        <div class="detail-box">
-                           <h5>
-                              Anna Trevor
-                           </h5>
-                           <h6>
-                              Customer
-                           </h6>
-                           <p>
-                              Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
-                           </p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="carousel_btn_box">
-                  <a class="carousel-control-prev" href="#carouselExample3Controls" role="button" data-slide="prev">
-                  <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
-                  <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselExample3Controls" role="button" data-slide="next">
-                  <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                  <span class="sr-only">Next</span>
-                  </a>
-               </div>
-            </div>
-         </div>
-      </section> -->
-      <!-- end client section -->
+      <!-- end-product-section -->
+
+      <!-- customer-service-btn -->
+      <li class="customerServiceBtn" id="btnCS" style="display: block;">
+         <a class="customerServiceLogo"  href="adminMessages.html">
+            <i class="fa-solid fa-comment" style="color: rgb(52, 52, 52);"></i>
+            <span class="messageCount"></span>
+         </a>
+      </li>
+      <!--end customer-service-btn -->
+
       <!-- footer start -->
       <footer>
          <div class="container">
@@ -271,9 +184,16 @@
       <script src="js/popper.min.js"></script>
       <!-- bootstrap js -->
       <script src="js/bootstrap.js"></script>
+      <!-- fontawesome -->
+      <script src="js/all.min.js"></script>
       <!-- custom js -->
       <script src="js/custom.js" type="module"></script>
       <!-- customer js -->
       <script src="js/customer.js" type="module"></script>
+      <!-- Admin -->
+      <script src="js/admin.js" type="module"></script>
+      <!-- loader -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLWL5N9CSM"></script>
+    <script src="loader/dist/loader.js"></script>
    </body>
 </html>
