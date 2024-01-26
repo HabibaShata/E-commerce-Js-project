@@ -3,7 +3,7 @@
     let listProductHtml;
     let listCartHTML;
     let iconCart;
-    export let iconCartSpan;
+    export  let iconCartSpan;
     let closeCart;
     let checkOut;
     let arrowBack;
@@ -87,10 +87,11 @@ window.addEventListener("load", function () {
     if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
         listCartHTML.addEventListener('click', (event) => {
             let positionClick = event.target;
+            // debugger;
             //console.log(event.target.dataset.btn);
             if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
                 let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
-                console.log(product_Id);
+                console.log(product_id);
                 let type = 'decr';
                 if (event.target.dataset.btn == "incr") {
                     type = 'incr';
@@ -114,8 +115,7 @@ function listCartAsHTML() {
     let totalQuantity = 0;
     let total = 0;
     totalPrice.innerHTML = "0"
-    iconCartSpan.innerHTML = arrCart.length;
-
+     iconCartSpan.innerHTML = arrCart.length;
     arrCart.forEach(item => {
         // console.log(arrCart);
 
@@ -339,7 +339,7 @@ const addCartToHTML = () => {
 
         let items = document.querySelectorAll(".item");
         cnt = 0
-        iconCartSpan.innerText = cnt;
+          iconCartSpan.innerText = cnt;
         listCartHTML.removeChild(items);
         // console.log(arrCart.length);
     }

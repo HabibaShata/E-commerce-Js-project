@@ -57,7 +57,7 @@ address = address==null?[]:address;
 
 var containerOreders = document.querySelector(".ordersBody");
 let totalPrice = document.querySelector(".cart-total");
-let btnCheckout = document.querySelector(".checkout a");
+let btnCheckout = document.querySelector(".checkout");
 
 console.log(totalPrice);
 let cart = JSON.parse(localStorage.getItem('cart'))
@@ -169,8 +169,7 @@ orderItems.forEach(x=>{
     
     items.push(new Item(productId, productName, image, option, quantity, price, totalPrice, seller));
 
-    //products[productId-1].quantity=parseInt(products[productId-1].quantity)-quantity ;
-    // products[productId-1].quantity_sold = parseInt(products[productId-1].quantity_sold)+parseInt(quantity);
+
     localStorage.setItem("products",JSON.stringify(products));
 
 })
@@ -195,28 +194,26 @@ orderItems.forEach(x=>{
 }
 // -----  first validate ---
 
-// btnCheckout.addEventListener("click", function (e) {
-//     event.preventDefault();
-//     debugger;
-//     cart.forEach((v) => {
-//    console.log("8777778888888");
-//       //  console.log(products[v.product_id - 1]);
+btnCheckout.addEventListener("click", function (e) {
+    event.preventDefault();
+    debugger;
+    cart.forEach((v) => {
+   console.log("8777778888888");
+      //  console.log(products[v.product_id - 1]);
 
-//         products[v.product_id - 1].quantity_sold +=parseInt(v.quantity);
-//         products[v.product_id - 1].quantity -= parseInt(v.quantity);
-//        //add modifiy countity to cart 
-  
+        products[v.product_id - 1].quantity_sold =parseInt (products[v.product_id - 1].quantity_sold)+parseInt(v.quantity)+"";
+        products[v.product_id - 1].quantity = parseInt(products[v.product_id - 1].quantity)-parseInt(v.quantity)+"";
+       //add modifiy countity to cart 
+       localStorage.setItem('products', JSON.stringify(products));
 
-//        localStorage.setItem('products', JSON.stringify(products));
-
-//        // console.log(v.product_id);//id product
-//     })
-//     localStorage.setItem('cart', JSON.stringify([]));
+       // console.log(v.product_id);//id product
+    })
+    localStorage.setItem('cart', JSON.stringify([]));
    
-//         //localStorage.setItem('cart', JSON.stringify(cart));
-//        // localStorage.setItem('cart', JSON.stringify(cart));
+        //localStorage.setItem('cart', JSON.stringify(cart));
+       // localStorage.setItem('cart', JSON.stringify(cart));
     
-// })
+})
 
 // console.log(order["product_id"]);//  idProduct
 

@@ -1,14 +1,21 @@
 
 import { products } from "./custom.js";
-import { addToCart, iconCartSpan, arrCart,temmraryDiv } from "./addtoCart.js";
+import { addToCart, arrCart } from "./addtoCart.js";
 
 // form-control btn btn-warning fa fa-shopping-cart iconAddToCart
 //////////////////////////////////////////////////////////////////////////////////
 let iconAddToCart = document.querySelectorAll(".iconAddToCart ");
 console.log(iconAddToCart);
-let cart = JSON.parse(localStorage.getItem('cart'));
+let iconCartSpan ;
+if(JSON.parse(localStorage.getItem('cart'))){
+    let cart = JSON.parse(localStorage.getItem('cart'));
+}else{
+    iconCartSpan.innerText = cart.length;
+}
 
-iconCartSpan.innerText = arrCart.length;
+
+
+console.log(iconCartSpan);
 console.log("helllllo");
 
 ///////////////////////////////////////////////////////////////////////////////////////
