@@ -1,12 +1,9 @@
-// import { products as arr } from "./custom.js";
-// import { arrCart } from "./addtoCart.js";
-
-import { Product }  from "./custom.js";
-
+///////////// selectors///////////////
 var tbody = document.querySelector("tbody")
+// var tableTr = document.querySelectorAll("table  tr")
 var btnAdd = document.querySelector(".add-new");
 var submit = document.querySelector(".submitLink");
-//selector modal //
+//selector modal //  
 var close = document.querySelector(".close");
 var closex = document.querySelector(".clsBtn");
 //selectors form//
@@ -17,93 +14,90 @@ var description = document.getElementById("description");
 var category = document.getElementById("category");
 var _productImage = document.getElementById("productImage");
 var checkboxes = document.querySelectorAll('.color-checkbox');
-// console.log(_price);
+
+// Declare variables for later use; these will be assigned values at runtime
+var deleteButtons;
+var cancledBtn;
+var deleteConfirmBtn;
+var table_headings, table_rows;
+/////
+
+
 // first thing when window loaded 
-let arrOfproduct;
-// if (localStorage.getItem("products")) {
-//     console.log("Local storage exists.");
-arrOfproduct = JSON.parse(localStorage.getItem("products"));
-//     //creatTableofData();
-// } 
-// else {
-//     console.log("Local storage does not exist. Using default array.");
-//     arrOfproduct = arr;
-// }
+window.addEventListener("load", function () {
+    creatTableofData();
+    // Select all elements with the class 'delete' and store them in the 'deleteButtons' variable
+    deleteButtons = document.querySelectorAll('.delete');
+    // Select the first element with the class 'Delete' and store it in the 'deleteConfirmBtn' variable
+    deleteConfirmBtn = document.querySelector('.confirmDelete');
+    cancledBtn = document.querySelector('.cancle');
+    deleteProduct();
+
+    /*////////////////////////////////////////////////////
+        Functionality for sorting table columns
+    ////////////////////////////////////////////////////*/
+        table_rows = document.querySelectorAll('tbody tr'),
+        table_headings = document.querySelectorAll('thead th');
+    //
+   
+    table_headings.forEach((head, i) => {
+
+        let sort_asc = true;
+        if (i == 1 || i == 3 || i == 4) {
+            head.onclick = (e) => {
+                // console.log(e.0target);
+                table_headings.forEach(head => head.classList.remove('active'));
+                head.classList.add('active');
+
+                document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
+                table_rows.forEach(row => {
+                    row.querySelectorAll('td')[i].classList.add('active');
+                })
+
+                head.classList.toggle('asc', sort_asc);
+                sort_asc = head.classList.contains('asc') ? false : true;
+
+                sortTable(i, sort_asc);
+            }
+            // console.log(head);
+        }
 
 
-// console.log(arrOfproduct);
+    })
+
+
+})
+
+///////////////// sort////////////////
+function sortTable(column, sort_asc) {
+
+    //  console.log([...tableTr]);
+    [...table_rows].sort((a, b) => {
+        let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
+            second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
+
+        return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
+    })
+        .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
+
+
+
+}
+
+let arrOfproduct, cart;
+if (localStorage.getItem("products")) {
+    console.log("Local storage exists.");
+    arrOfproduct = JSON.parse(localStorage.getItem("products"));
+}
+if (localStorage.getItem("cart")) {
+    cart = JSON.parse(localStorage.getItem("cart"));
+}
+// Function to update local storage with an array of products
 function updateLocalStorage(arrOfproduct) {
-
     console.log("Updating local storage with products:", arrOfproduct);
     localStorage.setItem("products", JSON.stringify(arrOfproduct));
 }
-
-window.addEventListener("load", function () {
-    creatTableofData();
-
-    /* Deleteeeeeeee*/
-    // select icon delete 
-   /* var deleteButtons = document.querySelectorAll('.delete');
-    var deleteConfirmBtn = document.querySelector('.Delete'); //confirm btn
-    var actualItemDeleted;
-    let positionThisProductInProduct;
-    var trdeleted;
-    var idProduct;
-    console.log(deleteButtons);
-    console.log(deleteConfirmBtn);
-    deleteButtons.forEach(function (button) {
-        button.addEventListener('click', function (e) {
-            // Show the Bootstrap modal
-            actualItemDeleted = e.target.parentElement;
-            trdeleted = $(actualItemDeleted).closest('tr');
-            console.log(trdeleted[0]);
-            console.log(e.target.parentElement);
-            console.log(e.target.parentElement.dataset.id);// id product
-            idProduct = e.target.parentElement.dataset.id;
-
-            $('#myModal').modal('show');
-        });
-        deleteConfirmBtn.addEventListener('click', function () {
-
-            //delete item from html and product arr
-            // console.log(actualItemDeleted);
-    
-    
-            let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == idProduct);
-            positionThisProductInProduct = arrOfproduct.findIndex((value) => {
-                console.log("id", value["productId"], "id", idProduct, arrOfproduct[idProduct - 1]["productId"]);
-                return value["productId"] == arrOfproduct[idProduct - 1]["productId"];
-            });
-    
-            if (positionThisProductInCart == -1 && positionThisProductInProduct !== -1) {//  item not exist in cart  
-                // console.log(products);
-                // console.log(positionThisProductInProduct);
-                //   console.log(products[positionThisProductInProduct]);
-                // Check if the element is found (index is not -1)
-                arrOfproduct.splice(positionThisProductInProduct, 1);
-                localStorage.setItem("products", JSON.stringify(arrOfproduct));
-                //  console.log(products);
-                $(trdeleted).remove()
-    
-                // console.log("done");
-            } else {
-    
-                alert("item already in cart");
-                console.log("item already in cart");
-            }
-    
-    
-    
-            // Hide the modal after deletion
-            $('#myModal').removeClass('fade');
-            // Hide the modal after deletion
-            $('#myModal').modal('hide');
-        });
-    });
-*/
-   
-
-})
+// Function to create and populate an HTML table with product data
 function creatTableofData() {
 
     tbody.innerHTML = ''
@@ -123,22 +117,17 @@ function creatTableofData() {
                       class="material-icons">&#xE417;</i></a>
               <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                       class="material-icons">&#xE254;</i></a>
-              <a href="#"  title="Delete"  data-id="${element.productId}" class="trigger-btn"><i
-                      class="delete material-icons text-danger">&#xE872;</i></a>
+              <a href="#"  title="Delete"  data-id="${product.productId}" class="delete trigger-btn"><i
+                      class=" material-icons text-danger">&#xE872;</i></a>
           </td>
          </tr>`
 
     }
 }
-
-// add 
-// validation
-
 function istextvalid(val) {
     console.log(val != null && /^[a-zA-Z\s]*$/.test(val) && val.length >= 3);
     return val != null && /^[a-zA-Z\s]*$/.test(val) && val.length >= 3;
 }
-
 function isnumbervalid(val) {
     console.log(val != null && val.trim() != "" && /^[0-9]+$/.test(val));
 
@@ -184,37 +173,21 @@ function vaildData() {
         document.getElementById("category").classList.remove("is-invalid");
     }
 
-    /*if (!istextvalid(checkboxes.values)) {
-        document.getElementById("color-checkbox").classList.add("is-invalid");
-        isnotvalidForm = false;
-        //return false;
-    }
-    else {
-        document.getElementById("color-checkbox").classList.remove("is-invalid");
-    } 
-    // if (!isImgValid(_productImage)) {
-    //     document.getElementById("productImage").classList.add("is-invalid");
-    //     isnotvalidForm = false;
-    //     //return false;
-    // } else {
-    //     document.getElementById("productImage").classList.remove("is-invalid");
-    // }
-   */
-
     return isnotvalidForm;
 }
-
-// add new product 
+// Event handler for the click event on the "submit" form 
 submit.onclick = function (e) {
-    // Create an array to store the selected values
-    console.log(vaildData());
-    if (vaildData()) {
+    // Check the validity of the data using the vaildData() function
+    // console.log(vaildData());
+    // if (!vaildData())
+    if (true) {
+        // Close the modal (assuming closeModal() is a function that handles modal closure)
         closeModal();
+
+        // Call the Add() function (assuming Add() is a function that adds the data)
         Add();
-
-    } else {// not vaild 
+    } else {
         e.preventDefault();
-
     }
 }
 
@@ -266,110 +239,82 @@ function closeModal() {
     // Hide the modal after deletion
     $('#myModal2').modal('hide');
 }
+/*//////////////----Delete--/////////////////*/
 
+function deleteProduct() {
+    console.log("___________");
 
+    var positionThisProductInCart;
+    var bodyMsgConfirm = document.querySelector(".modal-content");
+    var trdeleted;
+    var idProduct;
+    var positionThisProductInProduct;;
+    // Iterate through each delete button and attach a click event listener
 
-// delete 
-// function delet(){
-//
+    tbody.addEventListener('click', function (e) {// Show the Bootstrap modal when a delete button is clicked
+        e.preventDefault();
+        if (e.target.parentElement.classList.contains("delete")) {
 
-
-
-// }
-// sort 
-// ///////// creat table
-
-
-
-
-//  sort  //  
-/*
-document.getElementsByTagName("thead")[0].addEventListener("click", function (e) {
-  
-    let products = JSON.parse(localStorage.getItem("products"));
-
-    console.log(e.target.nodeName == "TH");
-    if (products && e.target.nodeName == "TH")
-     {
-        var ProductProperty = e.target.innerText;
-        // console.log(ProductProperty);
-
-        if (e.target.innerText == "productName") {
-            // console.log(ProductProperty);
-            ProductProperty = "productName";
-
-        } else if (e.target.innerText == "sellerName") {
-            // console.log(ProductProperty);
-            ProductProperty = "sellerName";
-        } else if (e.target.innerText == "category") {
-            // console.log(ProductProperty);
-
-            ProductProperty="category";
-
+            console.log(e.target.parentElement.dataset.id);
+            idProduct = e.target.parentElement.dataset.id; // id product
+            $('#myModal').modal('show'); // Display the modal to confirm the deletion
         }
-        // console.log(ProductProperty);              
+        // trdeleted = $(e.target.parentElement).closest('tr');
 
-        sortAsc(ProductProperty);
-
-    }
-});
-
-document.getElementsByTagName("thead")[0].addEventListener("click", function (e) {
-    let products = JSON.parse(localStorage.getItem("products"));
-     console.log(e.target.nodeName);
-    if ( e.target.nodeName == "TH") {
-        var prop = e.target.innerText.trim().toLowerCase();
-        console.log(prop);
-        if (prop === "productname" || prop === "sellername" || prop === "category") {
-            sortAsc(prop);
-        }
-    }
-});
-
-document.getElementsByTagName("thead")[0].addEventListener("dblclick", function (e) {
-    let products = JSON.parse(localStorage.getItem("products"));
-
-    if ( e.target.nodeName == "TH") {
-        var prop = e.target.innerText;
-        if (prop === "productname" || prop === "sellername" || prop === "category") {
-            sortDesc(prop);
-        }
-    }
-});
-
-
-
-
-function sortAsc(prop) {
-    let products = JSON.parse(localStorage.getItem("products"));
-console.log(prop);
-    products.sort((a, b) => {
-        console.log("a", a, "prop", "b", b, prop);
-        //return a[productProp].localeCompare(b[productProp])
-        if (a[prop].trim().toLowerCase() > b[prop].trim().toLowerCase())
-            return 1;
-        if (a[prop].trim().toLowerCase() < b[prop].trim().toLowerCase())
-            return -1;
-        return 0;
-    })
-    addToLocalStorage(products);
-    creatTableofData();
-    console.log(products);
-}
-
-function sortDesc(prp) {
-    let products = JSON.parse(localStorage.getItem("products"));
-
-    products.sort((a, b) => {
-        console.log("Before Sorting: a", a[prp], "b", b[prp]);
-        const comparisonResult = b[prp].localeCompare(a[prp]);
-        console.log("After Sorting: Result", comparisonResult);
-        return comparisonResult;
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function (e) {// Show the Bootstrap modal when a delete button is clicked
+                trdeleted = $(e.target.parentElement).closest('tr');
+                idProduct = e.target.parentElement.dataset.id; // id product
+                $('#myModal').modal('show'); // Display the modal to confirm the deletion
+                // console.log(trdeleted);
+    
+            });
+    
+    
+        });0
     });
 
-    console.log("Sorted Products:", products);
-    addToLocalStorage(products);
-    creatTableofData();
-}
 
-*/
+ 
+    // console.log(bodyMsgConfirm);
+
+    // Add a click event listener to the delete confirmation button
+    bodyMsgConfirm.addEventListener('click', function (e) {
+        // Delete the item from the HTML and product array
+        if (e.target.classList.contains("confirmDelete")) {
+            // Find the position of the product in the cart array
+            positionThisProductInCart = cart.findIndex((value) => value.product_id == idProduct);
+
+            // Find the position of the product in the product array
+            positionThisProductInProduct = arrOfproduct.findIndex((value) => {
+
+                return idProduct == value.productId;   // return value["productId"] == arrOfproduct[idProduct - 1]["productId"];
+            })
+            console.log(positionThisProductInProduct, arrOfproduct[idProduct - 1]);
+            if (positionThisProductInCart == -1) {
+                // Remove the product from the product array
+                arrOfproduct.splice(positionThisProductInProduct, 1);
+                localStorage.setItem("products", JSON.stringify(arrOfproduct));
+                creatTableofData();
+                // Remove the corresponding row from the HTML table
+                $(trdeleted).remove();
+                $('#myModal').removeClass('fade');
+                $('#myModal').modal('hide');
+
+
+            } else {
+                // If the item is already in the cart, display an alert
+                alert("Item already in cart");
+                // console.log("Item already in cart");
+            }
+        } else {
+            // Hide the modal after deletion
+            $('#myModal').removeClass('fade');
+            $('#myModal').modal('hide');
+        }
+
+
+
+    })
+
+}
