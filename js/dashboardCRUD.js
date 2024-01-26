@@ -1,6 +1,6 @@
 ///////////// selectors///////////////
 var tbody = document.querySelector("tbody")
-var tableTr = document.querySelectorAll("table  tr")
+// var tableTr = document.querySelectorAll("table  tr")
 var btnAdd = document.querySelector(".add-new");
 var submit = document.querySelector(".submitLink");
 //selector modal //  
@@ -72,7 +72,7 @@ window.addEventListener("load", function () {
 ///////////////// sort////////////////
 function sortTable(column, sort_asc) {
 
-     console.log([...tableTr]);
+    //  console.log([...tableTr]);
     [...table_rows].sort((a, b) => {
         let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
             second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
@@ -179,23 +179,6 @@ function vaildData() {
     else {
         document.getElementById("category").classList.remove("is-invalid");
     }
-
-    /*if (!istextvalid(checkboxes.values)) {
-        document.getElementById("color-checkbox").classList.add("is-invalid");
-        isnotvalidForm = false;
-        //return false;
-    }
-    else {
-        document.getElementById("color-checkbox").classList.remove("is-invalid");
-    } 
-    // if (!isImgValid(_productImage)) {
-    //     document.getElementById("productImage").classList.add("is-invalid");
-    //     isnotvalidForm = false;
-    //     //return false;
-    // } else {
-    //     document.getElementById("productImage").classList.remove("is-invalid");
-    // }
-   */
 
     return isnotvalidForm;
 }
