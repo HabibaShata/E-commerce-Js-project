@@ -33,7 +33,7 @@ window.addEventListener("load", function(){
         row.innerHTML += `<th>${key}</th>`;
     }
     row.innerHTML += `<th>Actions</th>`;
-    DisplayUsers(allUsers);
+    DisplayUsers();
     //display the pagination
     displayPagination();
 
@@ -65,22 +65,25 @@ window.addEventListener("load", function(){
     this.document.querySelector(".filter-category").addEventListener("click", filter);
 })
 
-function DisplayUsers(usersArray=-1)
+function DisplayUsers(usersArray)
 {
     tableBody.innerHTML = "";
     let rowTD;
     let td;
+    let startIndex=start, endIndex=end;
 
     //if the usersArray is not send (==-1) then equal it to the allusers array
-    if(usersArray==-1)
+    if(usersArray==null)
     {
         usersArray = allUsers;
+        startIndex = start;
+        endIndex = end;
+    } else { //if there is an array sent then display all of it (startIndex = 0 , endIndex = arraylength)
+        startIndex = 0;
+        endIndex = usersArray.length;
     }
 
-    //display the users according to the pagination
-    //if the end is larger than the lebgth of allUsers array then display only until the allUsers length
-    let actualEnd = end > usersArray.length ? usersArray.length : end;
-    for(let i = start; i < actualEnd; i++) {
+    for(let i = startIndex; i < endIndex; i++) {
         var user = usersArray[i];
         rowTD = tableBody.insertRow(-1);
         for (const key in user) {
@@ -154,7 +157,6 @@ function pagination(e) {
         //calculate the start and the end based on the page number and the number of users per page     
         end = pageNumber * numberOfUsersPerPage;
         start = end - numberOfUsersPerPage;
-
         //display the new set of users
         DisplayUsers();
     }
@@ -190,14 +192,27 @@ function filter(e)
             DisplayUsers(allUsers);
             usersFilter = "all";
             break;
-        case "Customers"://display only the customers
-            DisplayUsers(allUsers.filter(user=>user.userRole=="customer"));
-            usersFilter = "customer";
+        default:
+            let userRole = e.target.innerHTML.toLowerCase().substring(0, e.target.innerHTML.length-1);
+            //display only the users with the same userRole according to the current pagination page
+            let filteredUsers = [];
+            for(let i = start; i < end; i++) {
+                if(allUsers[i].userRole == userRole) {
+                    filteredUsers.push(allUsers[i]);
+                }
+            }
+            DisplayUsers(filteredUsers);
+            usersFilter = userRole;
             break;
-        case "Sellers"://display only the sellers
-            DisplayUsers(allUsers.filter(user=>user.userRole=="seller"));
-            usersFilter = "seller";
-            break;
+        // case "Customers"://display only the customers
+            
+        //     DisplayUsers(allUsers.filter(user=>user.userRole=="customer"));
+        //     usersFilter = "customer";
+        //     break;
+        // case "Sellers"://display only the sellers
+        //     DisplayUsers(allUsers.filter(user=>user.userRole=="seller"));
+        //     usersFilter = "seller";
+        //     break;
     }
 }
 

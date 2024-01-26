@@ -3,8 +3,6 @@ import { addToCart } from './addtoCart.js';
 import { renderingNavBar, LogOut } from "./general-methods.js";
 
 // Now you can use addToCart in this file
-
-
 let categories = ["All", "Jewellery", "Accessories", "Artwork", "Pet-supplies", "Sweets"];
 let filter = "All";
 let checkedSellers = [];
@@ -21,6 +19,9 @@ if (loggedInUser) {
     }
 }
 
+/**
+ *  
+ */
 function displaySellersFilter() {
     //get the sellers' names container in products.html
     sellersList = document.querySelector(".sellers-list");
