@@ -1,5 +1,5 @@
 //import { Item } from "../orders.js";
-//import { cart as arrCart} from "./addtoCart"
+import { clearCart} from "./addtoCart.js"
 
 //Check if the user is a guuest then navigate to the log in page
 let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -9,9 +9,8 @@ if (!loggedInUser) {
     history.back();
 }
 
-
 class Item {
-    constructor(_productId, _productName, _image, _option, _quantity, _price, _totalPrice, _seller) {
+    constructor(_productId, _productName, _image, _option, _quantity, _price, _totalPrice, _seller, _itemStatus) {
         this.productId = _productId;
         this.productName = _productName;
         this.image = _image;
@@ -20,6 +19,7 @@ class Item {
         this.price = _price;
         this.totalPrice = _totalPrice;
         this.seller = _seller;
+        this.itemStatus=_itemStatus;
     }
 }
 
@@ -79,7 +79,7 @@ window.addEventListener("load", function () {
 <img src="${products[order["product_id"] - 1].images[0]}"/>
 <div class="orderItem-detail">
     <h3 class="name" >Name: ${products[order["product_id"] - 1].productName}</h3>
-    <h3 class="seller">seller:  seller1</h3>
+    <h3 class="seller">seller: ${order["seller"]}</h3>
     <h5 class="quantity">quantity:  ${order["quantity"]}</h5>
     <h5 class="color">color:  ${order["colorOptions"]}</h5>
         <span class="orderItem-price">
@@ -96,6 +96,7 @@ window.addEventListener("load", function () {
         const userAddress = address.find(add => add.username == loggedInUser.userName);
         if (userAddress != null && userAddress != undefined) {
             createOrder(userAddress);
+            clearCart();
         } else {
             alert('Please Fill the Address and Save it')
         }
@@ -167,7 +168,7 @@ function createOrder(userAddress) {
     const price = totalPrice/quantity;
     const seller = item.find('.seller').text().replace('seller: ', '');
     
-    items.push(new Item(productId, productName, image, option, quantity, price, totalPrice, seller));
+    items.push(new Item(productId, productName, image, option, quantity, price, totalPrice, seller,"New"));
 
     //products[productId-1].quantity=parseInt(products[productId-1].quantity)-quantity ;
     // products[productId-1].quantity_sold = parseInt(products[productId-1].quantity_sold)+parseInt(quantity);
