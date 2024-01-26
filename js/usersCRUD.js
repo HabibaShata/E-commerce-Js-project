@@ -13,6 +13,7 @@ let selectedUser = {
 let tableBody, tableHead;
 
 let usersFilter="all";
+let roleFilter = "all";
 
 //pagination variables
 let numberOfUsersPerPage = 4;
@@ -20,7 +21,6 @@ let pageNumber = 1;
 let start = 0;
 let end = numberOfUsersPerPage;
 let numberOfBtns = 0;
-
 
 window.addEventListener("load", function(){
     //Get the users from local storage and make a table with all users except for those whose userRole is admin
@@ -128,6 +128,7 @@ function displayPagination(usersArray)
 }
 
 function pagination(e) {
+    debugger
     //if the user clicked on an LI item
     if (e.target.nodeName == "A") {
         //if the user clicked on the previous button
@@ -135,14 +136,14 @@ function pagination(e) {
             //if the current page number is greater than 1, decrease the page number by 1
             if (pageNumber > 1) {
                 pageNumber--;
-            }
+            } else return;
         }//if the user clicked on the next button
         else if(e.target.innerHTML == "Next")
         {
             //if the current page number is less than the number of buttons, increase the page number by 1
             if (pageNumber < numberOfBtns) {
                 pageNumber++;
-            }
+            } else return;
         }//if the user clicked on a button with a number 
         else {
             pageNumber = parseInt(e.target.innerHTML);
@@ -167,7 +168,6 @@ function pagination(e) {
 
 function search(e)
 {
-    debugger
     let searchedArr;
     if(usersFilter!="all") {
         searchedArr = allUsers.filter(user=>user.userName.toLowerCase().indexOf(e.target.value.toLowerCase())!=-1 && user.userRole == usersFilter);
@@ -198,15 +198,15 @@ function filter(e)
             usersFilter = "all";
             break;
         default:
-            debugger
             let userRole = e.target.innerHTML.toLowerCase().substring(0, e.target.innerHTML.length-1);
             //display only the users with the same userRole according to the current pagination page
             let filteredUsers = [];
-            for(let i = start; i < end; i++) {
+            for(let i = 0; i < allUsers.length; i++) {
                 if(allUsers[i].userRole == userRole) {
                     filteredUsers.push(allUsers[i]);
                 }
             }
+            displayPagination(filteredUsers);
             DisplayUsers(filteredUsers);
             usersFilter = userRole;
             break;
