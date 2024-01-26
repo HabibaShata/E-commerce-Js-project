@@ -50,6 +50,9 @@ if(!localStorage.getItem("products")){
    localStorage.setItem("products", JSON.stringify(products));
 }
 
+//get the loggedInUser
+let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
 
 
 // client section owl carousel
@@ -75,6 +78,37 @@ function GetProducts(maxNumber, productsList) {
    }
    let productCards = "";
    for (let i = 0; i < maxNumber; i++) {
+      if (loggedInUser.userRole == "admin") {
+         productCards +=
+      
+         `<div class="col-sm-6 col-md-6 col-lg-4 data-id=${products[i].productId}">
+
+           <div class="box">
+              <div class="option_container">
+                   <div class="options">
+                      <a href="productDetails.html?productId=${products[i].productId}" class="option2">
+                      View Details
+                      </a>
+                   </div>
+               </div>
+                <div class="img-box">
+                   <img src="${products[i].images[0]}" alt="">
+                </div>
+                <div class="detail-box" style="display: flex !important;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column !important;">
+                   <h5>
+                      ${products[i].productName}
+                   </h5>
+                   <h6>
+                      $${products[i].price}
+                   </h6>
+                </div>
+             </div>
+         
+          </div>`;
+      } else {
       productCards +=
       
          `<div class="col-sm-6 col-md-6 col-lg-4 data-id=${products[i].productId}">
@@ -107,10 +141,8 @@ function GetProducts(maxNumber, productsList) {
              </div>
          
           </div>`;
-
+      }
    }
-
-
 
    return productCards;
 }

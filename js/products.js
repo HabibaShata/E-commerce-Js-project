@@ -19,9 +19,6 @@ if (loggedInUser) {
     }
 }
 
-/**
- *  
- */
 function displaySellersFilter() {
     //get the sellers' names container in products.html
     sellersList = document.querySelector(".sellers-list");
