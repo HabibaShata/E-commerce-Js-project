@@ -1,3 +1,4 @@
+import {Product} from "./custom.js";
 ///////////// selectors///////////////
 var tbody = document.querySelector("tbody")
 // var tableTr = document.querySelectorAll("table  tr")
@@ -117,7 +118,7 @@ function creatTableofData() {
                       class="material-icons">&#xE417;</i></a>
               <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                       class="material-icons">&#xE254;</i></a>
-              <a href="#"  title="Delete"  data-id="${product.productId}" class="delete trigger-btn"><i
+              <a href="#"  title="Delete"  data-id="${element.productId}" class="delete trigger-btn"><i
                       class=" material-icons text-danger">&#xE872;</i></a>
           </td>
          </tr>`
@@ -210,7 +211,7 @@ function Add() {
     // console.log(imgesInput);
     var lastID = Math.max(...arrOfproduct.map(product => product.productId), 0); // to get max id 
 
-    var newProduct = new Product(lastID + 1, _ProductName.value, category.value, JSON.parse(localStorage.getItem(loggedInUser)).userName, _Quntity.value, "0", imgesInput, _price.value, description.value, selectedValues);
+    var newProduct = new Product(lastID + 1, _ProductName.value, category.value, JSON.parse(localStorage.getItem("loggedInUser")).userName, _Quntity.value, "0", imgesInput, _price.value, description.value, selectedValues);
 
     // console.log(newProduct);
     // console.log(newProduct["images"]);
