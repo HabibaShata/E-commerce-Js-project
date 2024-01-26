@@ -10,10 +10,11 @@ window.addEventListener('load', function () {
 // }
 
 //back btn
-this.document.querySelector("#backBtn").addEventListener("click", function () {
-  history.back();
-})
-
+//check if the url is profile.html
+if (location.href.includes("profile.html")) {
+  this.document.querySelector("#backBtn").addEventListener("click", function () {
+    history.back();
+  })
 
   const userData = JSON.parse(userDataString);
 
@@ -124,8 +125,10 @@ this.document.querySelector("#backBtn").addEventListener("click", function () {
           }
         }
       });
-  
   }
+}
+
+  
 
  });
 
