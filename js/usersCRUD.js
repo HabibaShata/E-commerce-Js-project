@@ -83,6 +83,8 @@ function DisplayUsers(usersArray)
         endIndex = usersArray.length;
     }
 
+    endIndex = endIndex > usersArray.length ? usersArray.length : endIndex;
+
     for(let i = startIndex; i < endIndex; i++) {
         var user = usersArray[i];
         rowTD = tableBody.insertRow(-1);
@@ -165,6 +167,7 @@ function pagination(e) {
 
 function search(e)
 {
+    debugger
     let searchedArr;
     if(usersFilter!="all") {
         searchedArr = allUsers.filter(user=>user.userName.toLowerCase().indexOf(e.target.value.toLowerCase())!=-1 && user.userRole == usersFilter);
@@ -172,6 +175,7 @@ function search(e)
         searchedArr = allUsers.filter(user=>user.userName.toLowerCase().indexOf(e.target.value.toLowerCase())!=-1);
     }
     
+    displayPagination(searchedArr);
     DisplayUsers(searchedArr);
 }
 
