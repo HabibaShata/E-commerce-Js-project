@@ -76,7 +76,7 @@ function GetProducts(maxNumber, productsList) {
       maxNumber = products.length;
    }
    let productCards = "";
-   for (let i = maxNumber; i >= 0; i--) {
+   for (let i = maxNumber - 1; i >= 0; i--) {
       if (loggedInUser && loggedInUser.userRole == "admin") {
          productCards +=
       

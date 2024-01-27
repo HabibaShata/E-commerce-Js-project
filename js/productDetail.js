@@ -1,6 +1,7 @@
 
 import { products } from "./custom.js";
 import { addToCart, iconCartSpan, arrCart, temmraryDiv } from "./addtoCart.js";
+import { renderingNavBar } from "./general-methods.js";
 
 // form-control btn btn-warning fa fa-shopping-cart iconAddToCart
 //////////////////////////////////////////////////////////////////////////////////
@@ -14,6 +15,8 @@ if(JSON.parse(localStorage.getItem('cart'))){
 
 
 window.addEventListener("load", function () {
+    renderingNavBar();
+
     const searchParams = new URLSearchParams(window.location.search);
 
     // Get the value of the 'productId' parameter

@@ -13,7 +13,7 @@ let selectedUser = {
 let tableBody, tableHead;
 
 let usersFilter="all";
-let roleFilter = "all";
+let filteredUsers = [];
 
 //pagination variables
 let numberOfUsersPerPage = 4;
@@ -75,7 +75,7 @@ function DisplayUsers(usersArray)
     //if the usersArray is not send (==-1) then equal it to the allusers array
     if(usersArray.length>end-start)
     {
-        usersArray = allUsers;
+        // usersArray = allUsers;
         startIndex = start;
         endIndex = end;
     } else { //if there is an array sent then display all of it (startIndex = 0 , endIndex = arraylength)
@@ -160,8 +160,13 @@ function pagination(e) {
         //calculate the start and the end based on the page number and the number of users per page     
         end = pageNumber * numberOfUsersPerPage;
         start = end - numberOfUsersPerPage;
-        //display the new set of users
-        DisplayUsers(allUsers);
+        //display the new set of users according to the role annd pagination
+        if(usersFilter == "customer" || usersFilter == "seller")
+        {
+            DisplayUsers(allUsers.filter(user=>user.userRole == usersFilter));
+        } else {
+            DisplayUsers(allUsers);
+        }
     }
 }
 
@@ -189,6 +194,10 @@ function filter(e)
         btns.forEach(btn=>{btn.classList.remove("btn-primary"); btn.classList.add("btn-secondary");})
         e.target.classList.add("btn-primary");
         e.target.classList.remove("btn-secondary");
+        //reset the pagination
+        start=0;
+        end = numberOfUsersPerPage;
+        pageNumber = 1;
     }
     switch(e.target.innerHTML) //switch based on the button innerhtml
     {
@@ -198,6 +207,7 @@ function filter(e)
             usersFilter = "all";
             break;
         default:
+            
             let userRole = e.target.innerHTML.toLowerCase().substring(0, e.target.innerHTML.length-1);
             //display only the users with the same userRole according to the current pagination page
             let filteredUsers = [];
