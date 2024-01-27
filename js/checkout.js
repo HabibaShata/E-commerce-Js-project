@@ -3,9 +3,16 @@ import { clearCart} from "./addtoCart.js"
 
 //Check if the user is a guuest then navigate to the log in page
 let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+let cart = JSON.parse(localStorage.getItem("cart"));
+
 if (!loggedInUser) {
     location.href = "../Login/login.html";
 } else if (loggedInUser.userRole != "customer") { //if the user is not a customer then go back
+    history.back();
+}
+
+if(cart.length==0)
+{
     history.back();
 }
 
@@ -59,8 +66,6 @@ var containerOreders = document.querySelector(".ordersBody");
 let totalPrice = document.querySelector(".cart-total");
 let btnCheckout = document.querySelector(".checkout");
 
-console.log(totalPrice);
-let cart = JSON.parse(localStorage.getItem('cart'))
 let products = JSON.parse(localStorage.getItem('products'))
 
 window.addEventListener("load", function () {

@@ -306,7 +306,6 @@ window.addEventListener("load", function () {
 
 var cnt = 0;
 export const addToCart = (product_id,seller) => {
-
     //findindex fun return index of ele if it extist in arr else if rturn -1;
     let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == product_id);
    console.log(positionThisProductInCart);
@@ -317,6 +316,7 @@ export const addToCart = (product_id,seller) => {
             seller: seller,
             quantity_sold: 0,
             colorOptions: "black",
+            sellerName: ""
         }];
         temmraryDiv.style.display = "block";
         setTimeout(function () {
@@ -331,7 +331,6 @@ export const addToCart = (product_id,seller) => {
             seller: seller,
             quantity_sold:0,
             colorOptions: "black",
-
         });
         temmraryDiv.style.display = "block";
         setTimeout(function () {
