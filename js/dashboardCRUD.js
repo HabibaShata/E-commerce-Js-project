@@ -1,4 +1,5 @@
 import {Product} from "./classes.js";
+import { products } from "./custom.js";
 ///////////// selectors///////////////
 var tbody = document.querySelector("tbody")
 // var tableTr = document.querySelectorAll("table  tr")
@@ -68,20 +69,34 @@ window.addEventListener("load", function () {
    var submitButton=document.getElementById('submitButton');
    var searchBar = document.getElementById('searchBar');
    searchBar.addEventListener('input', handleSearch);
+
+   ///////////////event to dispaly (button display product details)
+    document.querySelectorAll('.view').forEach(function(display){ display.addEventListener('click', function(event) {
+        let clickedRow = event.target.closest('tr');
+        console.log(clickedRow)
+        if (clickedRow) {
+            
+                displayProduct(productId);   
+            }
+        })
+    });
 })
 
 /*start hissen*/ 
 //get the date from the table into the modal
 function attachEditEventListeners() {
-    document.querySelectorAll('.edit').forEach(function(editIcon) {
-        editIcon.addEventListener('click', function(event) {
-            event.preventDefault();
-            const row = editIcon.closest('tr');
-            const productData = getProductDataFromRow(row);
+    tbody.addEventListener("click", function(e){
+        //if the clicked button is the edit button then get the id and from the id get the data
+        if(e.target.classList.contains("edit"))
+        {
+            //get the id from data-id
+            let productID = e.target.dataset.id;
+            //get the data from the id
+            console.log(products)
+            let productData = products.filter(product=>product.productId == productID)[0];
             populateFormWithProductData(productData);
-            $('#userFormModal').modal('show');
-        });
-    });
+        }
+    })
 }
 
 // Fetch data from a table row
@@ -98,11 +113,57 @@ function getProductDataFromRow(row) {
 
 // Populate the form fields with product data
 function populateFormWithProductData(data) {
-    document.querySelector("#productId").value = data.productId;
+    //make the modal fields
+    console.log(data)
+    const modalFields = document.querySelector('.modal-fields');
+    modalFields.innerHTML = `
+            <div class="form-group">
+            <label>Product ID</label>
+            <input class="form-control" type="text" name="productId" id="productId" value="${data.productId}">
+        </div>
+        <div class="form-group">
+            <label>Category</label>
+            <small id="categoryMessage" class="form-text  text-danger"></small>
+
+            <input class="form-control" type="text" name="category" id="category" value="${data.category}">
+        </div>
+        <div class="form-group">
+            <label>Product Name</label>
+            <small id="nameMessage" class="form-text  text-danger"></small>
+
+            <input class="form-control" type="text" name="productName"
+                id="productName" value="${data.productName}">
+        </div>
+        <div class="form-group">
+            <label>Images</label>
+            <small id="imagesMessage" class="form-text  text-danger"></small>
+            <input class="form-control" type="text" name="images" id="images" value="${data.images[0]}">
+        </div>
+
+        <div class="form-group">
+            <label>Seller Name</label>
+            <small id="sellerMessage" class="form-text  text-danger"></small>
+            <input class="form-control" type="text" name="sellerName" value="${data.sellerName}"
+                id="sellerName">
+        </div>
+
+
+        <div class="form-group">
+            <label>Price</label>
+            <small id="priceMessage" class="form-text  text-danger"></small>
+            <input class="form-control" type="text" name="price" id="price" value="${data.price}">
+        </div>
+        </div>`
+
+    document.querySelector("#productId").setAttribute("value", data.productId);
     document.querySelector("#productName").value = data.productName;
-    document.querySelector("#price").value = data.price;
+    document.querySelector("#images").value = data.images[0];
     document.querySelector("#sellerName").value = data.sellerName;
-    document.querySelector("#category").value = data.category;
+    document.querySelector("#category").value = data.category.toUpperCase();
+    document.querySelector("#price").value = data.price;
+
+    console.log(data.category.toUpperCase())
+    console.log(data.productName)
 }
 
 //update the product date on submit
@@ -116,6 +177,7 @@ submitButton.addEventListener("click", function(event) {
         console.log("Validation failed. Product data not updated.");
     }
 });
+
 
 // Update product data in the array and local storage
 function updateProductData(editedValues) {
@@ -134,7 +196,22 @@ function updateProductData(editedValues) {
     }
 }
 
-
+//display the product details
+function displayProduct(productID){
+    let productDetails = arrOfproduct.filter(item => item.productId == productID);
+    if(productDetails.length > 0){
+        console.log("helloo")
+        document.querySelector('#exampleModalLong2 .modal-body2 ').innerHTML = `
+            <p>Product Name: ${productDetails[0].productName}</p>
+            <p>Price: ${productDetails[0].price}</p>
+            <p>Sold by: ${productDetails[0].sellerName}</p>
+            <p>Category: ${productDetails[0].category}</p>
+            <img src="${productDetails[0].images[0]}" alt="Product Image">
+        `;
+    } else {
+        console.log("No such product exists");
+    }
+}
 
 // Handle search functionality
 function handleSearch() {
@@ -145,6 +222,7 @@ function handleSearch() {
         row.style.display = rowText.includes(searchValue) ? "" : "none";
     }
 }
+
 /*end hissen*/ 
 
 ///////////////// sort////////////////
@@ -192,10 +270,12 @@ function creatTableofData() {
           <td>${element.category}</td>
           <td>${element.price}</td>
           <td>
-              <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                      class="material-icons">&#xE417;</i></a>
-                      <a href="#" class="edit" title="Edit" data-toggle="modal" data-target="#userFormModal">
-                      <i class="material-icons">&#xE254;</i>
+                      <a href="#" class="edit" title="Edit" data-bs-toggle="modal" data-bs-target="#userFormModal">
+                      <i class="material-icons edit" data-id="${element.productId}">&#xE254;</i>
+                  </a>
+                  <!-- View Link -->
+                  <a href="#" title="View" data-bs-toggle="modal" data-bs-target="#exampleModalLong2" >
+                      <i data-id="${element.productId}" class="view material-icons">&#xE417;</i>
                   </a>
               <a href="#"  title="Delete"  data-id="${element.productId}" class="delete trigger-btn"><i
                       class=" material-icons text-danger">&#xE872;</i></a>
@@ -204,7 +284,18 @@ function creatTableofData() {
 
     }
     attachEditEventListeners();
+    //add view event listener
+    tbody.addEventListener("click", function(e){
+        console.log(e.target.dataset.id)
+        if(e.target.classList.contains("view")){
+            let productId = e.target.dataset.id;
+            console.log(productId);
+            
+            displayProduct(productId);
+        }
+    })
 }
+
 function istextvalid(val) {
     console.log(val != null && /^[a-zA-Z\s]*$/.test(val) && val.length >= 3);
     return val != null && /^[a-zA-Z\s]*$/.test(val) && val.length >= 3;
@@ -339,20 +430,22 @@ function deleteProduct() {
             console.log(e.target.parentElement.dataset.id);
             idProduct = e.target.parentElement.dataset.id; // id product
             $('#myModal').modal('show'); // Display the modal to confirm the deletion
+
+            deleteButtons.forEach(function (button) {
+                button.addEventListener('click', function (e) {// Show the Bootstrap modal when a delete button is clicked
+                    trdeleted = $(e.target.parentElement).closest('tr');
+                    idProduct = e.target.parentElement.dataset.id; // id product
+                    $('#myModal').modal('show'); // Display the modal to confirm the deletion
+                    // console.log(trdeleted);
+        
+                });
+        
+        
+            });
         }
         // trdeleted = $(e.target.parentElement).closest('tr');
 
-        deleteButtons.forEach(function (button) {
-            button.addEventListener('click', function (e) {// Show the Bootstrap modal when a delete button is clicked
-                trdeleted = $(e.target.parentElement).closest('tr');
-                idProduct = e.target.parentElement.dataset.id; // id product
-                $('#myModal').modal('show'); // Display the modal to confirm the deletion
-                // console.log(trdeleted);
-    
-            });
-    
-    
-        });0
+        
     });
 
 

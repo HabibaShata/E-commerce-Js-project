@@ -30,7 +30,8 @@ function handleFormSubmit(event) {
         showValidationMessages(['This email is already signed up. Please use a different email.']);
         emailExists = false;
     } else {
-        var user = new users(usersArray.length+1, username, password, email, role);
+        let maxId = Math.max(...usersArray.map(user => user.userID), 0); //get max id
+        var user = new users(maxId + 1, username, password, email, role);
 
         usersArray.push(user);
 
