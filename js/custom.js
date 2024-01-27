@@ -25,7 +25,6 @@ class Product
     }
 }
 
-//random data
 
 //random data
 let products = [
