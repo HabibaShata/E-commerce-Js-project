@@ -1,4 +1,4 @@
-import { users as usersClass } from "../sign-up/sign-up.js";
+import { users as usersClass } from "./classes.js";
 const userDataString = localStorage.getItem('loggedInUser');
 
 window.addEventListener('load', function () {

@@ -1,5 +1,4 @@
-
-import { products } from "./custom.js";
+import { products } from "./classes.js";
 import { addToCart, iconCartSpan, arrCart, temmraryDiv } from "./addtoCart.js";
 import { renderingNavBar } from "./general-methods.js";
 

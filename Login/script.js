@@ -1,4 +1,4 @@
-import { users } from "../sign-up/sign-up.js";
+import { users } from "../js/classes.js";
 
 let usersArray = [];
 

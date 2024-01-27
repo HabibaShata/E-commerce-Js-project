@@ -1,5 +1,6 @@
 //import { Item } from "../orders.js";
 import { clearCart} from "./addtoCart.js"
+import { Item,Order,Address } from "./classes.js";
 
 //Check if the user is a guuest then navigate to the log in page
 let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -16,45 +17,6 @@ if(cart.length==0)
     history.back();
 }
 
-class Item {
-    constructor(_productId, _productName, _image, _option, _quantity, _price, _totalPrice, _seller, _itemStatus) {
-        this.productId = _productId;
-        this.productName = _productName;
-        this.image = _image;
-        this.option = _option;
-        this.quantity = _quantity;
-        this.price = _price;
-        this.totalPrice = _totalPrice;
-        this.seller = _seller;
-        this.itemStatus=_itemStatus;
-    }
-}
-
-class Order {
-    constructor(_id, _userId, _clientName, _clientAddress, _date, _shipping, _totalPrice, _orderStatus, _items) {
-        this.id = _id;
-        this.userId = _userId;
-        this.clientName = _clientName;
-        this.clientAddress = _clientAddress;
-        this.date = _date;
-        this.shipping = _shipping;
-        this.totalPrice = _totalPrice;
-        this.orderStatus = _orderStatus;
-        this.items = _items;
-    }
-}
-
-class Address {
-    constructor( _username, _phoneNumber, _additionalNumber, _address, _additionalInformation, _region, _city) {
-        this.username = _username;
-        this.phoneNumber = _phoneNumber;
-        this.additionalNumber = _additionalNumber;
-        this.address = _address;
-        this.additionalInformation = _additionalInformation;
-        this.region = _region;
-        this.city = _city;
-    }
-}
 
 let address = JSON.parse(localStorage.getItem("address"));
 address = address == null ? [] : address;
