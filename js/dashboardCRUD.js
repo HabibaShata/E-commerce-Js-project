@@ -18,8 +18,6 @@ var checkboxes = document.querySelectorAll('.color-checkbox');
 
 // Declare variables for later use; these will be assigned values at runtime
 var deleteButtons;
-var cancledBtn;
-var deleteConfirmBtn;
 var table_headings, table_rows;
 /////
 
@@ -46,7 +44,7 @@ window.addEventListener("load", function () {
         let sort_asc = true;
         if (i == 1 || i == 3 || i == 4) {
             head.onclick = (e) => {
-                // console.log(e.0target);
+                // console.log(e.target);
                 table_headings.forEach(head => head.classList.remove('active'));
                 head.classList.add('active');
 
@@ -176,6 +174,10 @@ function updateLocalStorage(arrOfproduct) {
     console.log("Updating local storage with products:", arrOfproduct);
     localStorage.setItem("products", JSON.stringify(arrOfproduct));
 }
+
+
+
+
 // Function to create and populate an HTML table with product data
 function creatTableofData() {
 
@@ -206,7 +208,7 @@ function creatTableofData() {
     attachEditEventListeners();
 }
 function istextvalid(val) {
-    console.log(val != null && /^[a-zA-Z\s]*$/.test(val) && val.length >= 3);
+    // console.log(val != null && /^[a-zA-Z\s]*$/.test(val) && val.length >= 3);
     return val != null && /^[a-zA-Z\s]*$/.test(val) && val.length >= 3;
 }
 function isnumbervalid(val) {
@@ -259,8 +261,7 @@ function vaildData() {
 // Event handler for the click event on the "submit" form 
 submit.onclick = function (e) {
     // Check the validity of the data using the vaildData() function
-    // console.log(vaildData());
-    // if (!vaildData())
+    // if (vaildData())
     if (true) {
         // Close the modal (assuming closeModal() is a function that handles modal closure)
         closeModal();
@@ -301,7 +302,10 @@ function Add() {
 
     console.log("arr => html", arrOfproduct);
     // updateLocalStorage(arrOfproduct);
-    creatTableofData();
+    location.reload();
+    // creatTableofData();
+   
+
 
 }
 
@@ -352,7 +356,7 @@ function deleteProduct() {
             });
     
     
-        });0
+        });
     });
 
 
@@ -399,3 +403,5 @@ function deleteProduct() {
     })
 
 }
+
+
