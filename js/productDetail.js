@@ -35,11 +35,38 @@ window.addEventListener("load", function () {
     console.log(arrCart);
 
     iconAddToCart[0].addEventListener("click", function (e) {
-        const seller = $(".seller").text();
-        addToCart(productId, seller);
+        const seller = product.sellerName;
+       
+        
+        const color = document.querySelector(".color").value;
+        const quantity = document.querySelector(".quantity").value;
+        console.log(color);
+        console.log(quantity);
+
+        addToCart(productId, seller, quantity, color);
         console.log(e.target);
     })
     ////////////////////////////////////////////////////////////////////////////
+    //add event listener to the quantity to check the quantity is not negative
+    const quantity = document.querySelector("#quantity");
+    quantity.addEventListener("input", function () {
+        if (quantity.value < 1) {
+            quantity.value = 1;
+        } else if (product.quantity <=  quantity) {
+            quantity.value = product.quantity;
+        }
+    })
+    //display out of stock and hide in stock fields if the product quantity is 0
+    if (product.quantity == 0) {
+        document.querySelector("#out-stock").style.display = "block";
+        document.querySelector(".in-stock").style.display = "none";
+    }
+
+    //display the maximum quantity
+    document.querySelector("#max-quantity").innerHTML = `Available ${product.quantity}`;
+
+    //display the sold quantity
+    document.querySelector("#sold-quantity").innerHTML = `Sold ${product.quantity_sold}`;
 })
 
 

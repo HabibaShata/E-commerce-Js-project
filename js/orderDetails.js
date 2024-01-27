@@ -71,7 +71,7 @@ $(function () {
         $("#subtotal").text((order.totalPrice - order.shipping) + '$');
        }
 
-        const completeAddress = `${order.clientAddress.firstName} ${order.clientAddress.lastName}<br>${order.clientAddress.address}<br>${order.clientAddress.additionalInformation ? order.clientAddress.additionalInformation + "<br>" : ""}${order.clientAddress.region}, ${order.clientAddress.city}<br>Phone: ${order.clientAddress.phoneNumber}`;
+        const completeAddress = `${order.clientName}<br>${order.clientAddress.address}<br>${order.clientAddress.additionalInformation ? order.clientAddress.additionalInformation + "<br>" : ""}${order.clientAddress.region}<br>Phone: ${order.clientAddress.phoneNumber}`;
         $("#address").html(completeAddress);
 
 

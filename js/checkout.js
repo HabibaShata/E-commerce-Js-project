@@ -45,9 +45,7 @@ class Order {
 }
 
 class Address {
-    constructor(_firstName, _lastName, _username, _phoneNumber, _additionalNumber, _address, _additionalInformation, _region, _city) {
-        this.firstName = _firstName;
-        this.lastName = _lastName;
+    constructor( _username, _phoneNumber, _additionalNumber, _address, _additionalInformation, _region, _city) {
         this.username = _username;
         this.phoneNumber = _phoneNumber;
         this.additionalNumber = _additionalNumber;
@@ -112,16 +110,14 @@ window.addEventListener("load", function () {
         event.preventDefault();
 
         // Retrieve values from form fields
-        const firstName = $('#firstName').val();
-        const lastName = $('#lastName').val();
         const phone = $('#phone').val();
         const additionalphone = $('#additionalphone').val();
-        const adreess = $('#adreess').val();
+        const adreess = $('#address').val();
         const info = $('#info').val();
         const region = $('#region').find(":selected").text();;
         const city = $('#city').val();
 
-        const addressObject = new Address(firstName, lastName, loggedInUser.userName, phone, additionalphone, adreess, info, region, city);
+        const addressObject = new Address(loggedInUser.userName, phone, additionalphone, adreess, info, region, city);
         const userAddressIndex = address.findIndex(add => add.username === loggedInUser.userName);
 
         if (userAddressIndex !== -1) {
@@ -138,8 +134,6 @@ window.addEventListener("load", function () {
 
 function createOrder(userAddress) {
     const address = new Address(
-        userAddress.firstName,
-        userAddress.lastName,
         userAddress.username,
         userAddress.phoneNumber,
         userAddress.additionalNumber,

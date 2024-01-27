@@ -136,24 +136,22 @@
                         <p class="seller" style="color: #ff9f1a;"></p>
                         <p class="catigory"></p>
                         <div class="rating">
-                            <div class="stars">
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                            </div>
-                            <span class="review-no">41 reviews</span>
+                           <span id="sold-quantity" class="badge badge-success"></span>
                         </div>
                         <p class="product-description"></p>
-                        <h4 class="price">current price: <span></span></h4>              
-                        <h6>Color :</h6>
-                        <select class="form-control">
+                        <h4 class="price">current price: <span></span></h4>   
+                        <div class="in-stock">
+                           <h6>Color :</h6>
+                           <select class="form-control color">
 
-                        </select>
-                        <br>
-                        <h6>Quantity :</h6>
-                        <input type="number" class="form-control text-center w-100" value="1" min="1" max="12">
+                           </select>
+                           <br>
+                           <h6>Quantity : <span class="badge bg-warning" id="max-quantity"> </span></h6>
+                           <input type="number" class="quantity form-control text-center w-100" value="1" min="1" id="quantity">
+                        </div>
+                        
+                        <div class="alert alert-danger" style="display: none;" id="out-stock">Out of stock</div>
+                        
 
                         <br>
                         <span class="btnIconAddToCart iconAddToCart"><i class="fa-solid fa-cart-shopping"></i> </span>

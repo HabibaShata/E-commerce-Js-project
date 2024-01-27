@@ -65,9 +65,87 @@ window.addEventListener("load", function () {
 
 
     })
-
-
+   var submitButton=document.getElementById('submitButton');
+   var searchBar = document.getElementById('searchBar');
+   searchBar.addEventListener('input', handleSearch);
 })
+
+/*start hissen*/ 
+//get the date from the table into the modal
+function attachEditEventListeners() {
+    document.querySelectorAll('.edit').forEach(function(editIcon) {
+        editIcon.addEventListener('click', function(event) {
+            event.preventDefault();
+            const row = editIcon.closest('tr');
+            const productData = getProductDataFromRow(row);
+            populateFormWithProductData(productData);
+            $('#userFormModal').modal('show');
+        });
+    });
+}
+
+// Fetch data from a table row
+function getProductDataFromRow(row) {
+    return {
+        productId: row.cells[0].innerText.trim(),
+        productName: row.cells[1].innerText.trim(),
+        images: row.cells[2].querySelector('img').src,
+        sellerName: row.cells[3].innerText.trim(),
+        category: row.cells[4].innerText.trim(),
+        price: row.cells[5].innerText.trim()
+    };
+}
+
+// Populate the form fields with product data
+function populateFormWithProductData(data) {
+    document.querySelector("#productId").value = data.productId;
+    document.querySelector("#productName").value = data.productName;
+    document.querySelector("#price").value = data.price;
+    document.querySelector("#sellerName").value = data.sellerName;
+    document.querySelector("#category").value = data.category;
+}
+
+//update the product date on submit
+submitButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    if (validateFormData()) {
+        let editedProduct = getEditedValues();
+        updateProductData(editedProduct);
+        $('#userFormModal').modal('hide'); // Close the modal
+    } else {
+        console.log("Validation failed. Product data not updated.");
+    }
+});
+
+// Update product data in the array and local storage
+function updateProductData(editedValues) {
+    const index = arrOfproduct.findIndex(product => product.productId == editedValues.productId);
+    if (index !== -1) {
+        // Update the product details in the array
+        arrOfproduct[index] = { ...arrOfproduct[index], ...editedValues };
+
+        // Update the local storage
+        updateLocalStorage(arrOfproduct);
+
+        // Refresh the table to reflect the changes
+        creatTableofData();
+    } else {
+        console.error("Product not found in array.");
+    }
+}
+
+
+
+// Handle search functionality
+function handleSearch() {
+    let searchValue = searchBar.value.toLowerCase();
+    let allRows = tbody.getElementsByTagName("tr");
+    for (let row of allRows) {
+        let rowText = row.textContent.toLowerCase();
+        row.style.display = rowText.includes(searchValue) ? "" : "none";
+    }
+}
+/*end hissen*/ 
 
 ///////////////// sort////////////////
 function sortTable(column, sort_asc) {
@@ -116,14 +194,16 @@ function creatTableofData() {
           <td>
               <a href="#" class="view" title="View" data-toggle="tooltip"><i
                       class="material-icons">&#xE417;</i></a>
-              <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                      class="material-icons">&#xE254;</i></a>
+                      <a href="#" class="edit" title="Edit" data-toggle="modal" data-target="#userFormModal">
+                      <i class="material-icons">&#xE254;</i>
+                  </a>
               <a href="#"  title="Delete"  data-id="${element.productId}" class="delete trigger-btn"><i
                       class=" material-icons text-danger">&#xE872;</i></a>
           </td>
          </tr>`
 
     }
+    attachEditEventListeners();
 }
 function istextvalid(val) {
     console.log(val != null && /^[a-zA-Z\s]*$/.test(val) && val.length >= 3);

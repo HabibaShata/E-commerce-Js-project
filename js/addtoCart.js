@@ -292,7 +292,8 @@ window.addEventListener("load", function () {
         addCartLink[i].addEventListener("click", function (event) {
             event.preventDefault();
             product_Id = parseInt(event.target.parentElement.parentElement.parentElement.parentElement.classList[3].split('=')[1]);
-            addToCart(product_Id);
+            let productSeller = (products.filter(product => product.productId == product_Id)[0]).sellerName;
+            addToCart(product_Id, productSeller);
         })
     }
     
@@ -305,18 +306,26 @@ window.addEventListener("load", function () {
 //**   add to cart    / */
 
 var cnt = 0;
-export const addToCart = (product_id,seller) => {
+export const addToCart = (product_id,seller,quantity=1, color="White") => {
     //findindex fun return index of ele if it extist in arr else if rturn -1;
     let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == product_id);
-   console.log(positionThisProductInCart);
+    let productSeller;
+    //get the productseller if seller is undefined
+    if(!seller)
+    {
+        productSeller = products.filter(product => product.productId == product_id)[0].sellerName;
+    } else {
+        productSeller = seller;
+    }
+    
+
     if (arrCart.length <= 0) {
         arrCart = [{
             product_id: product_id,
-            quantity: 1,
-            seller: seller,
+            quantity: quantity,
+            seller: productSeller,
             quantity_sold: 0,
-            colorOptions: "black",
-            sellerName: ""
+            colorOptions: color
         }];
         temmraryDiv.style.display = "block";
         setTimeout(function () {
@@ -327,10 +336,10 @@ export const addToCart = (product_id,seller) => {
     } else if (positionThisProductInCart < 0) {
         arrCart.push({
             product_id: product_id,
-            quantity: 1,
-            seller: seller,
+            quantity: quantity,
+            seller: productSeller,
             quantity_sold:0,
-            colorOptions: "black",
+            colorOptions: color,
         });
         temmraryDiv.style.display = "block";
         setTimeout(function () {
