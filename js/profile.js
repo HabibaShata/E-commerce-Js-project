@@ -93,20 +93,23 @@ if (location.href.includes("profile.html")) {
   if(userData.userRole == "seller")
   {
       var sellerProducts = JSON.parse(this.localStorage.getItem('products'))
-                              // .filter((product) => product.sellerName == userData.userName);
-                              .filter((product) => product.sellerName == "Seller2");
+                              .filter((product) => product.sellerName == userData.userName);
 
-      var sellerProductscategories = sellerProducts.map((product) => product.category);
+      var categories = [];
+      sellerProducts.forEach((product) => {
+        if( !categories.includes(product.category))
+          categories.push(product.category);
+      });
+
       var ProductsInCategory=[];
       var colors=[];
-
-      for(var i=0; i<sellerProductscategories.length;i++)
+      for(var i=0; i<categories.length; i++)
       {
-        ProductsInCategory[i]=0;
-        colors[i] ='rgb('+Math.random()*255+','+Math.random()*255+','+Math.random()*255+')';
+        ProductsInEachCategory[i]=0;
+        colors[i] = `rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)})`;
         sellerProducts.forEach(product =>
         {
-            if(product.category == sellerProductscategories[i])
+            if(product.category == categories[i])
               ProductsInCategory[i]+=1;
         });  
       }
@@ -114,7 +117,7 @@ if (location.href.includes("profile.html")) {
       const createdChart1 = document.getElementById("myChart1");
       new Chart(createdChart1, {type: 'bar',
         data: {
-          labels: sellerProductscategories,
+          labels: categories,
           datasets: [{
             label: 'products in each category',
             data: ProductsInCategory,
@@ -130,26 +133,30 @@ if (location.href.includes("profile.html")) {
           }
         }
       });
-  
+
       const createdChart2 = document.getElementById("myChart2");
       new Chart(createdChart2, {type: 'pie',
         data: {
-          labels: sellerProductscategories,
+          labels: categories,
           datasets: [{
-            label: 'Products in each category',
+            label: 'products in each category',
             data: ProductsInCategory,
-            backgroundColor: colors,
+            backgroundColor:colors,
             hoverOffset: 4
           }]
         },
         options: {
           responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
         }
       });
-  
   }
 }
-});
+ });
 
 // Function to validate first name and last name
 function isValidName(name, messageElement) {
