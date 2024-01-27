@@ -1622,3 +1622,9 @@ display: none;
   margin-bottom: 20px;
   border-bottom: 2px solid var(--main-color);
 }
+
+.out-of-stock {
+  position: absolute;
+  left: 0px;
+  top: 20px;
+}
