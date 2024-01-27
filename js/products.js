@@ -111,10 +111,7 @@ window.addEventListener("load", function () {
         //filtering
         let categoryItems = document.getElementById("categories").children;
         document.getElementById("categories").addEventListener("click", function (e) {
-            console.log(e.target);
-            console.log(this);
             if (e.target.nodeName == "LI") {
-            console.log(e.target.nodeName );
                 filter = e.target.innerHTML;
                 //Removing the active class from all list items
                 for (let i = 0; i < categoryItems.length; i++) {
@@ -132,12 +129,9 @@ window.addEventListener("load", function () {
                     allFilteredProducts = GetProducts(-1);
                 } else {
                     //filtering by category name
-                    let filteredProducts = products.filter(product => product.category == e.target.innerHTML);
-                    // to make sure Dom[html code] loaded
-                    console.log(filteredProducts);
+                    let filteredProducts = products.filter(product => product.category.toLowerCase() == e.target.innerHTML.toLowerCase());
                     //Making the new products list
                     allFilteredProducts = GetProducts(filteredProducts.length, filteredProducts);
-                    console.log(allFilteredProducts);
                     var product_Id;
                     // window.addEventListener("load", function () {
                         var addCartLink = document.querySelectorAll(".addCart");
@@ -168,7 +162,6 @@ window.addEventListener("load", function () {
                             console.log(event.target);
                             product_Id = parseInt(event.target.parentElement.parentElement.parentElement.parentElement.classList[3].split('=')[1]);
                             addToCart(product_Id);
-            
                         })
                     }
             }
@@ -177,7 +170,6 @@ window.addEventListener("load", function () {
         var product_Id;
         // window.addEventListener("load", function () {
             var addCartLink = document.querySelectorAll(".addCart");
-            console.log(addCartLink);
             for (var i = 0; i < addCartLink.length; i++) {
                 addCartLink[i].addEventListener("click", function (event) {
                     event.preventDefault();

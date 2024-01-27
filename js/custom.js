@@ -79,7 +79,6 @@ function GetProducts(maxNumber, productsList) {
    for (let i = maxNumber - 1; i >= 0; i--) {
       if (loggedInUser && loggedInUser.userRole == "admin") {
          productCards +=
-      
          `<div class="col-sm-6 col-md-6 col-lg-4 data-id=${products[i].productId}">
 
            <div class="box">
@@ -107,12 +106,41 @@ function GetProducts(maxNumber, productsList) {
              </div>
          
           </div>`;
-      } else { //if the product is out of stock we will remove the add to cart button and add the out of stock button
-         console.log(products[i].quantity);
+      } else if (loggedInUser && loggedInUser.userRole == "seller") {
+         if(products[i].sellerName == loggedInUser.userName) {
+            productCards +=
+         `<div class="col-sm-6 col-md-6 col-lg-4 data-id=${products[i].productId}">
+
+           <div class="box">
+              <div class="option_container">
+                   <div class="options">
+                      <a href="productDetails.html?productId=${products[i].productId}" class="option2">
+                      View Details
+                      </a>
+                   </div>
+               </div>
+                <div class="img-box">
+                   <img src="${products[i].images[0]}" alt="">
+                </div>
+                <div class="detail-box" style="display: flex !important;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column !important;">
+                   <h5>
+                      ${products[i].productName}
+                   </h5>
+                   <h6>
+                      $${products[i].price}
+                   </h6>
+                </div>
+             </div>
+         
+          </div>`;
+         }
+      } else { //if the product is out of stock we will remove the add to cart button and add the out of stock butto
          if(products[i].quantity == 0)
          {
             productCards +=
-      
          `<div class="col-sm-6 col-md-6 col-lg-4 data-id=${products[i].productId}">
 
            <div class="box">
