@@ -6,9 +6,13 @@ import { addToCart, iconCartSpan, arrCart, temmraryDiv } from "./addtoCart.js";
 //////////////////////////////////////////////////////////////////////////////////
 let iconAddToCart = document.querySelectorAll(".iconAddToCart ");
 console.log(iconAddToCart);
-let cart = JSON.parse(localStorage.getItem('cart'));
+let iconCartSpan ;
+if(JSON.parse(localStorage.getItem('cart'))){
+    let cart = JSON.parse(localStorage.getItem('cart'));
+}else{
+    iconCartSpan.innerText = cart.length;
+}
 
-///////////////////////////////////////////////////////////////////////////////////////
 
 window.addEventListener("load", function () {
     const searchParams = new URLSearchParams(window.location.search);
