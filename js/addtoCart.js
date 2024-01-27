@@ -270,7 +270,7 @@ function hideCart() {
     lyercartOverlay.classList.remove("show");
     cart.classList.remove("show");
 }
-function clearCart(e) {
+export function clearCart(e) {
     arrCart = [];
     totalPrice.innerHTML = "0"
     try {
@@ -305,7 +305,7 @@ window.addEventListener("load", function () {
 //**   add to cart    / */
 
 var cnt = 0;
-export const addToCart = (product_id) => {
+export const addToCart = (product_id,seller) => {
 
     //findindex fun return index of ele if it extist in arr else if rturn -1;
     let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == product_id);
@@ -314,6 +314,7 @@ export const addToCart = (product_id) => {
         arrCart = [{
             product_id: product_id,
             quantity: 1,
+            seller: seller,
             quantity_sold: 0,
             colorOptions: "black",
         }];
@@ -327,6 +328,7 @@ export const addToCart = (product_id) => {
         arrCart.push({
             product_id: product_id,
             quantity: 1,
+            seller: seller,
             quantity_sold:0,
             colorOptions: "black",
 
