@@ -1,4 +1,4 @@
-import {Product} from "./custom.js";
+import {Product} from "./classes.js";
 ///////////// selectors///////////////
 var tbody = document.querySelector("tbody")
 // var tableTr = document.querySelectorAll("table  tr")

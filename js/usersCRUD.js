@@ -1,4 +1,5 @@
-import { users, handleFormSubmit } from "../sign-up/sign-up.js";
+import {users} from "classes.js" 
+import {  handleFormSubmit } from "../sign-up/sign-up.js";
 import { isValidEmail, isValidPassword, isValidName } from "./profile.js";
 let allUsers = JSON.parse(localStorage.getItem("users")).filter(user=>user.userRole != "admin");
 

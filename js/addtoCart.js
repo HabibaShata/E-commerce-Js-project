@@ -1,4 +1,3 @@
-//import { products } from "./custom.js";
  let products=JSON.parse(localStorage.getItem("products"));
     let listProductHtml;
     var  listCartHTML;

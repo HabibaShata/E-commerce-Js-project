@@ -1,3 +1,4 @@
+import {Product} from "./classes.js"
 // to get current year
 // function getYear() {
 //     var currentDate = new Date();
@@ -8,22 +9,6 @@
 // getYear();
 //Product class function
 
-class Product
-{
-    constructor(_productId, _productName, _category, _sellerName, _quantity, _quantity_sold, _images, _price, _description, _options)
-    {
-        this.productId=_productId;
-        this.productName = _productName;
-        this.category = _category;
-        this.sellerName = _sellerName;
-        this.quantity = _quantity;
-        this.quantity_sold = _quantity_sold;
-        this.images = _images;
-        this.price = _price;
-        this.description = _description;
-        this.options = _options;
-    }
-}
 
 
 //random data

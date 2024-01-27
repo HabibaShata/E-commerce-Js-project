@@ -1,15 +1,5 @@
 import { isValidEmail, isValidPassword, isValidName } from "../js/profile.js";
-
-export class users
-{
-    constructor(userID, userName, userPassword, userEmail, userRole) {
-        this.userID = userID;
-        this.userName = userName;
-        this.userPassword = userPassword;
-        this.userEmail = userEmail;
-        this.userRole = userRole;
-    }
-}
+import {users} from "../js/classes.js"
 
 window.addEventListener("load", function () {
     // Attach the form submission handler to the form
