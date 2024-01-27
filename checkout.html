@@ -21,6 +21,8 @@
     <link href="css/style.css" rel="stylesheet" />
     <!-- responsive style -->
     <link href="css/responsive.css" rel="stylesheet" />
+    <!-- loader -->
+    <link rel="stylesheet" href="loader/dist/loader.css">
     <style>
         :root {
             --color1: #ab4e68;
@@ -212,6 +214,21 @@
 
 <body>
     <div class="">
+        <!-- start-loader -->
+        <div id="loader">
+            <div class="pl">
+            <div class="pl__outer-ring"></div>
+            <div class="pl__inner-ring"></div>
+            <div class="pl__track-cover"></div>
+            <div class="pl__ball">
+                <div class="pl__ball-texture"></div>
+                <div class="pl__ball-outer-shadow"></div>
+                <div class="pl__ball-inner-shadow"></div>
+                <div class="pl__ball-side-shadows"></div>
+            </div>
+            </div>
+        </div>
+        <!-- end-loader -->
         <!-- header section strats -->
         <header class="header_section">
             <div class="container">
@@ -254,7 +271,7 @@
             </div>
             <div class="col-md-12">
                 <label for="adreess" class="form-label">Adreess</label>
-                <input type="text" class="form-control" id="adreess" required>
+                <input type="text" class="form-control" id="address" required>
                 <div class="invalid-feedback">
                     Please provide a valid city.
                 </div>
@@ -291,13 +308,13 @@
                     Please select a valid state.
                 </div>
             </div>
-            <div class="row col-4 ml-auto mt-2">
+            <div class="row col-12 mt-3">
                 <!-- <div class="col-6 ml-auto">
                         <button class="btn btn-light" type="submit">cancel</button>
                     </div> -->
-                <!-- <div class="col-6 ">
+                <div class="col-6">
                         <button class="btn btn-primary " type="submit">Save</button>
-                    </div> -->
+                    </div>
             </div>
 
         </form>
@@ -413,6 +430,9 @@
 
 
     </script>
+    <!-- loader -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLWL5N9CSM"></script>
+    <script src="loader/dist/loader.js"></script>
 
 </body>
 

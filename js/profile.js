@@ -1,4 +1,4 @@
-import { users as usersClass } from "../sign-up/sign-up.js";
+import { users as usersClass } from "./classes.js";
 const userDataString = localStorage.getItem('loggedInUser');
 
 window.addEventListener('load', function () {
@@ -10,10 +10,11 @@ window.addEventListener('load', function () {
 // }
 
 //back btn
-this.document.querySelector("#backBtn").addEventListener("click", function () {
-  history.back();
-})
-
+//check if the url is profile.html
+if (location.href.includes("profile.html")) {
+  this.document.querySelector("#backBtn").addEventListener("click", function () {
+    history.back();
+  })
 
   const userData = JSON.parse(userDataString);
 
@@ -93,22 +94,30 @@ this.document.querySelector("#backBtn").addEventListener("click", function () {
   {
       var sellerProducts = JSON.parse(this.localStorage.getItem('products'))
                               .filter((product) => product.sellerName == userData.userName);
-      var sellerProductscategories = sellerProducts.map((product) => product.category);
+
+      var categories = [];
+      sellerProducts.forEach((product) => {
+        if( !categories.includes(product.category))
+          categories.push(product.category);
+      });
+
       var ProductsInCategory=[];
-      for(var i=0; i<sellerProductscategories.length;i++)
+      var colors=[];
+      for(var i=0; i<categories.length; i++)
       {
-        ProductsInCategory[i]=0;
+        ProductsInEachCategory[i]=0;
+        colors[i] = `rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)})`;
         sellerProducts.forEach(product =>
         {
-            if(product.category == sellerProductscategories[i])
+            if(product.category == categories[i])
               ProductsInCategory[i]+=1;
         });  
       }
 
-      const createdChart = document.getElementById("myChart1");
-      new Chart(createdChart, {type: 'bar',
+      const createdChart1 = document.getElementById("myChart1");
+      new Chart(createdChart1, {type: 'bar',
         data: {
-          labels: sellerProductscategories,
+          labels: categories,
           datasets: [{
             label: 'products in each category',
             data: ProductsInCategory,
@@ -124,9 +133,29 @@ this.document.querySelector("#backBtn").addEventListener("click", function () {
           }
         }
       });
-  
-  }
 
+      const createdChart2 = document.getElementById("myChart2");
+      new Chart(createdChart2, {type: 'pie',
+        data: {
+          labels: categories,
+          datasets: [{
+            label: 'products in each category',
+            data: ProductsInCategory,
+            backgroundColor:colors,
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+  }
+}
  });
 
 // Function to validate first name and last name

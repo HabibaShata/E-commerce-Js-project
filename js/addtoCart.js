@@ -1,7 +1,6 @@
-//import { products } from "./custom.js";
-   let products=JSON.parse(localStorage.getItem("products"));
+ let products=JSON.parse(localStorage.getItem("products"));
     let listProductHtml;
-    let listCartHTML;
+    var  listCartHTML;
     let iconCart;
     export  let iconCartSpan;
     let closeCart;
@@ -92,6 +91,24 @@ window.addEventListener("load", function () {
             if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
                 let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
                 console.log(product_id);
+                let type = 'decr';
+                if (event.target.dataset.btn == "incr") {
+                    type = 'incr';
+                }
+                changeQuantityCart(product_id, type);
+            }
+
+        })
+    }
+
+    //check if the loggedinuser is the admin or seller so don't perform the following
+    if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
+        listCartHTML.addEventListener('click', (event) => {
+            let positionClick = event.target;
+            //console.log(event.target.dataset.btn);
+            if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
+                let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
+                // console.log(product_Id);
                 let type = 'decr';
                 if (event.target.dataset.btn == "incr") {
                     type = 'incr';
@@ -252,7 +269,7 @@ function hideCart() {
     lyercartOverlay.classList.remove("show");
     cart.classList.remove("show");
 }
-function clearCart(e) {
+export function clearCart(e) {
     arrCart = [];
     totalPrice.innerHTML = "0"
     try {
@@ -274,7 +291,8 @@ window.addEventListener("load", function () {
         addCartLink[i].addEventListener("click", function (event) {
             event.preventDefault();
             product_Id = parseInt(event.target.parentElement.parentElement.parentElement.parentElement.classList[3].split('=')[1]);
-            addToCart(product_Id);
+            let productSeller = (products.filter(product => product.productId == product_Id)[0]).sellerName;
+            addToCart(product_Id, productSeller);
         })
     }
     
@@ -287,17 +305,26 @@ window.addEventListener("load", function () {
 //**   add to cart    / */
 
 var cnt = 0;
-export const addToCart = (product_id) => {
-
+export const addToCart = (product_id,seller,quantity=1, color="White") => {
     //findindex fun return index of ele if it extist in arr else if rturn -1;
     let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == product_id);
-   console.log(positionThisProductInCart);
+    let productSeller;
+    //get the productseller if seller is undefined
+    if(!seller)
+    {
+        productSeller = products.filter(product => product.productId == product_id)[0].sellerName;
+    } else {
+        productSeller = seller;
+    }
+    
+
     if (arrCart.length <= 0) {
         arrCart = [{
             product_id: product_id,
-            quantity: 1,
+            quantity: quantity,
+            seller: productSeller,
             quantity_sold: 0,
-            colorOptions: "black",
+            colorOptions: color
         }];
         temmraryDiv.style.display = "block";
         setTimeout(function () {
@@ -308,10 +335,10 @@ export const addToCart = (product_id) => {
     } else if (positionThisProductInCart < 0) {
         arrCart.push({
             product_id: product_id,
-            quantity: 1,
+            quantity: quantity,
+            seller: productSeller,
             quantity_sold:0,
-            colorOptions: "black",
-
+            colorOptions: color,
         });
         temmraryDiv.style.display = "block";
         setTimeout(function () {
