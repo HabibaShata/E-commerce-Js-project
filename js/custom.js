@@ -21,11 +21,10 @@ class Product
         this.images = _images;
         this.price = _price;
         this.description = _description;
-      this.options = _options;
+        this.options = _options;
     }
 }
 
-//random data
 
 //random data
 let products = [
@@ -40,21 +39,21 @@ let products = [
    new Product(9, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p9.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
    new Product(10, "Artwork", "jewellery", "Zara Store", 20, 0, ["images/p10.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
    new Product(11, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p11.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(12, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p12.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(13, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p9.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(14, "Artwork", "artwork", "Zara Store", 20, 0, ["images/p12.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
 ]
-
+// checking if the key  is not exist in the localStorage we will set the arr;
 if(!localStorage.getItem("products")){
-//add the products to the local storage
-localStorage.setItem("products", JSON.stringify(products));
-
+   //add the products to the local storage
+   localStorage.setItem("products", JSON.stringify(products));
 }
+
+//get the loggedInUser
+let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
 
 
 // client section owl carousel
 $(function () {
-   
+
    let productCards = GetProducts(9);
    if (document.getElementById("products-Landing")) {
       document.getElementById("products-Landing").innerHTML = productCards;   
@@ -75,9 +74,40 @@ function GetProducts(maxNumber, productsList) {
    }
    let productCards = "";
    for (let i = 0; i < maxNumber; i++) {
+      if (loggedInUser.userRole == "admin") {
+         productCards +=
+      
+         `<div class="col-sm-6 col-md-6 col-lg-4 data-id=${products[i].productId}">
+
+           <div class="box">
+              <div class="option_container">
+                   <div class="options">
+                      <a href="productDetails.html?productId=${products[i].productId}" class="option2">
+                      View Details
+                      </a>
+                   </div>
+               </div>
+                <div class="img-box">
+                   <img src="${products[i].images[0]}" alt="">
+                </div>
+                <div class="detail-box" style="display: flex !important;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column !important;">
+                   <h5>
+                      ${products[i].productName}
+                   </h5>
+                   <h6>
+                      $${products[i].price}
+                   </h6>
+                </div>
+             </div>
+         
+          </div>`;
+      } else {
       productCards +=
       
-         `<div class="col-sm-6 col-md-4 col-lg-4 data-id=${products[i].productId}">
+         `<div class="col-sm-6 col-md-6 col-lg-4 data-id=${products[i].productId}">
 
            <div class="box">
               <div class="option_container">
@@ -93,7 +123,10 @@ function GetProducts(maxNumber, productsList) {
                 <div class="img-box">
                    <img src="${products[i].images[0]}" alt="">
                 </div>
-                <div class="detail-box">
+                <div class="detail-box" style="display: flex !important;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column !important;">
                    <h5>
                       ${products[i].productName}
                    </h5>
@@ -104,10 +137,8 @@ function GetProducts(maxNumber, productsList) {
              </div>
          
           </div>`;
-
+      }
    }
-
-
 
    return productCards;
 }
@@ -122,4 +153,4 @@ function myMap() {
     var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 }
 
-export { GetProducts, products };
+export { GetProducts, products, Product };

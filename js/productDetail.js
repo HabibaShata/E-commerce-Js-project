@@ -1,6 +1,6 @@
 
 import { products } from "./custom.js";
-import { addToCart, arrCart } from "./addtoCart.js";
+import { addToCart, iconCartSpan, arrCart, temmraryDiv } from "./addtoCart.js";
 
 // form-control btn btn-warning fa fa-shopping-cart iconAddToCart
 //////////////////////////////////////////////////////////////////////////////////
@@ -14,12 +14,6 @@ if(JSON.parse(localStorage.getItem('cart'))){
 }
 
 
-
-console.log(iconCartSpan);
-console.log("helllllo");
-
-///////////////////////////////////////////////////////////////////////////////////////
-
 window.addEventListener("load", function () {
     const searchParams = new URLSearchParams(window.location.search);
 
@@ -27,7 +21,7 @@ window.addEventListener("load", function () {
     const productId = searchParams.get('productId');
     const products = JSON.parse(localStorage.getItem('products'));
 
-    const product = products.find(x => x.productId == productId);
+    const product = products.find(x => x.productId == productId);// get the product from search bar
 
     FillDetail(product);
     FillImgList(product.images);
@@ -37,10 +31,11 @@ window.addEventListener("load", function () {
     console.log(productId);
     console.log(iconAddToCart[0]);
     console.log(arrCart);
-   
+
     iconAddToCart[0].addEventListener("click", function (e) {
-        addToCart(productId);
-        console.log(e.target); 
+        const seller = $(".seller").text();
+        addToCart(productId, seller);
+        console.log(e.target);
     })
     ////////////////////////////////////////////////////////////////////////////
 })
@@ -49,6 +44,7 @@ window.addEventListener("load", function () {
 function FillDetail(product) {
     $('.product-title').text(product.productName);
     $(".catigory").text("Catigory: " + product.category);
+    $(".seller").text(product.sellerName);
     $('.product-description').text(product.description);
     $('.price span').text(product.price + '$');
 
@@ -70,9 +66,9 @@ function FillMainImg(img) {
 function FillImgList(imges) {
     const imglist = $('#imglist')[0];
     imges.forEach(item => {
-        const creatimg = document.createElement('img');//<img>
+        const creatimg = document.createElement('img');//<img></img>
         creatimg.src = item;
-        creatimg.addEventListener('click', function (event) {
+        creatimg.addEventListener('click', function (event) { // event of filling the main img from the clicked img
             $('#mainimg img')[0].src = event.target.src;
         });
         creatimg.classList.add('img_list', 'card-img', 'top');

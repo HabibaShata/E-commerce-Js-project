@@ -678,19 +678,23 @@ a:focus {
 .checked, .price span {
   color: #ff9f1a; }
 
-.img_list {
-  border: 1px solid black;
-  margin: 3%;
-  padding: 0.5%;
+  .img_list {
+    border: 1px solid #b9b9b9;
+    margin: 3%;
+    padding: 0.5%;
 }
+ .imageList{
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 3%;
+ }
 
 .view_img {
-  border: 1px solid black;
-  margin: 7%;
+  margin: 5%;
   padding: 1%;
 }
 .img_list:hover{
-  border: 2px solid black;
+  border: 2px solid #b9b9b9;
     
 }
 
@@ -1604,4 +1608,17 @@ display: none;
     color: white;
     font-weight: bold;
     top: -12px;
+}
+
+/*products*/
+.filter-body .sellers-list {
+  background-color: #f7f8f9;
+  padding: 20px;
+  margin-top: 50px;
+}
+
+.filter-header {
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--main-color);
 }

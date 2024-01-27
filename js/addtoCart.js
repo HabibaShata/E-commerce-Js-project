@@ -1,7 +1,7 @@
 //import { products } from "./custom.js";
-   let products=JSON.parse(localStorage.getItem("products"));
+ let products=JSON.parse(localStorage.getItem("products"));
     let listProductHtml;
-    let listCartHTML;
+    var  listCartHTML;
     let iconCart;
     export  let iconCartSpan;
     let closeCart;
@@ -92,6 +92,24 @@ window.addEventListener("load", function () {
             if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
                 let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
                 console.log(product_id);
+                let type = 'decr';
+                if (event.target.dataset.btn == "incr") {
+                    type = 'incr';
+                }
+                changeQuantityCart(product_id, type);
+            }
+
+        })
+    }
+
+    //check if the loggedinuser is the admin or seller so don't perform the following
+    if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
+        listCartHTML.addEventListener('click', (event) => {
+            let positionClick = event.target;
+            //console.log(event.target.dataset.btn);
+            if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
+                let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
+                // console.log(product_Id);
                 let type = 'decr';
                 if (event.target.dataset.btn == "incr") {
                     type = 'incr';
@@ -252,7 +270,7 @@ function hideCart() {
     lyercartOverlay.classList.remove("show");
     cart.classList.remove("show");
 }
-function clearCart(e) {
+export function clearCart(e) {
     arrCart = [];
     totalPrice.innerHTML = "0"
     try {
@@ -287,7 +305,7 @@ window.addEventListener("load", function () {
 //**   add to cart    / */
 
 var cnt = 0;
-export const addToCart = (product_id) => {
+export const addToCart = (product_id,seller) => {
 
     //findindex fun return index of ele if it extist in arr else if rturn -1;
     let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == product_id);
@@ -296,6 +314,7 @@ export const addToCart = (product_id) => {
         arrCart = [{
             product_id: product_id,
             quantity: 1,
+            seller: seller,
             quantity_sold: 0,
             colorOptions: "black",
         }];
@@ -309,6 +328,7 @@ export const addToCart = (product_id) => {
         arrCart.push({
             product_id: product_id,
             quantity: 1,
+            seller: seller,
             quantity_sold:0,
             colorOptions: "black",
 
