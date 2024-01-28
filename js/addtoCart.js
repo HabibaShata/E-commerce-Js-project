@@ -306,6 +306,7 @@ window.addEventListener("load", function () {
 
 var cnt = 0;
 export const addToCart = (product_id,seller,quantity=1, color="White") => {
+    debugger
     //findindex fun return index of ele if it extist in arr else if rturn -1;
     let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == product_id);
     let productSeller;

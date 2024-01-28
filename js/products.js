@@ -41,6 +41,7 @@ function filterBySellerNameAndCategory(e)
 {
     if(e.target.nodeName == "INPUT")
         {
+            debugger
             //get the checked checkboxes
             let checkedSellersInputs = Array.from(sellersList.querySelectorAll("input:checked"));
             //check if the no checkbox is checked then display all products
@@ -50,13 +51,13 @@ function filterBySellerNameAndCategory(e)
                 return;
             } else {
                 //save the checked checkboxes values into an array
-                checkedSellers = checkedSellersInputs.map(input=>input.value);
+                checkedSellers = checkedSellersInputs.map(input=>input.value.toLowerCase());
                 //filter the products to get the products which seller exists within the checkedSellers array
                 let filteredProducts = [];
                 if (filter != "All") {
-                    filteredProducts = products.filter(product => checkedSellers.includes(product.sellerName) && product.category == filter);
+                    filteredProducts = products.filter(product => checkedSellers.includes(product.sellerName.toLowerCase()) && product.category == filter);
                 } else {
-                    filteredProducts = products.filter(product => checkedSellers.includes(product.sellerName));
+                    filteredProducts = products.filter(product => checkedSellers.includes(product.sellerName.toLowerCase()));
                 }
                 
                 //display the products according to the checked checkboxes
