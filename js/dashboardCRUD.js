@@ -437,6 +437,8 @@ btnAdd.addEventListener("click", function () {
 
 /*//////////////----Delete--/////////////////*/
 
+
+
 function deleteProduct() {
     console.log("___________");
 

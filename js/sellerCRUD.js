@@ -128,12 +128,12 @@ function deleteProduct(idDeleProduct) {
 
             if (positionThisProductInCart == -1) {
                 // Remove the product from the product array  in localStorage and SellerArr 
-             //   allProducts.splice(positionThisProductInProduct, 1);
-              //  sellerArr.splice(positionThisProductInArrSeller, 1);
-               //  localStorage.setItem("products", JSON.stringify(allProducts));
+               allProducts.splice(positionThisProductInProduct, 1);
+               sellerArr.splice(positionThisProductInArrSeller, 1);
+                localStorage.setItem("products", JSON.stringify(allProducts));
 
-               // parentTrDeleted.remove();
-              //  creatTableofData();
+               parentTrDeleted.remove();
+               creatTableofData();
                 // Remove the corresponding row from the HTML table
                 $('#myModal').removeClass('fade');
                 $('#myModal').modal('hide');
