@@ -88,26 +88,5 @@ function validateForm() {
     return validationMessages;
 }
 
-// function validateEmail(email) {
-//     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//     return re.test(String(email).toLowerCase());
-// }
-
-function showValidationMessages(messages) {
-    let validationPopup = document.getElementById("validationPopup");
-    validationPopup.innerHTML = messages.map(message => `<p>${message}</p>`).join('');
-    validationPopup.style.animation = ""; // Reset animation
-    validationPopup.style.display = "block";
-
-    void validationPopup.offsetWidth;
-
-    // Start the animation by adding the class
-    validationPopup.style.animation = "fadeOut 5s forwards";
-
-    // Hide the popup after 2 seconds
-    // setTimeout(function () {
-    //     validationPopup.style.display = "none";
-    // }, 2000);
-}
 
 export {validateForm, handleFormSubmit, showValidationMessages};

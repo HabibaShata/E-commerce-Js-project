@@ -118,12 +118,11 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   
   /*-- end reset --*/
   body {
-    background: #e576c0;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #f5caec, #fab5f5);
-    background: -moz-linear-gradient(to top, #f5caec, #fab5f5);
-    background: -o-linear-gradient(to top, #f5caec, #fab5f5);
-    background: linear-gradient(to top, #f5caec, #fab5f5);
+    background: #ffecd2; /* Light peach as a fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #fcb69f, #ffecd2);
+    background: -moz-linear-gradient(to top, #fcb69f, #ffecd2);
+    background: -o-linear-gradient(to top, #fcb69f, #ffecd2);
+    background: linear-gradient(to top, #fcb69f, #ffecd2);
     background-size: cover;
     background-attachment: fixed;
     font-family: 'Roboto', sans-serif;
@@ -218,7 +217,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   input[type="submit"] {
     font-size: .9em;
     color: #faf6f6;
-    background: #f888cb;
+    background: #e4d605a7;
     outline: none;
     border: 1px solid #edadda;
     cursor: pointer;
@@ -234,12 +233,12 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     -o-transition: .5s all;
     -ms-transition: .5s all;
     transition: .5s all;
-    background: #ec29db;
+    background: #e3861c;
   }
   
   .agileits-top p {
     font-size: 1em;
-    color: #fff;
+    color: #f4efea;
     text-align: center;
     letter-spacing: 1px;
     font-weight: 300;
@@ -254,8 +253,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   }
   
   .agileits-top p a:hover {
-    color: #f30ab1;
-  }
+    color: #f3ce97fd; /* Warm amber color for hover effect */
+}
   
   /*-- //main --*/
   /*-- checkbox --*/
@@ -268,8 +267,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   }
   
   input.checkbox {
-    background: #f51ebf;
-    cursor: pointer;
+    background-color: #e76f51; /* Terracotta color */
+    color: white; /* White text for contrast */
+        cursor: pointer;
     width: 1.2em;
     height: 1.2em;
   }
