@@ -127,13 +127,13 @@
     <div class="container-fluid">
         <main class="row">
             <!-- leftSide -->
-            <div class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" >
+            <div class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="index.html"><img width="121"
                         src="images/logo.png" alt="#" />
                 </a>
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto">
-         
+
                     <li>
                         <a href="#" class="nav-link link-dark active">
                             <svg class="bi me-2" width="16" height="16">
@@ -142,7 +142,7 @@
                             Dashboard
                         </a>
                     </li>
-             
+
                     <li>
                         <a href="productSeller.html" class="nav-link link-dark">
                             <svg class="bi me-2" width="16" height="16">
@@ -154,19 +154,19 @@
 
                 </ul>
                 <hr>
-                <div class="dropdown dropdownUser">
+                <div class="dropdown dropdownUser" id="user-DropDown">
                     <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
                         id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                        <img src="" alt="" width="32" height="32" class="rounded-circle me-2">
                         <strong> mohamed</strong>
                     </a>
                     <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                    
-                        <li><a class="dropdown-item" href="/profile.html">Profile</a></li>
+
+                        <li><a class="dropdown-item" href="/profile.html" id="userProfil">Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="./sign-up.html">Sign out</a></li>
+                        <li><a class="dropdown-item" id="logOut">Sign out</a></li>
                     </ul>
                 </div>
             </div>
@@ -185,7 +185,7 @@
                             <div class="col-sm-4 row">
                                 <div class="search-box col-sm-8">
                                     <i class="material-icons">&#xE8B6;</i>
-                                    <input type="text" class="form-control" placeholder="Search&hellip;">
+                                    <input type="text" class="form-control" placeholder="Search&hellip;" id="searchBar">
                                 </div>
                                 <div class="col-sm-4">
                                     <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add
@@ -256,24 +256,26 @@
                                 <form action="./dashordAdmin.html" class="addproduct">
                                     <div class="modal-header">
                                         <h4 class="modal-title">Add New Product</h4>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                            aria-hidden="true">&times;</button>
+                                        <button type="button" class="close" data-bs-dismiss="modal"
+                                            onclick="$('.modal-backdrop').hide()">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-md-6">
-    
+
                                                 <div class="form-group">
                                                     <label for="ProductName">Enter ProductName:</label>
                                                     <input type="text" name="ProductName" class="form-control"
                                                         id="ProductName" placeholder="ProductName" required>
-                                                   
+
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="price ">Enter price :</label>
                                                     <input type="text" name="price" class="form-control" id="price"
                                                         placeholder="price " required>
-                            
+
 
                                                 </div>
 
@@ -281,13 +283,13 @@
                                                     <label for="description">Descripe your product :</label>
                                                     <textarea class="form-control" name="description" id="description"
                                                         placeholder="Descripe your product" required></textarea>
-                                               
+
                                                 </div>
 
 
                                             </div>
                                             <div class="col-md-6">
-                                    
+
                                                 <div class="form-check" id="color-checkbox">
                                                     <label class="form-check-label col-12" for="color">Choose
                                                         colors:</label>
@@ -314,7 +316,7 @@
                                                                 class="form-check-input color-checkbox" type="checkbox"
                                                                 value="red" id="colorRed" name="color">Red</label>
                                                     </div>
-                                             
+
                                                 </div>
                                                 <!-- category -->
                                                 <select class="form-select form-select-sm"
@@ -343,13 +345,13 @@
                                                     <label for="productImage">Enter productImage:</label>
                                                     <input type="file" name="productImage" class="form-control"
                                                         id="productImage" placeholder="productImage" required>
-                                             
+
                                                 </div>
                                                 <div class="form-group">
                                                     <!-- <label for="productImage">Enter productImage:</label> -->
                                                     <input type="file" name="productImage2" class="form-control"
                                                         id="productImage2" placeholder="productImage" required>
-                                              
+
                                                 </div>
                                             </div>
                                         </div>
@@ -365,10 +367,61 @@
                         </div>
                     </div>
 
+                    <!-- edit model-->
+                    <div class="modal fade" role="dialog" tabindex="-1" id="userFormModal">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit Product</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal"
+                                        onclick="$('.modal-backdrop').hide()">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="py-1">
+                                        <form class="form" novalidate id="editForm">
+                                            <div class="row">
+                                                <div class="col modal-fields">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col d-flex justify-content-end">
+                                                    <button class="btn btn-primary" id="submitButton">Save
+                                                        Changes</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
 
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
+            <!-- view modal -->
+            <div class="modal fade" id="exampleModalLong2" tabindex="-1" aria-labelledby="exampleModalLongTitle"
+                aria-hidden="true" style="display: none;">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body2">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end edit modal -->
 
 
         </main>
@@ -377,7 +430,7 @@
     <!-- jQery -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-    <script src="js/sellerCRUD.js" type="module" ></script>
+    <script src="js/sellerCRUD.js" type="module"></script>
 
 
 
