@@ -82,3 +82,8 @@ export const StatusEnum = {
     InProgress: 'In progress',
     Completed: 'Completed'
 };
+
+let categories = ["All", "Jewellery", "Accessories", "Artwork", "Pet-supplies", "Sweets"];
+
+
+export {categories}

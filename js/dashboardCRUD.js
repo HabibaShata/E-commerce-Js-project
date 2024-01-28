@@ -1,8 +1,9 @@
 import {Product} from "./classes.js";
 import { products } from "./custom.js";
+import { categories } from "./classes.js";
+
 ///////////// selectors///////////////
 // Selectors
-
 var tbody = document.querySelector("tbody");
 var submitButton = document.getElementById('submitButton');
 var searchBar = document.getElementById('searchBar');
@@ -57,12 +58,7 @@ table_headings = document.querySelectorAll('thead th');
             }
             // console.log(head);
         }
-
-
     });
-    
-    
-
 
 function attachEventListeners() {
     // Edit and View button event listeners
@@ -91,68 +87,77 @@ function handleViewClick(productId) {
 function handleSubmitButtonClick(event) {
     event.preventDefault();
     let editedProduct = getEditedValues();
-    
         updateProductData(editedProduct);
         
-        location.reload();
+       location.reload();
     
+}
+
+function checkPriceInput(e) {
+    if(e.target.value <= 0) {
+        e.target.value = 1;
+    }
 }
 
 function populateFormWithProductData(data) {
     const modalFields = document.querySelector('.modal-fields');
+    //save the old data in the updatedProductData object
+
     modalFields.innerHTML =  `
-            <div class="form-group">
-            <label>Product ID</label>
-            <small id="productIdMessage" class="form-text  text-danger"></small>
-            <input class="form-control" type="text" name="productId" id="productId" value="${data.productId}">
-        </div>
-        <div class="form-group">
-            <label>Category</label>
-            <small id="categoryMessage" class="form-text  text-danger"></small>
-            <select class="form-select form-select-sm"
-            aria-label=".form-select-sm example" id="category" value="${data.category}">>
-            <label for="">
-                seclect category
-            </label>
-            <option selected disabled>category</option>
-            <option value="jewellery">jewellery</option>
-            <option value="artwork">artwork</option>
-            <!-- span invalid input -->
-            <span class="is-invalid"> *must choose catigery </span>
+    <div class="form-group">
+        <label>Product ID</label>
+        <small id="productIdMessage" class="form-text  text-danger"></small>
+        <input class="form-control" type="text" name="productId" id="productId" value="${data.productId}" readonly>
+    </div>
+    <div class="form-group">
+        <label>Category</label>
+        <small id="categoryMessage" class="form-text  text-danger"></small>
+        <select class="form-select form-select-sm"
+        aria-label=".form-select-sm example" id="category" value="${data.category}">    
+        ${
+            categories.map(element => 
+            {
+                if(element.toLowerCase() == data.category.toLowerCase())
+                {
+                    return `<option value="${element}" selected>${element}</option>`
+                } 
+                return `<option value="${element}">${element}</option>`
+            }).join('')
+        }
+    <!-- span invalid input -->
+        <span class="is-invalid"> *must choose catigery </span>
         </select> 
-        </div>
-        <div class="form-group">
-            <label>Product Name</label>
-            <small id="nameMessage" class="form-text  text-danger"></small>
-            <input class="form-control" type="text" name="productName"
-                id="productName" value="${data.productName}">
-        </div>
-        <div class="form-group">
-            <label>Images</label>
-            <small id="imagesMessage" class="form-text  text-danger"></small>
-            <input class="form-control" type="text" name="images" id="images" value="${data.images[0]}">
-        </div>
+    </div>
+    <div class="form-group">
+        <label>Product Name</label>
+        <small id="nameMessage" class="form-text  text-danger"></small>
+        <input class="form-control" type="text" name="productName"
+            id="productName" value="${data.productName}">
+    </div>
+    <div class="form-group">
+        <label>Images</label>
+        <small id="imagesMessage" class="form-text  text-danger"></small>
+        <input class="form-control" required type="file" name="images" id="images" onchange="console.log(this.value)">
+        <img class="img-fluid" src="${data.images[0]}" alt="">
+    </div>
 
-        <div class="form-group">
-            <label>Seller Name</label>
-            <small id="sellerMessage" class="form-text  text-danger"></small>
-            <input class="form-control" type="text" name="sellerName" value="${data.sellerName}"
-                id="sellerName">
-        </div>
+    <div class="form-group">
+        <label>Seller Name</label>
+        <small id="sellerMessage" class="form-text  text-danger"></small>
+        <input class="form-control" type="text" name="sellerName" value="${data.sellerName}"
+            id="sellerName" disabled>
+    </div>
 
 
-        <div class="form-group">
-            <label>Price</label>
-            <small id="priceMessage" class="form-text  text-danger"></small>
-            <input class="form-control" type="text" name="price" id="price" value="${data.price}">
-        </div>
-        </div>
-        `
+    <div class="form-group">
+        <label>Price</label>
+        <small id="priceMessage" class="form-text  text-danger"></small>
+        <input class="form-control" type="number" name="price" id="price" min="1" oninput="this.value = this.value <= 0 ? 1:this.value" value="${data.price}">
+    </div>
+    </div>`
 }
 
 function validateFormData(originalData) {
-    
-
     // Validate Product ID
     if (document.querySelector("#productId").value !== originalData.productId) {
         errors.productId = "Product ID cannot be changed.";
@@ -211,13 +216,24 @@ function displayErrors(errors) {
 }
 
 function getEditedValues() {
+    //get the info from the edit form
+    let editForm = document.querySelector("#editForm").children[0].children[0];
+    let img = editForm.children[3].children[2].value, oldImg = editForm.children[3].children[3].src;
+    let imgSrc;
+    console.log(oldImg);
+    if(!img) //if no image is selected then select the old image
+    {
+        imgSrc = `images/${oldImg.substring(oldImg.lastIndexOf("/")+1)}`;
+    } else {
+        imgSrc = `images/${img.substring(img.lastIndexOf("\\")+1)}`;
+    }
     return {
-        productId: document.querySelector("#productId").value,
-        productName: document.querySelector("#productName").value,
-        images: [document.querySelector("#images").value], 
-        sellerName: document.querySelector("#sellerName").value,
-        category: document.querySelector("#category").value,
-        price: document.querySelector("#price").value
+        productId: editForm.children[0].children[2].value,
+        productName: editForm.children[2].children[2].value,
+        images: [imgSrc], 
+        sellerName: editForm.children[4].children[2].value,
+        category: editForm.children[1].children[2].value,
+        price: editForm.children[5].children[2].value
     };
 }
 

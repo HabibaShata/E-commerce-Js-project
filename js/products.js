@@ -1,9 +1,9 @@
 import { GetProducts, products } from "./custom.js";
 import { addToCart } from './addtoCart.js';
 import { renderingNavBar, LogOut } from "./general-methods.js";
+import { categories } from "./classes.js";
 
 // Now you can use addToCart in this file
-let categories = ["All", "Jewellery", "Accessories", "Artwork", "Pet-supplies", "Sweets"];
 let filter = "All";
 let checkedSellers = [];
 let sellersList; //sellers' names container in products.html
