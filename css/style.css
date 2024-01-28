@@ -689,6 +689,19 @@ a:focus {
   margin-left: 3%;
  }
 
+ .imageList img {
+  width: 100px;
+  height: 130px; 
+}
+
+
+ #mainimg img{
+  width: 300px;
+  height: 371px;
+  
+ }
+
+
 .view_img {
   margin: 5%;
   padding: 1%;

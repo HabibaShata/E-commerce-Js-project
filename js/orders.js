@@ -1,5 +1,5 @@
 import { renderingNavBar, LogOut } from "./general-methods.js";
-import { Address ,Item ,Order } from "./classes.js";
+import { Address ,Item ,Order , StatusEnum} from "./classes.js";
 
 let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 if (!loggedInUser) {
@@ -11,13 +11,6 @@ window.addEventListener("load", function () {
     LogOut();
 });
 
-
-const StatusEnum = {
-    New: 'New',
-    InProgress: 'In progress',
-    Completed: 'Completed'
-};
-
 $(function () {
     GetOrders();
 });
@@ -28,13 +21,13 @@ function GetOrders() {
     var loggedInUser;
     var userCheck;
 
-    orders = JSON.parse(localStorage.getItem("orders"));//get orders
+    orders = JSON.parse(localStorage.getItem("orders"));//get orders from local storage
     userCheck = localStorage.getItem("loggedInUser");
 
     //check if this user logged in or not --- if no go to log in page 
     if (userCheck != null || userCheck != undefined) {
         if (orders != null) {
-            loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+            loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));// to get the user who loged in
             if (loggedInUser.userRole != 'seller') {
                 if (loggedInUser.userRole == 'customer') {
                     orders = orders.filter(order => order.userId == loggedInUser.userID);// get the order of this customer 
@@ -48,7 +41,7 @@ function GetOrders() {
                         $("tbody")[0].innerHTML = '';
                         //orders.some(order=>order.id==1); // return bool
                         orders.forEach(order => {
-                            order.items.some(item => { // to check if at least one element in the array has the name about this seller
+                            order.items.some(item => { // to check if at least one element in the array has the name of this seller
                                 if (item.seller.toLowerCase().includes(this.value.toLowerCase()) || this.value == '') {
                                     createdtr = document.createElement("tr");//<tr>
                                     createdtr.innerHTML = `                         
@@ -78,7 +71,7 @@ function GetOrders() {
             }
             // for seller
             else if (loggedInUser.userRole == 'seller') {
-                orders = orders.filter(order => order.items.some(item => item.seller == loggedInUser.userName));
+                orders = orders.filter(order => order.items.some(item => item.seller == loggedInUser.userName));//get orders dependon the items ofthe seller
                 orders.forEach(order => {
                     createdtr = document.createElement("tr");//<tr></tr>
                     createdtr.innerHTML = `                         
@@ -97,7 +90,7 @@ function GetOrders() {
                     $("tbody")[0].appendChild(createdtr);
                 });
 
-                // event on status changing
+                // event on status changing 
                 $(".status").on("change", function () {
                     const selectedStatus = this.value;
                     let Completed = true;
