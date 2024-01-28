@@ -1,44 +1,40 @@
 import {Product} from "./classes.js";
 import { products } from "./custom.js";
 ///////////// selectors///////////////
-var tbody = document.querySelector("tbody")
-// var tableTr = document.querySelectorAll("table  tr")
-var btnAdd = document.querySelector(".add-new");
-var submit = document.querySelector(".submitLink");
-//selector modal //  
-var close = document.querySelector(".close");
-var closex = document.querySelector(".clsBtn");
-//selectors form//
-var _ProductName = document.getElementById("ProductName");
+// Selectors
+
+var tbody = document.querySelector("tbody");
+var submitButton = document.getElementById('submitButton');
+var searchBar = document.getElementById('searchBar');
+// Select all elements with the class 'delete' and store them in the 'deleteButtons' variable
+ var deleteButtons = document.querySelectorAll('.delete');
+ var submit = document.querySelector(".submitLink");
+ ////formaddingSelectors
+ var _ProductName = document.getElementById("ProductName");
 var _price = document.getElementById("price");
 var _Quntity = document.getElementById("Quntity");
 var description = document.getElementById("description");
 var category = document.getElementById("category");
 var _productImage = document.getElementById("productImage");
-var checkboxes = document.querySelectorAll('.color-checkbox');
-
-// Declare variables for later use; these will be assigned values at runtime
-var deleteButtons;
-var table_headings, table_rows;
-/////
+ var btnAdd = document.querySelector(".add-new");
+ var checkboxes = document.querySelectorAll('.color-checkbox');
 
 
-// first thing when window loaded 
+// Data Arrays
+let arrOfproduct = JSON.parse(localStorage.getItem("products")) || [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+
+// Initialize table and event listeners on window load
 window.addEventListener("load", function () {
     creatTableofData();
-    // Select all elements with the class 'delete' and store them in the 'deleteButtons' variable
-    deleteButtons = document.querySelectorAll('.delete');
-    // Select the first element with the class 'Delete' and store it in the 'deleteConfirmBtn' variable
-    deleteConfirmBtn = document.querySelector('.confirmDelete');
-    cancledBtn = document.querySelector('.cancle');
+    attachEventListeners();
     deleteProduct();
 
-    /*////////////////////////////////////////////////////
-        Functionality for sorting table columns
-    ////////////////////////////////////////////////////*/
-        table_rows = document.querySelectorAll('tbody tr'),
-        table_headings = document.querySelectorAll('thead th');
-    //
+    
+table_rows = document.querySelectorAll('tbody tr'),
+table_headings = document.querySelectorAll('thead th');
+    
    
     table_headings.forEach((head, i) => {
 
@@ -63,72 +59,71 @@ window.addEventListener("load", function () {
         }
 
 
-    })
-   var submitButton=document.getElementById('submitButton');
-   var searchBar = document.getElementById('searchBar');
-   searchBar.addEventListener('input', handleSearch);
-
-   ///////////////event to dispaly (button display product details)
-    document.querySelectorAll('.view').forEach(function(display){ display.addEventListener('click', function(event) {
-        let clickedRow = event.target.closest('tr');
-        console.log(clickedRow)
-        if (clickedRow) {
-            
-                displayProduct(productId);   
-            }
-        })
     });
-})
+    
+    
 
-/*start hissen*/ 
-//get the date from the table into the modal
-function attachEditEventListeners() {
-    tbody.addEventListener("click", function(e){
-        //if the clicked button is the edit button then get the id and from the id get the data
-        if(e.target.classList.contains("edit"))
-        {
-            //get the id from data-id
-            let productID = e.target.dataset.id;
-            //get the data from the id
-            console.log(products)
-            let productData = products.filter(product=>product.productId == productID)[0];
-            populateFormWithProductData(productData);
+
+function attachEventListeners() {
+    // Edit and View button event listeners
+    tbody.addEventListener("click", function (e) {
+        if (e.target.classList.contains("edit")) {
+            handleEditClick(e.target.dataset.id);
+        } else if (e.target.classList.contains("view")) {
+            handleViewClick(e.target.dataset.id);
         }
-    })
+    });
+
+    searchBar.addEventListener('input', handleSearch);
+
+    submitButton.addEventListener("click", handleSubmitButtonClick);
 }
 
-// Fetch data from a table row
-function getProductDataFromRow(row) {
-    return {
-        productId: row.cells[0].innerText.trim(),
-        productName: row.cells[1].innerText.trim(),
-        images: row.cells[2].querySelector('img').src,
-        sellerName: row.cells[3].innerText.trim(),
-        category: row.cells[4].innerText.trim(),
-        price: row.cells[5].innerText.trim()
-    };
+function handleEditClick(productId) {
+    let productData = arrOfproduct.find(product => product.productId == productId);
+    populateFormWithProductData(productData);
 }
 
-// Populate the form fields with product data
+function handleViewClick(productId) {
+    displayProduct(productId);
+}
+
+function handleSubmitButtonClick(event) {
+    event.preventDefault();
+    let editedProduct = getEditedValues();
+    
+        updateProductData(editedProduct);
+        
+        location.reload();
+    
+}
+
 function populateFormWithProductData(data) {
-    //make the modal fields
-    console.log(data)
     const modalFields = document.querySelector('.modal-fields');
-    modalFields.innerHTML = `
+    modalFields.innerHTML =  `
             <div class="form-group">
             <label>Product ID</label>
+            <small id="productIdMessage" class="form-text  text-danger"></small>
             <input class="form-control" type="text" name="productId" id="productId" value="${data.productId}">
         </div>
         <div class="form-group">
             <label>Category</label>
             <small id="categoryMessage" class="form-text  text-danger"></small>
-
-            <input class="form-control" type="text" name="category" id="category" value="${data.category}">
+            <select class="form-select form-select-sm"
+            aria-label=".form-select-sm example" id="category" value="${data.category}">>
+            <label for="">
+                seclect category
+            </label>
+            <option selected disabled>category</option>
+            <option value="jewellery">jewellery</option>
+            <option value="artwork">artwork</option>
+            <!-- span invalid input -->
+            <span class="is-invalid"> *must choose catigery </span>
+        </select> 
         </div>
         <div class="form-group">
             <label>Product Name</label>
             <small id="nameMessage" class="form-text  text-danger"></small>
-
             <input class="form-control" type="text" name="productName"
                 id="productName" value="${data.productName}">
         </div>
@@ -151,68 +146,118 @@ function populateFormWithProductData(data) {
             <small id="priceMessage" class="form-text  text-danger"></small>
             <input class="form-control" type="text" name="price" id="price" value="${data.price}">
         </div>
-        </div>`
-
-    document.querySelector("#productId").setAttribute("value", data.productId);
-    document.querySelector("#productName").value = data.productName;
-    document.querySelector("#images").value = data.images[0];
-    document.querySelector("#sellerName").value = data.sellerName;
-    document.querySelector("#category").value = data.category.toUpperCase();
-    document.querySelector("#price").value = data.price;
-
-    console.log(data.category.toUpperCase())
-    console.log(data.productName)
+        </div>
+        `
 }
 
-//update the product date on submit
-submitButton.addEventListener("click", function(event) {
-    event.preventDefault();
-    if (validateFormData()) {
-        let editedProduct = getEditedValues();
-        updateProductData(editedProduct);
-        $('#userFormModal').modal('hide'); // Close the modal
-    } else {
-        console.log("Validation failed. Product data not updated.");
+function validateFormData(originalData) {
+    
+
+    // Validate Product ID
+    if (document.querySelector("#productId").value !== originalData.productId) {
+        errors.productId = "Product ID cannot be changed.";
     }
-});
+
+    // Validate Product Name
+    if (!/^[0-9]+$/.test(document.querySelector("#productName").value)) {
+        errors.productName = "Product Name should only contain numbers.";
+    }
+
+    // Validate Images
+    if (!document.querySelector("#images").value.endsWith(".jpg")) {
+        errors.images = "Image must be a .jpg file.";
+    }
+
+    // Validate Seller Name
+    if (document.querySelector("#sellerName").value !== originalData.sellerName) {
+        errors.sellerName = "Seller Name cannot be changed.";
+    }
+
+    // Validate Price
+    if (!/^[0-9]+(\.[0-9]+)?$/.test(document.querySelector("#price").value)) {
+        errors.price = "Price should only contain numbers.";
+    }
+
+    displayErrors(errors);
+
+    return Object.keys(errors).length === 0;
+}
+
+function displayErrors(errors) {
+    document.querySelectorAll('.form-text.text-danger').forEach(small => {
+        small.textContent = '';
+    });
+
+    // Set error messages
+    if (errors.productId) {
+        document.querySelector("#productIdMessage").textContent = errors.productId;
+    }
+    if (errors.productName) {
+        document.querySelector("#nameMessage").textContent = errors.productName;
+    }
+    if (errors.images) {
+        document.querySelector("#imagesMessage").textContent = errors.images;
+    }
+    if (errors.sellerName) {
+        document.querySelector("#sellerMessage").textContent = errors.sellerName;
+    }
+    if (errors.price) {
+        document.querySelector("#priceMessage").textContent = errors.price;
+    }
+    // Show or hide the error message box
+    const anyErrorMessagesVisible = [...document.querySelectorAll(`.form-text.text-danger`)].some(m => m.textContent);
 
 
-// Update product data in the array and local storage
-function updateProductData(editedValues) {
-    const index = arrOfproduct.findIndex(product => product.productId == editedValues.productId);
+}
+
+function getEditedValues() {
+    return {
+        productId: document.querySelector("#productId").value,
+        productName: document.querySelector("#productName").value,
+        images: [document.querySelector("#images").value], 
+        sellerName: document.querySelector("#sellerName").value,
+        category: document.querySelector("#category").value,
+        price: document.querySelector("#price").value
+    };
+}
+
+function updateProductData(EditedValues) {
+    const index = arrOfproduct.findIndex(products => products.productId == EditedValues.productId);
     if (index !== -1) {
-        // Update the product details in the array
-        arrOfproduct[index] = { ...arrOfproduct[index], ...editedValues };
-
-        // Update the local storage
+        arrOfproduct[index] = { ...arrOfproduct[index], ...EditedValues };
+        console.log("Updated Product Data", arrOfproduct[index]);
         updateLocalStorage(arrOfproduct);
-
-        // Refresh the table to reflect the changes
         creatTableofData();
     } else {
-        console.error("Product not found in array.");
+        console.error("Product not found in array. ID: ", EditedValues.productId);
     }
 }
 
-//display the product details
-function displayProduct(productID){
-    let productDetails = arrOfproduct.filter(item => item.productId == productID);
-    if(productDetails.length > 0){
-        console.log("helloo")
-        document.querySelector('#exampleModalLong2 .modal-body2 ').innerHTML = `
-            <p>Product Name: ${productDetails[0].productName}</p>
-            <p>Price: ${productDetails[0].price}</p>
-            <p>Sold by: ${productDetails[0].sellerName}</p>
-            <p>Category: ${productDetails[0].category}</p>
-            <img src="${productDetails[0].images[0]}" alt="Product Image">
+function displayProduct(productId) {
+    let productDetails = arrOfproduct.find(item => item.productId == productId);
+    if (productDetails) {
+        document.querySelector('#exampleModalLong2 .modal-body2').innerHTML = `
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Product Name:</strong> ${productDetails.productName}</p>
+                        <p><strong>Price:</strong> ${productDetails.price}</p>
+                        <p><strong>Sold by:</strong> ${productDetails.sellerName}</p>
+                        <p><strong>Category:</strong> ${productDetails.category}</p>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-end">
+                        <img src="${productDetails.images[0]}" alt="Product Image" class="img-fluid">
+                    </div>
+                </div>
+            </div>
         `;
     } else {
         console.log("No such product exists");
     }
 }
 
-// Handle search functionality
-function handleSearch() {
+
+function handleSearch(e) {
     let searchValue = searchBar.value.toLowerCase();
     let allRows = tbody.getElementsByTagName("tr");
     for (let row of allRows) {
@@ -221,46 +266,13 @@ function handleSearch() {
     }
 }
 
-/*end hissen*/ 
-
-///////////////// sort////////////////
-function sortTable(column, sort_asc) {
-
-    //  console.log([...tableTr]);
-    [...table_rows].sort((a, b) => {
-        let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
-            second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
-
-        return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
-    })
-        .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
 
 
-
-}
-
-let arrOfproduct, cart;
-if (localStorage.getItem("products")) {
-    console.log("Local storage exists.");
-    arrOfproduct = JSON.parse(localStorage.getItem("products"));
-}
-if (localStorage.getItem("cart")) {
-    cart = JSON.parse(localStorage.getItem("cart"));
-}
-// Function to update local storage with an array of products
 function updateLocalStorage(arrOfproduct) {
-    console.log("Updating local storage with products:", arrOfproduct);
     localStorage.setItem("products", JSON.stringify(arrOfproduct));
 }
 
-
-
-
-// Function to create and populate an HTML table with product data
 function creatTableofData() {
-
-    tbody.innerHTML = ''
-    //print the products from end to start (newest first)
     for (let index = arrOfproduct.length-1; index >= 0; index--) {
         var element = arrOfproduct[index];
         tbody.innerHTML += `
@@ -285,84 +297,84 @@ function creatTableofData() {
          </tr>`
 
     }
-    attachEditEventListeners();
-    //add view event listener
-    tbody.addEventListener("click", function(e){
-        console.log(e.target.dataset.id)
-        if(e.target.classList.contains("view")){
-            let productId = e.target.dataset.id;
-            console.log(productId);
-            
-            displayProduct(productId);
-        }
+    
+}
+
+
+// Declare variables for later use; these will be assigned values at runtime
+
+var table_headings, table_rows;
+/////
+
+function sortTable(column, sort_asc) {
+    [...table_rows].sort((a, b) => {
+        let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
+            second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
+
+        return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
     })
+        .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
+
 }
 
-function istextvalid(val) {
-    // console.log(val != null && /^[a-zA-Z\s]*$/.test(val) && val.length >= 3);
-    return val != null && /^[a-zA-Z\s]*$/.test(val) && val.length >= 3;
+
+
+/*end hissen*/ 
+
+///////////////// sort////////////////
+
+if (localStorage.getItem("cart")) {
+    cart = JSON.parse(localStorage.getItem("cart"));
 }
-function isnumbervalid(val) {
-    console.log(val != null && val.trim() != "" && /^[0-9]+$/.test(val));
+// Function to update local storage with an array of products
 
-    return val != null && val.trim() != "" && /^[0-9]+$/.test(val);
-}
 
-function vaildData() {
-    let isnotvalidForm = true;
-    if (!istextvalid(_ProductName.value)) {
-        document.getElementById("ProductName").classList.toggle("is-invalid");
-        isnotvalidForm = false;
-        //return false;  
-    } else {
-        document.getElementById("ProductName").classList.remove("is-invalid");
-    }
-    if (!isnumbervalid(_Quntity.value)) {
-        document.getElementById("Quntity").classList.add("is-invalid");
-        isnotvalidForm = false;
-        // return false;
-    } else {
-        document.getElementById("Quntity").classList.remove("is-invalid");
-    }
-    if (!isnumbervalid(_price.value)) {
-        document.getElementById("price").classList.add("is-invalid");
-        isnotvalidForm = false;
-        // return false;
-    } else {
-        document.getElementById("price").classList.remove("is-invalid");
-    } if (!istextvalid(description.value)) {
-        document.getElementById("description").classList.add("is-invalid");
-        isnotvalidForm = false;
-        //return false;
-    } else {
-        document.getElementById("description").classList.remove("is-invalid");
-    }
 
-    if (!istextvalid(category.value)) {
-        document.getElementById("Catogry").classList.add("is-invalid");
-        isnotvalidForm = false;
-        //return false;
-    }
-    else {
-        document.getElementById("category").classList.remove("is-invalid");
-    }
 
-    return isnotvalidForm;
-}
+
+
+//     let isnotvalidForm = true;
+//     if (!istextvalid(_ProductName.value)) {
+//         document.getElementById("ProductName").classList.toggle("is-invalid");
+//         isnotvalidForm = false;
+//         //return false;  
+//     } else {
+//         document.getElementById("ProductName").classList.remove("is-invalid");
+//     }
+//     if (!isnumbervalid(_Quntity.value)) {
+//         document.getElementById("Quntity").classList.add("is-invalid");
+//         isnotvalidForm = false;
+//         // return false;
+//     } else {
+//         document.getElementById("Quntity").classList.remove("is-invalid");
+//     }
+//     if (!isnumbervalid(_price.value)) {
+//         document.getElementById("price").classList.add("is-invalid");
+//         isnotvalidForm = false;
+//         // return false;
+//     } else {
+//         document.getElementById("price").classList.remove("is-invalid");
+//     } if (!istextvalid(description.value)) {
+//         document.getElementById("description").classList.add("is-invalid");
+//         isnotvalidForm = false;
+//         //return false;
+//     } else {
+//         document.getElementById("description").classList.remove("is-invalid");
+//     }
+
+//     if (!istextvalid(category.value)) {
+//         document.getElementById("Catogry").classList.add("is-invalid");
+//         isnotvalidForm = false;
+//         //return false;
+//     }
+//     else {
+//         document.getElementById("category").classList.remove("is-invalid");
+//     }
+
+//     return isnotvalidForm;
+// }
 // Event handler for the click event on the "submit" form 
-submit.onclick = function (e) {
-    // Check the validity of the data using the vaildData() function
-    // if (vaildData())
-    if (true) {
-        // Close the modal (assuming closeModal() is a function that handles modal closure)
-        closeModal();
-
-        // Call the Add() function (assuming Add() is a function that adds the data)
-        Add();
-    } else {
-        e.preventDefault();
-    }
-}
+submit.addEventListener('click',Add)
 
 function Add() {
     var selectedValues = [];
@@ -406,15 +418,7 @@ btnAdd.addEventListener("click", function () {
     $('#myModal2').modal('show');
 
 })
-close.addEventListener("click", closeModal)
-closex.addEventListener("click", closeModal)
 
-function closeModal() {
-    // Hide the modal after deletion
-    $('#myModal2').removeClass('fade');
-    // Hide the modal after deletion
-    $('#myModal2').modal('hide');
-}
 /*//////////////----Delete--/////////////////*/
 
 function deleteProduct() {
@@ -507,5 +511,5 @@ function deleteProduct() {
     })
 
 }
-
+});
 

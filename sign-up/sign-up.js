@@ -10,10 +10,11 @@ window.addEventListener("load", function () {
 function handleFormSubmit(event) {
     event.preventDefault();
     // Validate the form before proceeding
-    let validationMessages = validateForm();
+    let validationErrors = validateForm();
 
-    if (validationMessages.length > 0) {
-        showValidationMessages(validationMessages);
+    // Check if there are any validation errors
+    if (Object.keys(validationErrors).length > 0) {
+        showValidationMessages(validationErrors);
         return;
     }
 
@@ -25,10 +26,10 @@ function handleFormSubmit(event) {
     var emailExists = usersArray.some(function (user) {
         return user.userEmail.toLowerCase() === email.toLowerCase();
     });
-
     if (emailExists) {
-        showValidationMessages(['This email is already signed up. Please use a different email.']);
-        emailExists = false;
+        showValidationMessages({ email: 'This email is already signed up. Please use a different email.' });
+        return;
+
     } else {
         let maxId = Math.max(...usersArray.map(user => user.userID), 0); //get max id
         var user = new users(maxId + 1, username, password, email, role);
@@ -56,58 +57,81 @@ function handleFormSubmit(event) {
     }
 }
 
+
 function validateForm() {
+    // Get the input values
     var email = document.querySelector('input[name="email"]').value;
     var username = document.querySelector('input[name="username"]').value;
     var password = document.getElementById("password").value;
     var confirmPassword = document.getElementById("confirmPassword").value;
 
-    let validationMessages = [];
-
-    const firstNameMessage = document.getElementById('firstNameMessage');
+    // Get the small elements for displaying messages
     const emailMessage = document.getElementById('emailMessage');
+    const usernameMessage = document.getElementById('usernameMessage'); // Make sure you have this in HTML
     const passwordMessage = document.getElementById('passwordMessage');
+    const confirmPasswordMessage = document.getElementById('confirmPasswordMessage'); // Make sure you have this in HTML
 
-    // You can add more specific validation if needed
-    if (!isValidEmail(email, emailMessage)) {
-        validationMessages.push("Fix the email error.");
+    // Clear previous messages
+    emailMessage.textContent = '';
+    usernameMessage.textContent = '';
+    passwordMessage.textContent = '';
+    confirmPasswordMessage.textContent = '';
+
+    // Validate each field and set messages
+    if (!isValidEmail(email)) {
+        emailMessage.textContent = "Invalid email format.";
     }
 
-    if (!isValidName(username, firstNameMessage)) {
-        validationMessages.push("Fix the username error.");
+    if (!isValidName(username)) {
+        usernameMessage.textContent = "Username is not valid.";
     }
 
-    if (!isValidPassword(password, passwordMessage)) {
-        validationMessages.push("Fix the password error.");
+    if (!isValidPassword(password)) {
+        passwordMessage.textContent = "Password does not meet criteria.";
     }
 
     if (password !== confirmPassword) {
-        validationMessages.push("Passwords do not match.");
+        confirmPasswordMessage.textContent = "Passwords do not match.";
     }
 
-    return validationMessages;
+    // Return true if all validations pass, otherwise false
+    return emailMessage.textContent === '' && 
+           usernameMessage.textContent === '' && 
+           passwordMessage.textContent === '' && 
+           confirmPasswordMessage.textContent === '';
 }
 
-// function validateEmail(email) {
-//     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//     return re.test(String(email).toLowerCase());
-// }
+// Make sure to update isValidEmail, isValidPassword, and isValidName functions to only return true/false
+// and not manipulate the DOM directly.
 
-function showValidationMessages(messages) {
-    let validationPopup = document.getElementById("validationPopup");
-    validationPopup.innerHTML = messages.map(message => `<p>${message}</p>`).join('');
-    validationPopup.style.animation = ""; // Reset animation
-    validationPopup.style.display = "block";
 
-    void validationPopup.offsetWidth;
 
-    // Start the animation by adding the class
-    validationPopup.style.animation = "fadeOut 5s forwards";
 
-    // Hide the popup after 2 seconds
-    // setTimeout(function () {
-    //     validationPopup.style.display = "none";
-    // }, 2000);
+function showValidationMessages(errors) {
+    document.querySelectorAll('.form-text.text-danger').forEach(elem => {
+        elem.textContent = '';
+    });
+
+    // Display new error messages
+    for (const key in errors) {
+        const errorMessage = errors[key];
+        const errorElement = document.getElementById(`${key}Error`);
+        if (errorElement) {
+            errorElement.textContent = errorMessage;
+        }
+    }
+}
+
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email) && email.includes('.com');
+}
+function isValidPassword(password) {
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+}
+function isValidName(username) {
+    return username.length >= 3;
 }
 
 export {validateForm, handleFormSubmit, showValidationMessages};
