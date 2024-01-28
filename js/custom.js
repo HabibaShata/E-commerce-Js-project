@@ -10,8 +10,7 @@ import {Product} from "./classes.js"
 //Product class function
 
 
-
-//random data
+//get the products data from the local storage
 let products = JSON.parse(localStorage.getItem("products"))|| [];
 // checking if the key  is not exist in the localStorage we will set the arr;
 if(!localStorage.getItem("products")){
@@ -26,15 +25,17 @@ let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
 // client section owl carousel
 $(function () {
-
-   let productCards = GetProducts(9);
+   //display all products at the beggining of function loading
+   let productCards = GetProducts(-1);
    if (document.getElementById("products-Landing")) {
       document.getElementById("products-Landing").innerHTML = productCards;   
    }
 })
 
 function GetProducts(maxNumber, productsList) {
+   debugger
    let products;
+   //if no productsList sent then get them from the local storage
    if (productsList != undefined) {
       products = productsList;
    }
@@ -42,11 +43,16 @@ function GetProducts(maxNumber, productsList) {
       products = JSON.parse(localStorage.getItem("products"));
    }
 
+   //if -1 is sent then display all the products (the products length is the length of all products in the local storage)
    if (maxNumber == -1) {
       maxNumber = products.length;
    }
+
+
    let productCards = "";
+   //Display the products from the newest to the oldest
    for (let i = maxNumber - 1; i >= 0; i--) {
+      //display the products based on the user role
       if (loggedInUser && loggedInUser.userRole == "admin") {
          productCards +=
          `<div class="col-sm-6 col-md-6 col-lg-4 data-id=${products[i].productId}">
@@ -108,6 +114,8 @@ function GetProducts(maxNumber, productsList) {
           </div>`;
          }
       } else { //if the product is out of stock we will remove the add to cart button and add the out of stock butto
+         console.log(i)
+         console.log(products[i])
          if(products[i].quantity == 0)
          {
             productCards +=
