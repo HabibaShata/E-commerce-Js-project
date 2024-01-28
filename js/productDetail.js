@@ -5,9 +5,9 @@ import { renderingNavBar } from "./general-methods.js";
 //////////////////////////////////////////////////////////////////////////////////
 let iconAddToCart = document.querySelectorAll(".iconAddToCart ");
 console.log(iconAddToCart);
-if(JSON.parse(localStorage.getItem('cart'))){
+if (JSON.parse(localStorage.getItem('cart'))) {
     let cart = JSON.parse(localStorage.getItem('cart'));
-}else{
+} else {
     iconCartSpan.innerText = cart.length;
 }
 
@@ -34,8 +34,8 @@ window.addEventListener("load", function () {
 
     iconAddToCart[0].addEventListener("click", function (e) {
         const seller = product.sellerName;
-       
-        
+
+
         const color = document.querySelector(".color").value;
         const quantity = document.querySelector(".quantity").value;
         console.log(color);
@@ -45,12 +45,12 @@ window.addEventListener("load", function () {
         console.log(e.target);
     })
     ////////////////////////////////////////////////////////////////////////////
-    //add event listener to the quantity to check the quantity is not negative
+    //add event listener to the quantity to check the quantity is not negative and the max is the product quantity
     const quantity = document.querySelector("#quantity");
     quantity.addEventListener("input", function () {
         if (quantity.value < 1) {
             quantity.value = 1;
-        } else if (product.quantity <=  quantity) {
+        } else if (quantity.value > product.quantity) {
             quantity.value = product.quantity;
         }
     })
