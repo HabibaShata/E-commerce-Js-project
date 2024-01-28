@@ -1,4 +1,3 @@
-import { isValidEmail, isValidPassword, isValidName } from "../js/profile.js";
 import {users} from "../js/classes.js"
 
 window.addEventListener("load", function () {
@@ -8,7 +7,8 @@ window.addEventListener("load", function () {
 });
 
 function handleFormSubmit(event) {
-    event.preventDefault();
+    debugger
+    
     // Validate the form before proceeding
     let validationErrors = validateForm();
 
@@ -67,9 +67,9 @@ function validateForm() {
 
     // Get the small elements for displaying messages
     const emailMessage = document.getElementById('emailMessage');
-    const usernameMessage = document.getElementById('usernameMessage'); // Make sure you have this in HTML
+    const usernameMessage = document.getElementById('userNameMessage'); // Make sure you have this in HTML
     const passwordMessage = document.getElementById('passwordMessage');
-    const confirmPasswordMessage = document.getElementById('confirmPasswordMessage'); // Make sure you have this in HTML
+    const confirmPasswordMessage = document.getElementById('confirmPassword'); // Make sure you have this in HTML
 
     // Clear previous messages
     emailMessage.textContent = '';

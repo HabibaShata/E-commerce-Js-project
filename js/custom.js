@@ -33,7 +33,6 @@ $(function () {
 })
 
 function GetProducts(maxNumber, productsList) {
-   debugger
    let products;
    //if no productsList sent then get them from the local storage
    if (productsList != undefined) {
