@@ -127,6 +127,11 @@ window.addEventListener('load', function () {
                 },
                 options: {
                   responsive: true,
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
                 }
               });
           }

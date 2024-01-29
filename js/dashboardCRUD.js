@@ -291,7 +291,8 @@ function updateLocalStorage(arrOfproduct) {
 function creatTableofData() {
     for (let index = arrOfproduct.length-1; index >= 0; index--) {
         var element = arrOfproduct[index];
-        tbody.innerHTML += `
+        if(JSON.parse(localStorage.getItem("loggedInUser")).userRole=="admin") {
+            tbody.innerHTML += `
           <tr>
           <td>${element.productId}</td>
           <td>${element.productName}</td>
@@ -300,9 +301,6 @@ function creatTableofData() {
           <td>${element.category}</td>
           <td>${element.price}</td>
           <td>
-                      <a href="#" class="edit" title="Edit" data-bs-toggle="modal" data-bs-target="#userFormModal">
-                      <i class="material-icons edit" data-id="${element.productId}">&#xE254;</i>
-                  </a>
                   <!-- View Link -->
                   <a href="#" title="View" data-bs-toggle="modal" data-bs-target="#exampleModalLong2" >
                       <i data-id="${element.productId}" class="view material-icons">&#xE417;</i>
@@ -311,6 +309,29 @@ function creatTableofData() {
                       class=" material-icons text-danger">&#xE872;</i></a>
           </td>
          </tr>`
+        } else {
+            tbody.innerHTML += `
+          <tr>
+            <td>${element.productId}</td>
+            <td>${element.productName}</td>
+            <td><img src="${element["images"][0]}"/></td>
+            <td>${element.sellerName}</td>
+            <td>${element.category}</td>
+            <td>${element.price}</td>
+            <td>
+                    <a href="#" class="edit" title="Edit" data-bs-toggle="modal" data-bs-target="#userFormModal">
+                        <i class="material-icons edit" data-id="${element.productId}">&#xE254;</i>
+                    </a>
+                    <!-- View Link -->
+                    <a href="#" title="View" data-bs-toggle="modal" data-bs-target="#exampleModalLong2" >
+                        <i data-id="${element.productId}" class="view material-icons">&#xE417;</i>
+                    </a>
+                <a href="#"  title="Delete"  data-id="${element.productId}" class="delete trigger-btn"><i
+                        class=" material-icons text-danger">&#xE872;</i></a>
+                </td>
+         </tr>`
+        }
+        
 
     }
     
