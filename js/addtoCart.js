@@ -1,23 +1,22 @@
-let products = JSON.parse(localStorage.getItem("products"));
-let listProductHtml;
-var listCartHTML;
-let iconCart;
-export let iconCartSpan;
-let closeCart;
-let checkOut;
-let arrowBack;
-let cart;
-let lyercartOverlay;
-export let temmraryDiv;
-let totalPrice;
+ let products=JSON.parse(localStorage.getItem("products"));
+    let listProductHtml;
+    var  listCartHTML;
+    let iconCart;
+    export  let iconCartSpan;
+    let closeCart;
+    let checkOut;
+    let arrowBack;
+    let cart;
+    let lyercartOverlay;
+    export let temmraryDiv;
+    let totalPrice;
 
-let footerCart;
-var containerDivCartIsEmpty;
-var iconEmptyCart;
-var msg;
-// a
-var btnStratShopping;
-export let arrCart = [];
+    let footerCart;
+    var containerDivCartIsEmpty;
+    var iconEmptyCart;
+    var msg;
+    // a
+    var btnStratShopping;
 
 window.addEventListener("load", function () {
     listProductHtml = document.getElementById("products-Landing");
@@ -64,38 +63,43 @@ window.addEventListener("load", function () {
     containerDivCartIsEmpty.append(msg);
     containerDivCartIsEmpty.append(btnStratShopping);
 
-    // console.log(containerDivCartIsEmpty);
-    //check if the loggedinuser is the admin or seller so don't perform the following
-    if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
-        if (localStorage.getItem("cart") != null) {
-            
-            //check if the loggedinuser is the admin or seller so don't perform the following
-            //  arrCart = JSON.parse(localStorage.getItem("cart"));
-            //  console.log(arrCart);
-            //  iconCart.addEventListener("click", showCart);
-            //  arrowBack.addEventListener("click", hideCart);
-            //  closeCart.addEventListener("click", clearCart);
-            //  listCartAsHTML();
-            iconCart.addEventListener("click", showCart);
-            arrowBack.addEventListener("click", hideCart);
-            closeCart.addEventListener("click", clearCart);
-
-        }
-
-
-
-    }
-
+    console.log(containerDivCartIsEmpty);
 
     if (localStorage.getItem("cart") != null) {
         //check if the loggedinuser is the admin or seller so don't perform the following
         if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
             arrCart = JSON.parse(localStorage.getItem("cart"));
-
+    
             listCartAsHTML();
         }
     }
 
+    //cart events
+    //check if the loggedinuser is the admin or seller so don't perform the following
+    if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
+        iconCart.addEventListener("click", showCart);
+        arrowBack.addEventListener("click", hideCart);
+        closeCart.addEventListener("click", clearCart);
+    }
+
+    //check if the loggedinuser is the admin or seller so don't perform the following
+    if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
+        listCartHTML.addEventListener('click', (event) => {
+            let positionClick = event.target;
+            // debugger;
+            //console.log(event.target.dataset.btn);
+            if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
+                let product_id = parseInt(positionClick.parentElement.parentElement.parentElement.dataset.id);
+                console.log(product_id);
+                let type = 'decr';
+                if (event.target.dataset.btn == "incr") {
+                    type = 'incr';
+                }
+                changeQuantityCart(product_id, type);
+            }
+
+        })
+    }
 
     //check if the loggedinuser is the admin or seller so don't perform the following
     if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
@@ -114,9 +118,9 @@ window.addEventListener("load", function () {
 
         })
     }
-
 })
 
+export let arrCart = [];
 let loggedInUser = null;
 
 if (localStorage.getItem("loggedInUser")) {
@@ -124,24 +128,22 @@ if (localStorage.getItem("loggedInUser")) {
 }
 
 function listCartAsHTML() {
-
+    
     let totalQuantity = 0;
     let total = 0;
     totalPrice.innerHTML = "0"
-    iconCartSpan.innerHTML = arrCart.length;
-    console.log(arrCart);
+     iconCartSpan.innerHTML = arrCart.length;
     arrCart.forEach(item => {
         // console.log(arrCart);
 
         totalQuantity = totalQuantity + item.quantity;
-        console.log("item in arr ", item, products);
         total = item.quantity * products[item.product_id - 1].price;
         let newItem = document.createElement('div');
         newItem.classList.add('item');
         //  console.log(products);
         //  console.log(totalPrice=Number(totalPrice)+products[item.product_id - 1].price * item.quantity);
         totalPrice.innerHTML = parseInt(totalPrice.innerHTML) + products[item.product_id - 1].price * item.quantity + "$";
-        // let info = products[product_Id];
+        let info = products[product_Id];
         //    console.log(info['images'][0]);
         listCartHTML.appendChild(newItem);
         newItem.innerHTML =
@@ -174,7 +176,7 @@ function listCartAsHTML() {
                 </div>
               </div>
               `;
-        //console.log(newItem);
+
         // console.log(products[item.product_id - 1].price * item.quantity);
 
     })
@@ -188,9 +190,6 @@ function listCartAsHTML() {
             }
         })
     }
-
-
-
     //color options
     let allColors = document.querySelectorAll(".color-radio-btn");
 
@@ -251,8 +250,9 @@ function listCartAsHTML() {
     }
 
 }
+
+
 function showCart() {
-    console.log("show cart");
     if (arrCart.length == 0) {
 
         listCartHTML.prepend(containerDivCartIsEmpty);
@@ -283,6 +283,7 @@ export function clearCart(e) {
 
 };
 
+// to make sure Dom[html code] loaded
 var product_Id;
 window.addEventListener("load", function () {
     var addCartLink = document.querySelectorAll(".addCart");
@@ -294,26 +295,29 @@ window.addEventListener("load", function () {
             addToCart(product_Id, productSeller);
         })
     }
-
-
+    
+//     if(JSON.parse(localStorage.getItem('products'))!=null){
+//         products = JSON.parse(localStorage.getItem('products'));
+//        console.log("trueeeeeeeeeeeeee");
+//    }
 })
 
 //**   add to cart    / */
 
 var cnt = 0;
-
 export const addToCart = (product_id,seller,quantity=1, color="White") => {
-
+    debugger
     //findindex fun return index of ele if it extist in arr else if rturn -1;
     let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == product_id);
     let productSeller;
     //get the productseller if seller is undefined
-    if (!seller) {
+    if(!seller)
+    {
         productSeller = products.filter(product => product.productId == product_id)[0].sellerName;
     } else {
         productSeller = seller;
     }
-
+    
 
     if (arrCart.length <= 0) {
         arrCart = [{
@@ -327,28 +331,23 @@ export const addToCart = (product_id,seller,quantity=1, color="White") => {
         setTimeout(function () {
             temmraryDiv.style.display = "none";
         }, 2000)
-        // cnt++;
+        cnt++;
 
     } else if (positionThisProductInCart < 0) {
         arrCart.push({
             product_id: product_id,
             quantity: quantity,
             seller: productSeller,
-            quantity_sold: 0,
+            quantity_sold:0,
             colorOptions: color,
         });
         temmraryDiv.style.display = "block";
         setTimeout(function () {
             temmraryDiv.style.display = "none";
         }, 2000)
-        // cnt++;
+        cnt++;
     } else {
-        Swal.fire({
-            title: "Item is already in cart",
-            text: "That thing is still around?",
-            icon: "warning"
-          });
-        // alert("Item is already in cart");
+        alert("Item is already in cart");
     }
     addCartToHTML();
     addCartToMemory();
@@ -401,11 +400,9 @@ const changeQuantityCart = (product_id, type) => {
         //  let info = arrCart[positionItemInCart];
         switch (type) {
             case 'incr':
-
                 if(arrCart[positionItemInCart].quantity <products[arrCart[positionItemInCart].product_id-1].quantity){
                     arrCart[positionItemInCart].quantity = Number(arrCart[positionItemInCart].quantity) + 1;
                 }else{
-
                     alert("out of sotck");
                 }
 
