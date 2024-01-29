@@ -9,7 +9,6 @@ window.addEventListener('load', function () {
           history.back();
         })
 
-    
       let userData = JSON.parse(userDataString);
       if(userData.userGender == "Male")
       {
@@ -37,10 +36,8 @@ window.addEventListener('load', function () {
           if (  updatedUserData.password == userData.userPassword
                 && updatedUserData.email == userData.userEmail ) 
           {
-            console.log('inside');
             return;
           }
-          console.log('outside');
           // Validate user information
           const emailMessage = document.getElementById('emailMessage');
           const passwordMessage = document.getElementById('passwordMessage');
@@ -58,6 +55,11 @@ window.addEventListener('load', function () {
           if (!isEmailValid || !isPasswordValid) {
             document.getElementById('email').value = updatedUserData.email || '';
             document.getElementById('password').value = updatedUserData.password || '';
+            setTimeout(() => {
+              emailMessage.innerText = '';
+              passwordMessage.innerText = '';
+              validationMessage.innerText = '';
+            }, 3000);  
             return;
           }
 
@@ -102,11 +104,7 @@ window.addEventListener('load', function () {
                   labels: sellerProducts.map((p) => p.productName),
                   datasets: [{
                     label: 'remaining quantities of each product',
-<<<<<<< HEAD
-                    data: sellerProducts.map((p)=>p.quantity -p.quantity_sold),
-=======
                     data: sellerProducts.map((p)=>p.quantity-p.quantity_sold),
->>>>>>> 6230548d53230c3b4aa0932ff34c3fca78382d0a
                     borderWidth: 5
                   }]
                 },
@@ -165,8 +163,9 @@ function isValidName(name, messageElement) {
 // Function to validate email
 function isValidEmail(email, messageElement) {
   // Email must contain @ and a dot after @
-  if (!/@.*\.[a-zA-Z]{2,}/.test(email)) {
-    messageElement.innerText = 'Invalid email format. Make sure it contains "@" and a dot (.) after "@" (e.g., example@example.com).';
+  const emailReg = /^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,6}$/;
+  if (! emailReg.test(email)) {
+    messageElement.innerText = `Invalid email format. Make sure it contains "@" and a dot (.) after "@" and it accepts only characters and digits(e.g., example@example.com).`;
     return false;
   }
 
