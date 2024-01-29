@@ -1,6 +1,6 @@
 //import { Item } from "../orders.js";
-import { clearCart} from "./addtoCart.js"
-import { Item,Order,Address } from "./classes.js";
+import { clearCart } from "./addtoCart.js"
+import { Item, Order, Address } from "./classes.js";
 
 //Check if the user is a guuest then navigate to the log in page
 let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -12,8 +12,7 @@ if (!loggedInUser) {
     history.back();
 }
 
-if(cart.length==0)
-{
+if (cart.length == 0) {
     history.back();
 }
 
@@ -43,10 +42,16 @@ window.addEventListener("load", function () {
 <div class="orderItem" data-id="${order["product_id"]}">
 <img src="${products[order["product_id"] - 1].images[0]}"/>
 <div class="orderItem-detail">
-    <h3 class="name" >Name: ${products[order["product_id"] - 1].productName}</h3>
-    <h3 class="seller">seller: ${order["seller"]}</h3>
+          <div class="allDiv">
+           <h3 class="name" >Name: ${products[order["product_id"] - 1].productName}</h3>
+
+            <h3 class="seller">seller: ${order["seller"]}</h3>
+         </div>
+ 
+        <div class="allDiv">
     <h5 class="quantity">quantity:  ${order["quantity"]}</h5>
     <h5 class="color">color:  ${order["colorOptions"]}</h5>
+    </div>
         <span class="orderItem-price">
         price:  ${products[order["product_id"] - 1].price * order["quantity"]} $
         </span>
@@ -70,7 +75,8 @@ window.addEventListener("load", function () {
     $('#addressForm').submit(function (event) {
         // Prevent the default form submission
         event.preventDefault();
-
+        let btn = document.getElementById("submetbtn");
+        if(btn.classList.contains("disabled")){return;}
         // Retrieve values from form fields
         const phone = $('#phone').val();
         const additionalphone = $('#additionalphone').val();
@@ -90,6 +96,8 @@ window.addEventListener("load", function () {
 
         localStorage.setItem("address", JSON.stringify(address));
         console.log(addressObject);
+        btn.classList.add("disabled")
+        alert("Your address has been saved successfully")
     });
 
 })
@@ -120,21 +128,21 @@ function createOrder(userAddress) {
     orderItems.forEach(x => {
         const item = $(x); // Wrap the raw DOM element in a jQuery object
 
-    const productId = item.data('id');
-    const productName = item.find('.name').text().replace('Name: ', '');
-    const image = item.find('img').attr('src');
-    const option = item.find('.color').text().replace('color: ', '');
-    const quantity = parseInt(item.find('.quantity').text().replace('quantity: ', ''), 10);
-    const totalPrice = parseFloat(item.find('.orderItem-price').text().replace('price: ', '').replace('$', ''));
-    const price = totalPrice/quantity;
-    const seller = item.find('.seller').text().replace('seller: ', '');
-    
-    items.push(new Item(productId, productName, image, option, quantity, price, totalPrice, seller,"New"));
+        const productId = item.data('id');
+        const productName = item.find('.name').text().replace('Name: ', '');
+        const image = item.find('img').attr('src');
+        const option = item.find('.color').text().replace('color: ', '');
+        const quantity = parseInt(item.find('.quantity').text().replace('quantity: ', ''), 10);
+        const totalPrice = parseFloat(item.find('.orderItem-price').text().replace('price: ', '').replace('$', ''));
+        const price = totalPrice / quantity;
+        const seller = item.find('.seller').text().replace('seller: ', '');
+
+        items.push(new Item(productId, productName, image, option, quantity, price, totalPrice, seller, "New"));
 
 
-    localStorage.setItem("products",JSON.stringify(products));
+        localStorage.setItem("products", JSON.stringify(products));
 
-})
+    })
 
     const newOrder =
         new Order(
@@ -156,25 +164,39 @@ function createOrder(userAddress) {
 }
 // -----  first validate ---
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 btnCheckout.addEventListener("click", function (e) {
-    event.preventDefault();
-    debugger;
+//    e.preventDefault();
+
+
     cart.forEach((v) => {
-   console.log("8777778888888");
-      //  console.log(products[v.product_id - 1]);
+        //  console.log(products[v.product_id - 1]);
 
-        products[v.product_id - 1].quantity_sold =parseInt (products[v.product_id - 1].quantity_sold)+parseInt(v.quantity)+"";
-        products[v.product_id - 1].quantity = parseInt(products[v.product_id - 1].quantity)-parseInt(v.quantity)+"";
-       //add modifiy countity to cart 
-       localStorage.setItem('products', JSON.stringify(products));
+        products[v.product_id - 1].quantity_sold = parseInt(products[v.product_id - 1].quantity_sold) + parseInt(v.quantity) + "";
+        products[v.product_id - 1].quantity = parseInt(products[v.product_id - 1].quantity) - parseInt(v.quantity) + "";
+        //add modifiy countity to cart 
+        localStorage.setItem('products', JSON.stringify(products));
 
-       // console.log(v.product_id);//id product
+        // console.log(v.product_id);//id product
     })
     localStorage.setItem('cart', JSON.stringify([]));
-   
-        //localStorage.setItem('cart', JSON.stringify(cart));
-       // localStorage.setItem('cart', JSON.stringify(cart));
-    
+
+    //localStorage.setItem('cart', JSON.stringify(cart));
+    // localStorage.setItem('cart', JSON.stringify(cart));
+
 })
 
 // console.log(order["product_id"]);//  idProduct

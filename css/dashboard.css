@@ -259,8 +259,10 @@ tr img{
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 
-.dropdownUser{
-    margin-top: 252px;
+.dropdownUser {
+    position: absolute;
+    bottom: 13px;
+    left: 10px;
 }
 
 /* modal add product */
@@ -371,4 +373,14 @@ thead th.active,tbody td.active {
 }
 thead th.asc span.icon-arrow{
     transform: rotate(180deg);
+}
+.swal2-cancel{
+     margin-right: 10px;
+}
+
+.swal2-popup{
+    background-color: white;
+}
+.swal2-title{
+    color: #00000091;
 }

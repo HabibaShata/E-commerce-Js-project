@@ -30,16 +30,15 @@
     <!-- responsive style -->
     <link href="css/responsive.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <style>
-        /* .is-invalid {
-            margin: auto;
-            color: red;
-        } */
-    </style>
+    <!--sweet alert  -->
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
 </head>
 
 <link rel="stylesheet" href="/css/dashboard.css">
 
+<script src="js/sellerCRUD.js" type="module" defer></script>
 
 
 </head>
@@ -127,13 +126,13 @@
     <div class="container-fluid">
         <main class="row">
             <!-- leftSide -->
-            <div class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" >
+            <div class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="index.html"><img width="121"
                         src="images/logo.png" alt="#" />
                 </a>
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto">
-         
+
                     <li>
                         <a href="#" class="nav-link link-dark active">
                             <svg class="bi me-2" width="16" height="16">
@@ -142,7 +141,7 @@
                             Dashboard
                         </a>
                     </li>
-             
+
                     <li>
                         <a href="productSeller.html" class="nav-link link-dark">
                             <svg class="bi me-2" width="16" height="16">
@@ -157,11 +156,11 @@
                 <div class="dropdown dropdownUser">
                     <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
                         id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                        <strong> mohamed</strong>
+                        <!-- <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2"> -->
+                        <!-- <strong> mohamed</strong> -->
                     </a>
                     <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                    
+
                         <li><a class="dropdown-item" href="/profile.html">Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">
@@ -200,9 +199,9 @@
                         <thead>
                             <tr>
                                 <th>productId</th>
-                                <th>productName </th>
+                                <th>productName <i class="fa fa-sort"></i></th>
                                 <th>productImage </th>
-                                <th>sellerName <i class="fa fa-sort"></i></th>
+                                <th>sellerName </th>
                                 <th>category <i class="fa fa-sort"></i></th>
                                 <th>price</th>
                                 <th>Action</th>
@@ -253,27 +252,27 @@
                     <div id="myModal2" class="modal fade">
                         <div class="modal-dialog modal-lg contact-modal">
                             <div class="modal-content">
-                                <form action="./dashordAdmin.html" class="addproduct">
+                                <form action="./seller.html" class="addproduct" id="addressForm">
                                     <div class="modal-header">
                                         <h4 class="modal-title">Add New Product</h4>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                            aria-hidden="true">&times;</button>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                            id="clsX">&times;</button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-md-6">
-    
+
                                                 <div class="form-group">
                                                     <label for="ProductName">Enter ProductName:</label>
                                                     <input type="text" name="ProductName" class="form-control"
-                                                        id="ProductName" placeholder="ProductName" required>
-                                                   
+                                                        id="ProductName" placeholder="ProductName" pattern="^[a-zA-Z0-9\s-]+$" required>
+
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="price ">Enter price :</label>
                                                     <input type="text" name="price" class="form-control" id="price"
-                                                        placeholder="price " required>
-                            
+                                                        placeholder="price " pattern="^(0|[1-9]\d*)(\.\d{2})?$" min="0.01" required>
+
 
                                                 </div>
 
@@ -281,13 +280,13 @@
                                                     <label for="description">Descripe your product :</label>
                                                     <textarea class="form-control" name="description" id="description"
                                                         placeholder="Descripe your product" required></textarea>
-                                               
+
                                                 </div>
 
 
                                             </div>
                                             <div class="col-md-6">
-                                    
+                                                <!-- checkbox -->
                                                 <div class="form-check" id="color-checkbox">
                                                     <label class="form-check-label col-12" for="color">Choose
                                                         colors:</label>
@@ -296,7 +295,7 @@
 
                                                         <label class="form-check-label " for="colorWhite"><input
                                                                 class="form-check-input color-checkbox" type="checkbox"
-                                                                value="white" id="colorWhite" name="color">
+                                                                value="white" id="colorWhite" name="color" required>
                                                             White</label>
 
                                                     </div>
@@ -314,51 +313,45 @@
                                                                 class="form-check-input color-checkbox" type="checkbox"
                                                                 value="red" id="colorRed" name="color">Red</label>
                                                     </div>
-                                             
+
                                                 </div>
                                                 <!-- category -->
                                                 <select class="form-select form-select-sm"
                                                     aria-label=".form-select-sm example" id="category">
-                                                    <label for="">
+                                                    <label for="category">
                                                         seclect category
 
                                                     </label>
                                                     <option selected disabled>category</option>
-                                                    <option value="jewellery">jewellery</option>
-                                                    <option value="artwork">artwork</option>
-                                                    <!-- span invalid input -->
-                                                    <span class="is-invalid"> *must choose catigery </span>
+
                                                 </select>
-
-
-
+                                                <!-- Quntity -->
                                                 <div class="form-group">
                                                     <label for="Quntity ">Enter Quntity :</label>
                                                     <input type="number" name="Quntity" class="form-control"
-                                                        id="Quntity" placeholder="Quntity " required min="1">
+                                                        id="Quntity" placeholder="Quntity " pattern="^[1-9]\d*$" required min="1">
 
                                                 </div>
-
+                                                <!-- productImage -->
                                                 <div class="form-group">
-                                                    <label for="productImage">Enter productImage:</label>
+                                                    <label for="productImage">Enter productImages:</label>
                                                     <input type="file" name="productImage" class="form-control"
                                                         id="productImage" placeholder="productImage" required>
-                                             
+
                                                 </div>
-                                                <div class="form-group">
-                                                    <!-- <label for="productImage">Enter productImage:</label> -->
+                                                <!-- <div class="form-group">
                                                     <input type="file" name="productImage2" class="form-control"
                                                         id="productImage2" placeholder="productImage" required>
-                                              
-                                                </div>
+
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-link clsBtn" data-dismiss="modal"
                                             value="Cancel">
-                                        <a href="#" class="btn btn-info submitLink" value="Save">Save</a>
-                                        <!-- <input type="submit" class="btn btn-info" value="Save"> -->
+                                        <!-- <a href="#" class="btn btn-info submitLink" value="Save">Save</a> -->
+                                        <button class="submit submitLink btn btn-success rounded w-25" id="submentbtn">Save</button>
                                     </div>
                                 </form>
                             </div>
@@ -377,7 +370,6 @@
     <!-- jQery -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-    <script src="js/sellerCRUD.js" type="module" ></script>
 
 
 
