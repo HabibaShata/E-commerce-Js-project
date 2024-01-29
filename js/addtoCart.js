@@ -103,7 +103,7 @@ window.addEventListener("load", function () {
 
     //check if the loggedinuser is the admin or seller so don't perform the following
     if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
-        listCartHTML.addEventListener('click', (event) => {
+        listCartHTML.addEventListener('dblclick', (event) => {
             let positionClick = event.target;
             //console.log(event.target.dataset.btn);
             if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
@@ -391,6 +391,7 @@ const addCartToHTML = () => {
 // }
 
 const changeQuantityCart = (product_id, type) => {
+    debugger
     let positionItemInCart = arrCart.findIndex((value) => value.product_id == product_id);
     // let positionItemInCart2 = arrCart.findIndex((value) =>{} );
 

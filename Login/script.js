@@ -6,10 +6,13 @@ if(localStorage.getItem("users") != null)
 {
     usersArray = JSON.parse(localStorage.getItem("users"));
     //check if no admin in the user array then add one admin account
-    if(usersArray.filter((user)=>{
-        user.userRole=="admin";
-    }).length==0) {
-        usersArray = [new users(0, "admin", 1234567, "admin@gmail.com", "admin")];
+    let admins = usersArray.filter(user=>{
+       return user.userName=="admin";
+    })
+
+
+    if(admins.length==0) {
+        usersArray.push(new users(0, "admin", 1234567, "admin@gmail.com", "admin"));
     }
 } else {
     usersArray = [new users(0, "admin", 1234567, "admin@gmail.com", "admin")];
