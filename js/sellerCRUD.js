@@ -144,16 +144,16 @@ function deleteProduct(idDeleProduct) {
 
             if (positionThisProductInCart == -1) {
                 // Remove the product from the product array  in localStorage and SellerArr 
-             //   arrOfproduct.splice(positionThisProductInProduct, 1);
-              //  sellerArr.splice(positionThisProductInArrSeller, 1);
-               //  localStorage.setItem("products", JSON.stringify(arrOfproduct));
+                arrOfproduct.splice(positionThisProductInProduct, 1);
+                sellerArr.splice(positionThisProductInArrSeller, 1);
+                localStorage.setItem("products", JSON.stringify(arrOfproduct));
 
-               // parentTrDeleted.remove();
-              //  creatTableofData();
+                parentTrDeleted.remove();
+                creatTableofData();
                 // Remove the corresponding row from the HTML table
                 $('#myModal').removeClass('fade');
                 $('#myModal').modal('hide');
-
+                location.reload();
 
             } else {
                 // If the item is already in the cart, display an alert

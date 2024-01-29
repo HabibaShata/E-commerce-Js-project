@@ -83,7 +83,5 @@ export const StatusEnum = {
     Completed: 'Completed'
 };
 
-let categories = ["All", "Jewellery", "Accessories", "Artwork", "Pet-supplies", "Sweets"];
+export let categories = ["All", "Jewellery", "Accessories", "Artwork", "Pet-supplies", "Sweets"];
 
-
-export {categories}
