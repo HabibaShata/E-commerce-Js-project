@@ -3,7 +3,6 @@ import { addToCart } from './addtoCart.js';
 import { renderingNavBar, LogOut } from "./general-methods.js";
 import { categories } from "./classes.js";
 
-// Now you can use addToCart in this file
 let filter = "All";
 let checkedSellers = [];
 let sellersList; //sellers' names container in products.html
@@ -13,9 +12,9 @@ let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 if (loggedInUser) {
     if(loggedInUser.userRole == "admin")
     {
-        location.replace("../dashboardAdmin.html");
+        // location.replace("../dashboardAdmin.html");
     } else if (loggedInUser.userRole == "seller") {
-        location.replace("../dashboardSeller.html");
+      //  location.replace("../seller.html");
     }
 }
 

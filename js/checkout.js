@@ -98,6 +98,7 @@ window.addEventListener("load", function () {
         //to prevent reload
         event.preventDefault();
 
+
         // get values from form fields
         const phone = $('#phone').val();
         const additionalphone = $('#additionalphone').val();
@@ -118,6 +119,7 @@ window.addEventListener("load", function () {
         }
 
         localStorage.setItem("address", JSON.stringify(address));
+
     });
 
 })
@@ -138,6 +140,7 @@ function createOrder(userAddress) {
 
     const orderItems = $('.orderItem').toArray();
     orderItems.forEach(x => {
+
         const item = $(x); // convert to jQuery object
 
         const productId = item.data('id');
@@ -175,6 +178,20 @@ function createOrder(userAddress) {
 
 // -----  first validate ---
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 btnCheckout.addEventListener("click", function (e) {
     event.preventDefault();
 
@@ -183,7 +200,6 @@ btnCheckout.addEventListener("click", function (e) {
         products[v.product_id - 1].quantity = parseInt(products[v.product_id - 1].quantity) - parseInt(v.quantity) + "";
         //add modifiy countity to cart 
         localStorage.setItem('products', JSON.stringify(products));
-
     })
     localStorage.setItem('cart', JSON.stringify([]));
 })
