@@ -5,10 +5,17 @@ let usersArray = [];
 if(localStorage.getItem("users") != null)
 {
     usersArray = JSON.parse(localStorage.getItem("users"));
-    console.log("hello");
+    //check if no admin in the user array then add one admin account
+    let admins = usersArray.filter(user=>{
+       return user.userName=="admin";
+    })
+
+
+    if(admins.length==0) {
+        usersArray.push(new users(0, "admin", 1234567, "admin@gmail.com", "admin"));
+    }
 } else {
     usersArray = [new users(0, "admin", 1234567, "admin@gmail.com", "admin")];
-    console.log("hi");
 }
 
 localStorage.setItem("users", JSON.stringify(usersArray));
@@ -79,6 +86,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 }, 5000);
             }
         }
-    
+       
+        document.getElementById('togglePassword').addEventListener('click', function (e) {
+            const password = document.getElementById('Password');
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+                    this.classList.toggle('fa-eye-slash');
+        })
+          });
         
-});

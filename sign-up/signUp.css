@@ -7,7 +7,42 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     vertical-align: baseline;
     border-radius: 50px;
   }
-  
+  .input-group-text {
+    background-color: transparent;
+    border: none;
+    color: white;
+
+}
+
+
+
+.form-control {
+    border: 1px solid #ccc;
+
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(241, 223, 163, 0.893);
+}
+
+i {
+    margin-right: 5px;
+    margin-top: 15px;
+}
+
+.Input {
+    margin-bottom: 20px;
+}
+
+.spanInput {
+    margin-right: 4px;
+}
+#togglePassword{
+  position: absolute;
+  right: 1px;
+  color: #000000;
+}
   article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     display: block;
   }
@@ -116,14 +151,12 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     max-width: 100%;
   }
   
-  /*-- end reset --*/
   body {
-    background: #e576c0;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #f5caec, #fab5f5);
-    background: -moz-linear-gradient(to top, #f5caec, #fab5f5);
-    background: -o-linear-gradient(to top, #f5caec, #fab5f5);
-    background: linear-gradient(to top, #f5caec, #fab5f5);
+    background: #ffecd2; /* Light peach as a fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #fcb69f, #ffecd2);
+    background: -moz-linear-gradient(to top, #fcb69f, #ffecd2);
+    background: -o-linear-gradient(to top, #fcb69f, #ffecd2);
+    background: linear-gradient(to top, #fcb69f, #ffecd2);
     background-size: cover;
     background-attachment: fixed;
     font-family: 'Roboto', sans-serif;
@@ -218,7 +251,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   input[type="submit"] {
     font-size: .9em;
     color: #faf6f6;
-    background: #f888cb;
+    background: #e4d605a7;
     outline: none;
     border: 1px solid #edadda;
     cursor: pointer;
@@ -234,12 +267,12 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     -o-transition: .5s all;
     -ms-transition: .5s all;
     transition: .5s all;
-    background: #ec29db;
+    background: #e3861c;
   }
   
   .agileits-top p {
     font-size: 1em;
-    color: #fff;
+    color: #f4efea;
     text-align: center;
     letter-spacing: 1px;
     font-weight: 300;
@@ -254,8 +287,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   }
   
   .agileits-top p a:hover {
-    color: #f30ab1;
-  }
+    color: #f3ce97fd; /* Warm amber color for hover effect */
+}
   
   /*-- //main --*/
   /*-- checkbox --*/
@@ -268,8 +301,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   }
   
   input.checkbox {
-    background: #f51ebf;
-    cursor: pointer;
+    background-color: #e76f51; /* Terracotta color */
+    color: white; /* White text for contrast */
+        cursor: pointer;
     width: 1.2em;
     height: 1.2em;
   }
@@ -309,7 +343,34 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     border-top-color: transparent;
     border-right-color: transparent;
   }
+  #logo{
+    position: fixed;
+    left: 30px;
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333; /* Change color as needed */
+    font-weight: bold; 
+  }
+  #logo>img{
+    width: 300px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+        filter: hue-rotate(45deg);
+  }
+
+  @media screen and (max-width: 576px){
+    #logo>img{
+      width: 200px;
+    }
+  }
   
+  .home-page-label {
+    font-size: 20px; 
+    position: fixed;
+    left: 460px;
+    display: flex;
+  }
   .anim input.checkbox:checked:after {
     -webkit-transform: rotate(-45deg);
     -moz-transform: rotate(-45deg);
@@ -331,6 +392,22 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     100% {
       border-bottom-color: #fff;
       border-left-color: #fff;
+    }
+  }
+  @media (max-width: 400px) {
+    .form {
+      margin: 0 20px;
+      padding: 30px;
+    }
+  }
+  
+  @keyframes shadow-pulse {
+    0% {
+      box-shadow: linear-gradient(to top, #fcb69f, #ffecd2);
+      ;
+    }
+    100% {
+      box-shadow: 0 0 15px 15px rgba(142, 140, 140, 0);
     }
   }
   

@@ -8,30 +8,20 @@ import {Product} from "./classes.js"
 
 // getYear();
 //Product class function
-
-
-
-//random data
-let products = [
-   new Product(1, "Jewellery", "jewellery", "Omar123", 10, 0, ["images/p1.png", "images/p2.png", "images/p3.png"], 50.0, "Lorem ipsum dolor sit amet, consect", ["Red", "White", "Black"]),
-   new Product(2, "Artwork", "artwork", "Omar123", 0, 0, ["images/p2.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(3, "Artwork", "artwork", "Ahmed", 3, 0, ["images/p3.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(4, "Artwork", "jewellery", "Ahmed", 0, 0, ["images/p4.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(5, "Artwork", "artwork", "Ahmed", 4, 0, ["images/p5.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(6, "Artwork", "jewellery", "Omar123", 2, 0, ["images/p6.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(7, "Artwork", "artwork", "Ahmed", 5, 0, ["images/p7.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(8, "Artwork", "jewellery", "Aly", 10, 0, ["images/p8.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(9, "Artwork", "artwork", "Aly", 0, 0, ["images/p9.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(10, "Artwork", "jewellery", "Aly", 0, 0, ["images/p10.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(11, "Artwork", "artwork", "Aly", 4, 0, ["images/p11.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(12, "Artwork", "artwork", "Zara Store", 5, 0, ["images/p12.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(13, "Artwork", "artwork", "Zara Store", 2, 0, ["images/p9.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-   new Product(14, "Artwork", "artwork", "Zara Store", 1, 0, ["images/p12.png", "images/p5.png", "images/p6.png"], 40.0, "Lorem ipsum dolor sit amet, consect", ["Red","White", "Black"]),
-]
-// checking if the key  is not exist in the localStorage we will set the arr;
-if(!localStorage.getItem("products")){
-   //add the products to the local storage
+let products = [];
+if(!JSON.parse(localStorage.getItem("products"))||JSON.parse(localStorage.getItem("products")).length == 0) {
+   products = [
+      new Product (1, "Men's Shirt", "Jewellery", "Omar1", 100, 50, ["../images/1.jpeg"], 200, "any descroiption", ["Black", "Red", "White"]),
+      new Product (2, "Women's Shirt", "Jewellery", "Omar1", 100, 50, ["../images/2.jpeg"], 300, "any descroiption", ["Black", "Red", "White"]),
+      new Product (3, "Men's Shoes", "Accessories", "Omar1", 25, 25, ["../images/3.jpeg"], 320, "any descroiption", ["Black", "Red", "White"]),
+      new Product (4, "Women's Shoes", "Accessories", "Omar1", 30, 0, ["../images/1.jpeg"], 120, "any descroiption", ["Black", "Red", "White"]),
+      new Product (5, "Men's Accessories", "Artwork", "Omar1", 60, 40, ["../images/2.jpeg"], 140, "any descroiption", ["Black", "Red", "White"]),
+      new Product (6, "Women's Accessories", "Accessories", "Omar1", 30, 1, ["../images/3.jpeg"], 155, "any descroiption", ["Black", "Red", "White"]),
+      new Product (7, "Men's Watch", "Artwork", "Omar1", 25, 14, ["../images/4.jpeg"], 500, "any descroiption", ["Black", "Red", "White"]),
+   ];
    localStorage.setItem("products", JSON.stringify(products));
+} else {
+   products = JSON.parse(localStorage.getItem("products"));
 }
 
 //get the loggedInUser
@@ -41,8 +31,8 @@ let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
 // client section owl carousel
 $(function () {
-
-   let productCards = GetProducts(9);
+   //display all products at the beggining of function loading
+   let productCards = GetProducts(-1);
    if (document.getElementById("products-Landing")) {
       document.getElementById("products-Landing").innerHTML = productCards;   
    }
@@ -50,6 +40,7 @@ $(function () {
 
 function GetProducts(maxNumber, productsList) {
    let products;
+   //if no productsList sent then get them from the local storage
    if (productsList != undefined) {
       products = productsList;
    }
@@ -57,11 +48,16 @@ function GetProducts(maxNumber, productsList) {
       products = JSON.parse(localStorage.getItem("products"));
    }
 
+   //if -1 is sent then display all the products (the products length is the length of all products in the local storage)
    if (maxNumber == -1) {
       maxNumber = products.length;
    }
+
+
    let productCards = "";
+   //Display the products from the newest to the oldest
    for (let i = maxNumber - 1; i >= 0; i--) {
+      //display the products based on the user role
       if (loggedInUser && loggedInUser.userRole == "admin") {
          productCards +=
          `<div class="col-sm-6 col-md-6 col-lg-4 data-id=${products[i].productId}">
@@ -123,6 +119,8 @@ function GetProducts(maxNumber, productsList) {
           </div>`;
          }
       } else { //if the product is out of stock we will remove the add to cart button and add the out of stock butto
+         console.log(i)
+         console.log(products[i])
          if(products[i].quantity == 0)
          {
             productCards +=

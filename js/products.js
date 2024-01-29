@@ -1,9 +1,8 @@
 import { GetProducts, products } from "./custom.js";
 import { addToCart } from './addtoCart.js';
 import { renderingNavBar, LogOut } from "./general-methods.js";
+import { categories } from "./classes.js";
 
-// Now you can use addToCart in this file
-export let categories = ["All", "Jewellery", "Accessories", "Artwork", "Pet-supplies", "Sweets"];
 let filter = "All";
 let checkedSellers = [];
 let sellersList; //sellers' names container in products.html
@@ -34,34 +33,55 @@ function displaySellersFilter() {
     });
 
     //add the event listener to the checkboxes
-    sellersList.addEventListener("click", filterBySellerNameAndCategory)
+    sellersList.addEventListener("click", filterAll)
 }
 
-function filterBySellerNameAndCategory(e)
+function filterAll(e)
 {
     if(e.target.nodeName == "INPUT")
         {
+            let price = -1;
+            if(e.target.type=="range") {
+                price = e.target.value;
+                document.querySelector("#priceContainer").innerHTML = `${price}$`;
+                if(price<11 || price>499) {
+                    price = -1;
+                    document.querySelector("#priceContainer").innerHTML = `any$`;
+                }
+            }
             //get the checked checkboxes
             let checkedSellersInputs = Array.from(sellersList.querySelectorAll("input:checked"));
+            let filteredProducts = [];
             //check if the no checkbox is checked then display all products
             if(checkedSellersInputs.length == 0)
             {
-                document.getElementById("all-products-section").innerHTML = GetProducts(-1);
-                return;
-            } else {
-                //save the checked checkboxes values into an array
-                checkedSellers = checkedSellersInputs.map(input=>input.value);
-                //filter the products to get the products which seller exists within the checkedSellers array
-                let filteredProducts = [];
-                if (filter != "All") {
-                    filteredProducts = products.filter(product => checkedSellers.includes(product.sellerName) && product.category == filter);
+                if(price!=-1) { //if no seller filter but there is price filter
+                    filteredProducts = products.filter(product=>product.price < price);
                 } else {
-                    filteredProducts = products.filter(product => checkedSellers.includes(product.sellerName));
+                    document.getElementById("all-products-section").innerHTML = GetProducts(-1);
+                    return;
                 }
-                
-                //display the products according to the checked checkboxes
-                document.getElementById("all-products-section").innerHTML = GetProducts(filteredProducts.length, filteredProducts);
+            } else { //seller selected
+                //save the checked checkboxes values into an array
+                checkedSellers = checkedSellersInputs.map(input=>input.value.toLowerCase());
+                //filter the products to get the products which seller exists within the checkedSellers array
+                if (filter != "All") { //category selected + seller selected
+                    if(price != -1) { //category selected + price selected + seller selected
+                        filteredProducts = products.filter(product => checkedSellers.includes(product.sellerName.toLowerCase()) && product.category == filter && products.price < price);
+                    } else { //category selected + seller selected
+                        filteredProducts = products.filter(product => checkedSellers.includes(product.sellerName.toLowerCase()) && product.category == filter);
+                    }
+                } else { //seller selected
+                    if(price != -1) { //price selected + seller selected
+                        filteredProducts = products.filter(product => checkedSellers.includes(product.sellerName.toLowerCase()) && product.price < price);
+                    } else { //seller selected
+                        filteredProducts = products.filter(product => checkedSellers.includes(product.sellerName.toLowerCase()));
+                    }
+                    
+                }
             }
+            //display the products according to the filtered products (category + price + seller)
+            document.getElementById("all-products-section").innerHTML = GetProducts(filteredProducts.length, filteredProducts);
         }
 }
 
@@ -186,6 +206,9 @@ window.addEventListener("load", function () {
         document.getElementById("search-input").addEventListener("keyup", function () {
             searchProductsByName(this.value);
         })
+
+        //adding priceRange functionality
+        document.querySelector("#priceRange").addEventListener("change", filterAll);
     }    
 })
 

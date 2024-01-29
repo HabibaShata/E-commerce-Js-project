@@ -99,7 +99,7 @@ window.addEventListener("load", function () {
 
     //check if the loggedinuser is the admin or seller so don't perform the following
     if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
-        listCartHTML.addEventListener('click', (event) => {
+        listCartHTML.addEventListener('dblclick', (event) => {
             let positionClick = event.target;
             //console.log(event.target.dataset.btn);
             if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
@@ -301,7 +301,9 @@ window.addEventListener("load", function () {
 //**   add to cart    / */
 
 var cnt = 0;
-export const addToCart = (product_id, seller, quantity = 1, color = "White") => {
+
+export const addToCart = (product_id,seller,quantity=1, color="White") => {
+
     //findindex fun return index of ele if it extist in arr else if rturn -1;
     let positionThisProductInCart = arrCart.findIndex((value) => value.product_id == product_id);
     let productSeller;
@@ -363,7 +365,6 @@ const addCartToHTML = () => {
         //console.log(itemsFromCart);
 
     } else {
-
         let items = document.querySelectorAll(".item");
         cnt = 0
         iconCartSpan.innerText = cnt;
@@ -391,6 +392,7 @@ const addCartToHTML = () => {
 // }
 
 const changeQuantityCart = (product_id, type) => {
+    debugger
     let positionItemInCart = arrCart.findIndex((value) => value.product_id == product_id);
     // let positionItemInCart2 = arrCart.findIndex((value) =>{} );
 
@@ -399,9 +401,11 @@ const changeQuantityCart = (product_id, type) => {
         //  let info = arrCart[positionItemInCart];
         switch (type) {
             case 'incr':
-                if (arrCart[positionItemInCart].quantity < products[arrCart[positionItemInCart].product_id - 1].quantity) {
-                    arrCart[positionItemInCart].quantity = arrCart[positionItemInCart].quantity + 1;
-                } else {
+
+                if(arrCart[positionItemInCart].quantity <products[arrCart[positionItemInCart].product_id-1].quantity){
+                    arrCart[positionItemInCart].quantity = Number(arrCart[positionItemInCart].quantity) + 1;
+                }else{
+
                     alert("out of sotck");
                 }
 
@@ -410,7 +414,7 @@ const changeQuantityCart = (product_id, type) => {
                 break;
 
             default:
-                let changeQuantity = arrCart[positionItemInCart].quantity - 1;
+                let changeQuantity = Number(arrCart[positionItemInCart].quantity) - 1;
                 if (changeQuantity >= 1) {
                     arrCart[positionItemInCart].quantity = changeQuantity;
                 }
@@ -419,6 +423,7 @@ const changeQuantityCart = (product_id, type) => {
     }
     addCartToHTML();
     addCartToMemory();
+    return;
 }
 
 // fun delete&update 

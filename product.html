@@ -146,9 +146,21 @@
                      </h2>
                   </div>
                   <form class="filter-body">
-                     <ul class="list-unstyled sellers-list">
-                        <h4 class="text-center filter-header">By Seller</h4>
-                     </ul>
+                     <div class="row">
+                        <div class="col-sm-6 col-md-12">
+                           <ul class="list-unstyled sellers-list">
+                              <h4 class="text-center filter-header">By Seller</h4>
+                           </ul>
+                        </div>
+
+                        <div class="col-sm-6 col-md-12">
+                           <ul class="list-unstyled sellers-list">
+                              <h4 class="text-center filter-header">Price Less than</h4>
+                              <input type="range" id="priceRange" min="10" max="500" step="1">
+                              <p class="text-center h2 text-success" id="priceContainer">$$</p>
+                           </ul>
+                        </div>
+                     </div>
                   </form>
                </div>
             

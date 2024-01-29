@@ -24,6 +24,16 @@ body {
   overflow-x: hidden;
 }
 
+/*classes*/
+.input-valid {
+  background-color: #000;
+  border: 1px solid green;
+}
+
+.input-invalid {
+  border: 1px solid red;
+}
+
 .layout_padding {
   padding: 70px 0;
 }
@@ -125,6 +135,12 @@ a:focus {
 
 .navbar-nav .dropdown-menu {
   overflow: hidden;
+}
+
+.navbar-brand img {
+  border-radius: 30%;
+  filter: drop-shadow(2px 4px 6px black) hue-rotate(45deg);
+  width: 200px;
 }
 
 .search-nav .input-group input[type=search] {
@@ -408,6 +424,7 @@ a:focus {
   overflow: hidden;
   box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, .2);
   border: solid #fff 10px;
+  max-height: 382px;
 }
 
 .product_section .box .img-box {
@@ -688,6 +705,19 @@ a:focus {
   margin-bottom: 2%;
   margin-left: 3%;
  }
+
+ .imageList img {
+  width: 100px;
+  height: 130px; 
+}
+
+
+ #mainimg img{
+  width: 300px;
+  height: 371px;
+  
+ }
+
 
 .view_img {
   margin: 5%;
@@ -1615,6 +1645,14 @@ display: none;
   background-color: #f7f8f9;
   padding: 20px;
   margin-top: 50px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px){
+  .filter-body .sellers-list {
+    height: 250px;
+  }
 }
 
 .filter-header {
@@ -1627,4 +1665,16 @@ display: none;
   position: absolute;
   left: 0px;
   top: 20px;
+}
+
+.checkedInput {
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+  align-items: center; 
+}  
+
+.checkedInput input[type=checkbox] {
+  flex-basis: 20%;
+  margin: 0;
 }
