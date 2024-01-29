@@ -364,10 +364,9 @@ const addCartToHTML = () => {
         //console.log(itemsFromCart);
 
     } else {
-
         let items = document.querySelectorAll(".item");
         cnt = 0
-          iconCartSpan.innerText = cnt;
+        iconCartSpan.innerText = cnt;
         listCartHTML.removeChild(items);
         // console.log(arrCart.length);
     }
@@ -401,7 +400,7 @@ const changeQuantityCart = (product_id, type) => {
         switch (type) {
             case 'incr':
                 if(arrCart[positionItemInCart].quantity <products[arrCart[positionItemInCart].product_id-1].quantity){
-                    arrCart[positionItemInCart].quantity = arrCart[positionItemInCart].quantity + 1;
+                    arrCart[positionItemInCart].quantity = Number(arrCart[positionItemInCart].quantity) + 1;
                 }else{
                     alert("out of sotck");
                 }
@@ -411,7 +410,7 @@ const changeQuantityCart = (product_id, type) => {
                 break;
 
             default:
-                let changeQuantity = arrCart[positionItemInCart].quantity - 1;
+                let changeQuantity = Number(arrCart[positionItemInCart].quantity) - 1;
                 if (changeQuantity >= 1) {
                     arrCart[positionItemInCart].quantity = changeQuantity;
                 }
@@ -420,6 +419,7 @@ const changeQuantityCart = (product_id, type) => {
     }
     addCartToHTML();
     addCartToMemory();
+    return;
 }
 
 // fun delete&update 
