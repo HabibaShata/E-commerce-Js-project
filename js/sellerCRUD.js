@@ -299,6 +299,13 @@ function populateFormWithProductData(data) {
         <small id="priceMessage" class="form-text  text-danger"></small>
         <input class="form-control" type="number" name="price" id="price" min="1" oninput="this.value = this.value <= 0 ? 1:this.value" value="${data.price}">
     </div>
+
+    <div class="form-group">
+        <label>Description</label>
+        <small id="descMessage" class="form-text  text-danger"></small>
+        <input class="form-control" type="text" name="productDesc" style="width:100%" required
+            id="productDesc" value="${data.description}">
+    </div>
     </div>`
 }
 
@@ -330,7 +337,7 @@ function getEditedValues() {
         return null; 
     }
 
-    // Price validation  number and decimal point
+    // Price validation number and decimal point
     let price = parseFloat(editForm.children[5].children[2].value);
     if (isNaN(price) || price <= 0) {
         document.querySelector("#priceMessage").textContent = "Price must be more than zero.";
@@ -339,13 +346,15 @@ function getEditedValues() {
     }
 
     // Return the edited values
+    console.log(editForm.children[0].children[2].value);
     return {
         productId: editForm.children[0].children[2].value,
         productName: productName,
         images: [imgSrc],
         sellerName: editForm.children[4].children[2].value,
         category: editForm.children[1].children[2].value,
-        price: price
+        price: price,
+        description: editForm.children[6].children[2].value
     };
 }
 
