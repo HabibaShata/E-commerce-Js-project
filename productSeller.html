@@ -30,7 +30,6 @@
     <!-- responsive style -->
     <link href="css/responsive.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
     <style>
         /* .is-invalid {
             margin: auto;
@@ -173,7 +172,6 @@
                 <div class="dropdown dropdownUser" id="user-DropDown">
                     <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
                         id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-
                         <img src="" alt="" width="32" height="32" class="rounded-circle me-2">
                         <strong> mohamed</strong>
                     </a>
@@ -217,7 +215,7 @@
                         <thead>
                             <tr>
                                 <th>productId</th>
-                                <th>productName  <i class="fa fa-sort"></i></th>
+                                <th>productName </th>
                                 <th>productImage </th>
                                 <th>sellerName <i class="fa fa-sort"></i></th>
                                 <th>category <i class="fa fa-sort"></i></th>
@@ -272,7 +270,7 @@
                     <div id="myModal2" class="modal fade">
                         <div class="modal-dialog modal-lg contact-modal">
                             <div class="modal-content">
-                                <form action="./seller.html" class="addproduct">
+                                <form action="./dashordAdmin.html" class="addproduct">
                                     <div class="modal-header">
                                         <h4 class="modal-title">Add New Product</h4>
                                         <button type="button" class="close" data-bs-dismiss="modal"
@@ -340,28 +338,34 @@
                                                 <!-- category -->
                                                 <select class="form-select form-select-sm"
                                                     aria-label=".form-select-sm example" id="category">
-                                                    <label for="category">
+                                                    <label for="">
                                                         seclect category
 
                                                     </label>
                                                     <option selected disabled>category</option>
-                                                   
+                                                    <option value="jewellery">jewellery</option>
+                                                    <option value="artwork">artwork</option>
+                                                    <!-- span invalid input -->
+                                                    <span class="is-invalid"> *must choose catigery </span>
                                                 </select>
-                                                <!-- Quntity -->
+
+
+
                                                 <div class="form-group">
                                                     <label for="Quntity ">Enter Quntity :</label>
                                                     <input type="number" name="Quntity" class="form-control"
                                                         id="Quntity" placeholder="Quntity " required min="1">
 
                                                 </div>
-                                                <!-- productImage -->
+
                                                 <div class="form-group">
-                                                    <label for="productImage">Enter productImages:</label>
+                                                    <label for="productImage">Enter productImage:</label>
                                                     <input type="file" name="productImage" class="form-control"
                                                         id="productImage" placeholder="productImage" required>
 
                                                 </div>
                                                 <div class="form-group">
+                                                    <!-- <label for="productImage">Enter productImage:</label> -->
                                                     <input type="file" name="productImage2" class="form-control"
                                                         id="productImage2" placeholder="productImage" required>
 
@@ -373,6 +377,7 @@
                                         <input type="button" class="btn btn-link clsBtn" data-dismiss="modal"
                                             value="Cancel">
                                         <a href="#" class="btn btn-info submitLink" value="Save">Save</a>
+                                        <!-- <input type="submit" class="btn btn-info" value="Save"> -->
                                     </div>
                                 </form>
                             </div>
@@ -408,11 +413,9 @@
                                 </div>
 
 
-
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
