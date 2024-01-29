@@ -480,7 +480,7 @@ function deleteProduct() {
                 $(trdeleted).remove();
                 $('#myModal').removeClass('fade');
                 $('#myModal').modal('hide');
-
+                location.reload();
 
             } else {
                 // If the item is already in the cart, display an alert
