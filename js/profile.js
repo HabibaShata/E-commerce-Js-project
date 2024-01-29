@@ -1,162 +1,137 @@
-import { users as usersClass } from "./classes.js";
+import { users as usersClass ,categories} from "./classes.js";
 const userDataString = localStorage.getItem('loggedInUser');
 
 window.addEventListener('load', function () {
 
-  ////////////////////////////////////////////////////////////////////////////
-//   if (!userDataString ) {
-//     alert('User data not found. Please create a customer first.');
-//     return;
-// }
+      //check if the url is profile.html
+      if (location.href.includes("profile.html")) {
+        this.document.querySelector("#backBtn").addEventListener("click", function () {
+          history.back();
+        })
 
-//back btn
-//check if the url is profile.html
-if (location.href.includes("profile.html")) {
-  this.document.querySelector("#backBtn").addEventListener("click", function () {
-    history.back();
-  })
+      let userData = JSON.parse(userDataString);
 
-  const userData = JSON.parse(userDataString);
-
-  // Populate form with user data
-  document.getElementById('firstName').value = userData.userName || '';
-  document.getElementById('role').value = userData.userRole || '';
-  document.getElementById('email').value = userData.userEmail || '';
-  document.getElementById('password').value = userData.userPassword || '';
+      document.getElementById('firstName').value = userData.userName || '';
+      document.getElementById('role').value = userData.userRole || '';
+      document.getElementById('email').value = userData.userEmail || '';
+      document.getElementById('password').value = userData.userPassword || '';
 
 
-  // Handle form submission
-  document.getElementById('profileForm').addEventListener('submit', function (event) {
-    event.preventDefault();
+      // Handle form submission
+      document.getElementById('profileForm').addEventListener('submit', function (event) {
+          event.preventDefault();
 
-    // Get updated user information
-    const updatedUserData = {
-      firstName: document.getElementById('firstName').value,
-      email: document.getElementById('email').value,
-      password: document.getElementById('password').value,
-    };
+          const updatedUserData = {
+            firstName: document.getElementById('firstName').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+          };
 
-    // Check if the data is the same as the existing data
-    if (JSON.stringify(updatedUserData) === JSON.stringify(userData)) {
-      return;
-    }
+          if (updatedUserData.firstName == userData.userName &&updatedUserData.password == userData.userPassword
+                && updatedUserData.email == userData.userEmail ) 
+          {
+            console.log('inside');
+            return;
+          }
+          console.log('outside');
+          // Validate user information
+          const firstNameMessage = document.getElementById('firstNameMessage');
+          const emailMessage = document.getElementById('emailMessage');
+          const passwordMessage = document.getElementById('passwordMessage');
+          const validationMessage = document.getElementById('validationMessage');
+          const successMessage = document.getElementById('successMessage');
 
-    // Validate user information
-    const firstNameMessage = document.getElementById('firstNameMessage');
-    const emailMessage = document.getElementById('emailMessage');
-    const passwordMessage = document.getElementById('passwordMessage');
-    const validationMessage = document.getElementById('validationMessage');
-    const successMessage = document.getElementById('successMessage');
+          // Clear previous validation messages
+          firstNameMessage.innerText = '';
+          emailMessage.innerText = '';
+          passwordMessage.innerText = '';
+          validationMessage.innerText = '';
 
-    // Clear previous validation messages
-    firstNameMessage.innerText = '';
-    emailMessage.innerText = '';
-    passwordMessage.innerText = '';
-    validationMessage.innerText = '';
+          const isFirstNameValid = isValidName(updatedUserData.firstName, firstNameMessage);
+          const isEmailValid = isValidEmail(updatedUserData.email, emailMessage);
+          const isPasswordValid = isValidPassword(updatedUserData.password, passwordMessage);
 
-    const isFirstNameValid = isValidName(updatedUserData.firstName, firstNameMessage);
-    const isEmailValid = isValidEmail(updatedUserData.email, emailMessage);
-    const isPasswordValid = isValidPassword(updatedUserData.password, passwordMessage);
+          if (!isFirstNameValid || !isEmailValid || !isPasswordValid) {
 
-    if (!isFirstNameValid || !isEmailValid || !isPasswordValid) {
+            document.getElementById('firstName').value = updatedUserData.firstName || '';
+            document.getElementById('email').value = updatedUserData.email || '';
+            document.getElementById('password').value = updatedUserData.password || '';
+            return;
+          }
 
-      document.getElementById('firstName').value = updatedUserData.firstName || '';
-      document.getElementById('email').value = updatedUserData.email || '';
-      document.getElementById('password').value = updatedUserData.password || '';
-      return;
-    }
+          let updatedUserObj = new usersClass(userData.userID, updatedUserData.firstName, updatedUserData.password, updatedUserData.email, userData.userRole);
+          userData = updatedUserObj;
+          localStorage.setItem('loggedInUser', JSON.stringify(updatedUserObj));
+          
+          let users = JSON.parse(localStorage.getItem('users'));
+          let userIndex = users.findIndex(user => user.userID === userData.userID);
+          users.splice(userIndex, 1, updatedUserObj);
+          localStorage.setItem('users', JSON.stringify(users));
 
-    //make a new user object
-    let updatedUserObj = new usersClass(userData.userID, updatedUserData.firstName, updatedUserData.password, updatedUserData.email, userData.userRole);
-    // Update user data in local storage
-    localStorage.setItem('loggedInUser', JSON.stringify(updatedUserObj));
-    
-    ////////////////////////////////////////////////////////////////////////////////////
-    //get all the users from the local storage
-    let users = JSON.parse(localStorage.getItem('users'));
-    //find the index of the user with the same userID
-    let userIndex = users.findIndex(user => user.userID === userData.userID);
-    //update the user data with the updated user data
-    users.splice(userIndex, 1, updatedUserObj);
-    //save the updated users array to the local storage with the key 'users'
-    localStorage.setItem('users', JSON.stringify(users));
+          successMessage.innerText = 'Profile updated successfully!';
 
-    // Display success message only if data is updated
-    successMessage.innerText = 'Profile updated successfully!';
+          setTimeout(() => {
+            successMessage.innerText = '';
+          }, 3000);
 
-    // Clear success message after 3 seconds (adjust the time as needed)
-    setTimeout(() => {
-      successMessage.innerText = '';
-    }, 3000);
-  });
+       });//end of submit
 
-  if(userData.userRole == "seller")
-  {
-      var sellerProducts = JSON.parse(this.localStorage.getItem('products'))
-                              .filter((product) => product.sellerName == userData.userName);
+          if(userData.userRole == "seller")
+          {
+              let sellerProducts = JSON.parse(this.localStorage.getItem('products'))
+                                      .filter((product) => product.sellerName == userData.userName);
 
-      var categories = [];
-      sellerProducts.forEach((product) => {
-        if( !categories.includes(product.category))
-          categories.push(product.category);
-      });
+              var SoldProductsInEachCategory=[];
+              var colors=[];
+              for(var i=0; i<categories.length; i++)
+              {
+                SoldProductsInEachCategory[i]=0;
+                colors[i] = `rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)})`;
+                sellerProducts.forEach(product =>
+                {
+                    if(product.category == categories[i])
+                      SoldProductsInEachCategory[i]+=product.quantity_sold;
+                });  
+              }
 
-      var ProductsInCategory=[];
-      var colors=[];
-      for(var i=0; i<categories.length; i++)
-      {
-        ProductsInEachCategory[i]=0;
-        colors[i] = `rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)})`;
-        sellerProducts.forEach(product =>
-        {
-            if(product.category == categories[i])
-              ProductsInCategory[i]+=1;
-        });  
-      }
+              const createdChart1 = document.getElementById("myChart1");
+              new Chart(createdChart1, {type: 'bar',
+                data: {
+                  labels: sellerProducts.map((p) => p.productName),
+                  datasets: [{
+                    label: 'quantities of each products',
+                    data: sellerProducts.map((p)=>p.quantity),
+                    borderWidth: 5
+                  }]
+                },
+                options: {
+                  responsive: true,
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
 
-      const createdChart1 = document.getElementById("myChart1");
-      new Chart(createdChart1, {type: 'bar',
-        data: {
-          labels: categories,
-          datasets: [{
-            label: 'products in each category',
-            data: ProductsInCategory,
-            borderWidth: 5
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
+              const createdChart2 = document.getElementById("myChart2");
+              new Chart(createdChart2, {type: 'pie',
+                data: {
+                  labels: categories,
+                  datasets: [{
+                    label: 'Number of sold products in each category',
+                    data: SoldProductsInEachCategory,
+                    backgroundColor:colors,
+                    hoverOffset: 4
+                  }]
+                },
+                options: {
+                  responsive: true,
+                }
+              });
           }
         }
-      });
-
-      const createdChart2 = document.getElementById("myChart2");
-      new Chart(createdChart2, {type: 'pie',
-        data: {
-          labels: categories,
-          datasets: [{
-            label: 'products in each category',
-            data: ProductsInCategory,
-            backgroundColor:colors,
-            hoverOffset: 4
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-  }
-}
- });
+ });//end of load
 
 // Function to validate first name and last name
 function isValidName(name, messageElement) {
