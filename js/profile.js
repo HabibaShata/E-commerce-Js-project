@@ -10,8 +10,15 @@ window.addEventListener('load', function () {
         })
 
       let userData = JSON.parse(userDataString);
+      if(userData.userGender == "Male")
+      {
+          this.document.getElementById("profileImage").src = "images/male.jpeg";
+      }
+      else{
+        this.document.getElementById("profileImage").src = "images/female.jpeg";
+      }
 
-      document.getElementById('firstName').value = userData.userName || '';
+      document.getElementById('userName').value = userData.userName || '';
       document.getElementById('role').value = userData.userRole || '';
       document.getElementById('email').value = userData.userEmail || '';
       document.getElementById('password').value = userData.userPassword || '';
@@ -22,44 +29,41 @@ window.addEventListener('load', function () {
           event.preventDefault();
 
           const updatedUserData = {
-            firstName: document.getElementById('firstName').value,
             email: document.getElementById('email').value,
             password: document.getElementById('password').value,
           };
 
-          if (updatedUserData.firstName == userData.userName &&updatedUserData.password == userData.userPassword
+          if (  updatedUserData.password == userData.userPassword
                 && updatedUserData.email == userData.userEmail ) 
           {
-            console.log('inside');
             return;
           }
-          console.log('outside');
           // Validate user information
-          const firstNameMessage = document.getElementById('firstNameMessage');
           const emailMessage = document.getElementById('emailMessage');
           const passwordMessage = document.getElementById('passwordMessage');
           const validationMessage = document.getElementById('validationMessage');
           const successMessage = document.getElementById('successMessage');
 
           // Clear previous validation messages
-          firstNameMessage.innerText = '';
           emailMessage.innerText = '';
           passwordMessage.innerText = '';
           validationMessage.innerText = '';
 
-          const isFirstNameValid = isValidName(updatedUserData.firstName, firstNameMessage);
           const isEmailValid = isValidEmail(updatedUserData.email, emailMessage);
           const isPasswordValid = isValidPassword(updatedUserData.password, passwordMessage);
 
-          if (!isFirstNameValid || !isEmailValid || !isPasswordValid) {
-
-            document.getElementById('firstName').value = updatedUserData.firstName || '';
+          if (!isEmailValid || !isPasswordValid) {
             document.getElementById('email').value = updatedUserData.email || '';
             document.getElementById('password').value = updatedUserData.password || '';
+            setTimeout(() => {
+              emailMessage.innerText = '';
+              passwordMessage.innerText = '';
+              validationMessage.innerText = '';
+            }, 3000);  
             return;
           }
 
-          let updatedUserObj = new usersClass(userData.userID, updatedUserData.firstName, updatedUserData.password, updatedUserData.email, userData.userRole);
+          let updatedUserObj = new usersClass(userData.userID, userData.userName, updatedUserData.password, updatedUserData.email, userData.userRole,userData.userGender);
           userData = updatedUserObj;
           localStorage.setItem('loggedInUser', JSON.stringify(updatedUserObj));
           
@@ -159,8 +163,9 @@ function isValidName(name, messageElement) {
 // Function to validate email
 function isValidEmail(email, messageElement) {
   // Email must contain @ and a dot after @
-  if (!/@.*\.[a-zA-Z]{2,}/.test(email)) {
-    messageElement.innerText = 'Invalid email format. Make sure it contains "@" and a dot (.) after "@" (e.g., example@example.com).';
+  const emailReg = /^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,6}$/;
+  if (! emailReg.test(email)) {
+    messageElement.innerText = `Invalid email format. Make sure it contains "@" and a dot (.) after "@" and it accepts only characters and digits(e.g., example@example.com).`;
     return false;
   }
 
