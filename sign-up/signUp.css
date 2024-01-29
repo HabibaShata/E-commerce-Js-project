@@ -7,7 +7,42 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     vertical-align: baseline;
     border-radius: 50px;
   }
-  
+  .input-group-text {
+    background-color: transparent;
+    border: none;
+    color: white;
+
+}
+
+
+
+.form-control {
+    border: 1px solid #ccc;
+
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(241, 223, 163, 0.893);
+}
+
+i {
+    margin-right: 5px;
+    margin-top: 15px;
+}
+
+.Input {
+    margin-bottom: 20px;
+}
+
+.spanInput {
+    margin-right: 4px;
+}
+#togglePassword{
+  position: absolute;
+  right: 1px;
+  color: #000000;
+}
   article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     display: block;
   }
