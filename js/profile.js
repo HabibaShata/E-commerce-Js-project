@@ -100,7 +100,7 @@ window.addEventListener('load', function () {
                   labels: sellerProducts.map((p) => p.productName),
                   datasets: [{
                     label: 'quantities of each products',
-                    data: sellerProducts.map((p)=>p.quantity),
+                    data: sellerProducts.map((p)=>p.quantity-p.quantity_sold),
                     borderWidth: 5
                   }]
                 },
