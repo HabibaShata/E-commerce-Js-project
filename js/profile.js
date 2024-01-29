@@ -117,7 +117,8 @@ window.addEventListener('load', function () {
                   }
                 }
               });
-
+              this.document.getElementById("mychartlabel1").innerText = "remaining quantities of each product";
+              
               const createdChart2 = document.getElementById("myChart2");
               new Chart(createdChart2, {type: 'pie',
                 data: {
@@ -138,6 +139,7 @@ window.addEventListener('load', function () {
                   }
                 }
               });
+              this.document.getElementById("mychartlabel2").innerText = "Number of sold products in each category";
           }
         }
  });//end of load

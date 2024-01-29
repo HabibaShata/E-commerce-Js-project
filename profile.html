@@ -9,7 +9,12 @@
         body {
                 background-color: #f8f9fa;
             }
-        .card {
+      
+        p{
+          display: block;
+          margin: 10px auto;
+        }
+      .card {
             border: none;
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -29,6 +34,14 @@
             object-fit: cover;
             border-radius: 50%;
             border: 3px solid #007bff;
+        }
+        #mychartlabel1 ,#mychartlabel2{
+          display: block;
+          text-align: center;
+          margin: 10px auto;
+          color: rgb(18, 135, 174);
+          font-weight:bold ;
+
         }
     </style>
   </style>
@@ -76,12 +89,14 @@
                     </div>
                 </div>
         </form>
-        <div class="my-2  col-12 col-md-8">
+        <div class="my-2 justify-content-center col-12 col-md-8">
           <canvas id="myChart1"></canvas>
+          <label id="mychartlabel1"></label>
         </div>
 
         <div class="my-2 col-12 col-md-8">
           <canvas id="myChart2"></canvas>
+          <label id="mychartlabel2"></label>
         </div>
     </div>
   </div> 
