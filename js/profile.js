@@ -9,9 +9,17 @@ window.addEventListener('load', function () {
           history.back();
         })
 
+    
       let userData = JSON.parse(userDataString);
+      if(userData.userGender == "Male")
+      {
+          this.document.getElementById("profileImage").src = "images/male.jpeg";
+      }
+      else{
+        this.document.getElementById("profileImage").src = "images/female.jpeg";
+      }
 
-      document.getElementById('firstName').value = userData.userName || '';
+      document.getElementById('userName').value = userData.userName || '';
       document.getElementById('role').value = userData.userRole || '';
       document.getElementById('email').value = userData.userEmail || '';
       document.getElementById('password').value = userData.userPassword || '';
@@ -22,12 +30,11 @@ window.addEventListener('load', function () {
           event.preventDefault();
 
           const updatedUserData = {
-            firstName: document.getElementById('firstName').value,
             email: document.getElementById('email').value,
             password: document.getElementById('password').value,
           };
 
-          if (updatedUserData.firstName == userData.userName &&updatedUserData.password == userData.userPassword
+          if (  updatedUserData.password == userData.userPassword
                 && updatedUserData.email == userData.userEmail ) 
           {
             console.log('inside');
@@ -35,31 +42,26 @@ window.addEventListener('load', function () {
           }
           console.log('outside');
           // Validate user information
-          const firstNameMessage = document.getElementById('firstNameMessage');
           const emailMessage = document.getElementById('emailMessage');
           const passwordMessage = document.getElementById('passwordMessage');
           const validationMessage = document.getElementById('validationMessage');
           const successMessage = document.getElementById('successMessage');
 
           // Clear previous validation messages
-          firstNameMessage.innerText = '';
           emailMessage.innerText = '';
           passwordMessage.innerText = '';
           validationMessage.innerText = '';
 
-          const isFirstNameValid = isValidName(updatedUserData.firstName, firstNameMessage);
           const isEmailValid = isValidEmail(updatedUserData.email, emailMessage);
           const isPasswordValid = isValidPassword(updatedUserData.password, passwordMessage);
 
-          if (!isFirstNameValid || !isEmailValid || !isPasswordValid) {
-
-            document.getElementById('firstName').value = updatedUserData.firstName || '';
+          if (!isEmailValid || !isPasswordValid) {
             document.getElementById('email').value = updatedUserData.email || '';
             document.getElementById('password').value = updatedUserData.password || '';
             return;
           }
 
-          let updatedUserObj = new usersClass(userData.userID, updatedUserData.firstName, updatedUserData.password, updatedUserData.email, userData.userRole);
+          let updatedUserObj = new usersClass(userData.userID, userData.userName, updatedUserData.password, updatedUserData.email, userData.userRole,userData.userGender);
           userData = updatedUserObj;
           localStorage.setItem('loggedInUser', JSON.stringify(updatedUserObj));
           
@@ -99,8 +101,8 @@ window.addEventListener('load', function () {
                 data: {
                   labels: sellerProducts.map((p) => p.productName),
                   datasets: [{
-                    label: 'quantities of each products',
-                    data: sellerProducts.map((p)=>p.quantity),
+                    label: 'remaining quantities of each product',
+                    data: sellerProducts.map((p)=>p.quantity -p.quantity_sold),
                     borderWidth: 5
                   }]
                 },

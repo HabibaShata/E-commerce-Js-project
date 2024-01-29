@@ -27,6 +27,8 @@ function handleFormSubmit(event) {
     var email = document.querySelector('input[name="email"]').value;
     var password = document.querySelector('input[name="password"]').value;
     var username = document.querySelector('input[name="username"]').value;
+    var userGender = document.querySelector('input[name="gender"]:checked').value;
+
     var usersArray = JSON.parse(localStorage.getItem('users')) || [];
     var emailExists = usersArray.some(function (user) {
         return user.userEmail.toLowerCase() === email.toLowerCase();
@@ -49,10 +51,10 @@ function handleFormSubmit(event) {
         document.getElementById('userNameMessage').style.display = "none";
         document.getElementById('emailMessage').style.display = "none";
         let maxId = Math.max(...usersArray.map(user => user.userID), 0); //get max id
-        var user = new users(maxId + 1, username, password, email, role);
+        var user = new users(maxId + 1, username, password, email, role,userGender);
 
         usersArray.push(user);
-
+        console.log(user);
         localStorage.setItem('users', JSON.stringify(usersArray));
 
         //check if the admin is the one who is trying to add a new user account then don't navigate

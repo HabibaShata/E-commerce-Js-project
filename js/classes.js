@@ -68,12 +68,13 @@ export class Product
 
 export class users
 {
-    constructor(userID, userName, userPassword, userEmail, userRole) {
+    constructor(userID, userName, userPassword, userEmail, userRole,userGender) {
         this.userID = userID;
         this.userName = userName;
         this.userPassword = userPassword;
         this.userEmail = userEmail;
         this.userRole = userRole;
+        this.userGender =userGender;
     }
 }
 
@@ -86,4 +87,3 @@ export const StatusEnum = {
 export let categories = ["All", "Jewellery", "Accessories", "Artwork", "Pet-supplies", "Sweets"];
 
 
-export {categories}
