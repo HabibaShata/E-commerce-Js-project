@@ -137,6 +137,12 @@ a:focus {
   overflow: hidden;
 }
 
+.navbar-brand img {
+  border-radius: 30%;
+  filter: drop-shadow(2px 4px 6px black) hue-rotate(45deg);
+  width: 200px;
+}
+
 .search-nav .input-group input[type=search] {
   font-size: 1rem;
 }
