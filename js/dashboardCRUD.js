@@ -1,6 +1,7 @@
 import {Product} from "./classes.js";
 import { products } from "./custom.js";
 import { categories } from "./classes.js";
+import {LogOut} from "../js/general-methods.js";
 
 ///////////// selectors///////////////
 // Selectors
@@ -28,6 +29,7 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // Initialize table and event listeners on window load
 window.addEventListener("load", function () {
+    LogOut();
     creatTableofData();
     attachEventListeners();
     deleteProduct();
@@ -408,11 +410,11 @@ function Add() {
 }
 
 // open modal
-btnAdd.addEventListener("click", function () {
+// btnAdd.addEventListener("click", function () {
 
-    $('#myModal2').modal('show');
+//     $('#myModal2').modal('show');
 
-})
+// })
 
 /*//////////////----Delete--/////////////////*/
 
