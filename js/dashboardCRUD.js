@@ -363,11 +363,53 @@ function sortTable(column, sort_asc) {
 if (localStorage.getItem("cart")) {
     cart = JSON.parse(localStorage.getItem("cart"));
 }
+// Function to update local storage with an array of products
 
 
 
 
 
+
+//     let isnotvalidForm = true;
+//     if (!istextvalid(_ProductName.value)) {
+//         document.getElementById("ProductName").classList.toggle("is-invalid");
+//         isnotvalidForm = false;
+//         //return false;  
+//     } else {
+//         document.getElementById("ProductName").classList.remove("is-invalid");
+//     }
+//     if (!isnumbervalid(_Quntity.value)) {
+//         document.getElementById("Quntity").classList.add("is-invalid");
+//         isnotvalidForm = false;
+//         // return false;
+//     } else {
+//         document.getElementById("Quntity").classList.remove("is-invalid");
+//     }
+//     if (!isnumbervalid(_price.value)) {
+//         document.getElementById("price").classList.add("is-invalid");
+//         isnotvalidForm = false;
+//         // return false;
+//     } else {
+//         document.getElementById("price").classList.remove("is-invalid");
+//     } if (!istextvalid(description.value)) {
+//         document.getElementById("description").classList.add("is-invalid");
+//         isnotvalidForm = false;
+//         //return false;
+//     } else {
+//         document.getElementById("description").classList.remove("is-invalid");
+//     }
+
+//     if (!istextvalid(category.value)) {
+//         document.getElementById("Catogry").classList.add("is-invalid");
+//         isnotvalidForm = false;
+//         //return false;
+//     }
+//     else {
+//         document.getElementById("category").classList.remove("is-invalid");
+//     }
+
+//     return isnotvalidForm;
+// }
 // Event handler for the click event on the "submit" form 
 submit.addEventListener('click',Add)
 

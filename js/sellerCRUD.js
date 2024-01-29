@@ -237,15 +237,8 @@ btnAdd.addEventListener("click", function () {
     $('#myModal2').modal('show');
 
 })
-close.addEventListener("click", closeModal)
-closex.addEventListener("click", closeModal)
 
-function closeModal() {
-    // Hide the modal after deletion
-    $('#myModal2').removeClass('fade');
-    // Hide the modal after deletion
-    $('#myModal2').modal('hide');
-}
+
 
 
 
@@ -260,7 +253,7 @@ function populateFormWithProductData(data) {
         <label>Product ID</label>
         <small id="productIdMessage" class="form-text  text-danger"></small>
         <input class="form-control" type="text" name="productId" id="productId" value="${data.productId}" readonly>
-    </div>
+             </div>
     <div class="form-group">
         <label>Category</label>
         <small id="categoryMessage" class="form-text  text-danger"></small>
@@ -309,85 +302,53 @@ function populateFormWithProductData(data) {
     </div>`
 }
 
-// function validateFormData(originalData) {
-//     // Validate Product ID
-//     if (document.querySelector("#productId").value !== originalData.productId) {
-//         errors.productId = "Product ID cannot be changed.";
-//     }
 
-//     // Validate Product Name
-//     if (!/^[0-9]+$/.test(document.querySelector("#productName").value)) {
-//         errors.productName = "Product Name should only contain numbers.";
-//     }
-
-//     // Validate Images
-//     if (!document.querySelector("#images").value.endsWith(".jpg")) {
-//         errors.images = "Image must be a .jpg file.";
-//     }
-
-//     // Validate Seller Name
-//     if (document.querySelector("#sellerName").value !== originalData.sellerName) {
-//         errors.sellerName = "Seller Name cannot be changed.";
-//     }
-
-//     // Validate Price
-//     if (!/^[0-9]+(\.[0-9]+)?$/.test(document.querySelector("#price").value)) {
-//         errors.price = "Price should only contain numbers.";
-//     }
-
-//     displayErrors(errors);
-
-//     return Object.keys(errors).length === 0;
-// }
-
-// function displayErrors(errors) {
-//     document.querySelectorAll('.form-text.text-danger').forEach(small => {
-//         small.textContent = '';
-//     });
-
-//     // Set error messages
-//     if (errors.productId) {
-//         document.querySelector("#productIdMessage").textContent = errors.productId;
-//     }
-//     if (errors.productName) {
-//         document.querySelector("#nameMessage").textContent = errors.productName;
-//     }
-//     if (errors.images) {
-//         document.querySelector("#imagesMessage").textContent = errors.images;
-//     }
-//     if (errors.sellerName) {
-//         document.querySelector("#sellerMessage").textContent = errors.sellerName;
-//     }
-//     if (errors.price) {
-//         document.querySelector("#priceMessage").textContent = errors.price;
-//     }
-//     // Show or hide the error message box
-//     const anyErrorMessagesVisible = [...document.querySelectorAll(`.form-text.text-danger`)].some(m => m.textContent);
-
-
-// }
 
 function getEditedValues() {
-    //get the info from the edit form
     let editForm = document.querySelector("#editForm").children[0].children[0];
-    let img = editForm.children[3].children[2].value, oldImg = editForm.children[3].children[3].src;
+    let imgInput = editForm.children[3].children[2];
+    let oldImg = editForm.children[3].children[3].src;
     let imgSrc;
-    console.log(oldImg);
-    if(!img) //if no image is selected then select the old image
-    {
-        imgSrc = `images/${oldImg.substring(oldImg.lastIndexOf("/")+1)}`;
-    } else {
-        imgSrc = `images/${img.substring(img.lastIndexOf("\\")+1)}`;
+    
+    // Image validation only jpg and jpeg
+    if (imgInput.value && !/\.(jpg|jpeg)$/i.test(imgInput.value)) {
+        document.querySelector("#imagesMessage").textContent = "Image must be a .jpg or .jpeg file.";
+        return null; 
     }
+
+    if (imgInput.value) {
+        imgSrc = `images/${imgInput.value.substring(imgInput.value.lastIndexOf("\\") + 1)}`;
+    } else {
+        imgSrc = `images/${oldImg.substring(oldImg.lastIndexOf("/") + 1)}`;
+    }
+
+    // Product Name validation Only char
+    let productName = editForm.children[2].children[2].value;
+    if (!/^[a-zA-Z\s]+$/.test(productName)) {
+        document.querySelector("#nameMessage").textContent = "Product Name should only contain characters.";
+
+        return null; 
+    }
+
+    // Price validation  number and decimal point
+    let price = parseFloat(editForm.children[5].children[2].value);
+    if (isNaN(price) || price <= 0) {
+        document.querySelector("#priceMessage").textContent = "Price must be more than zero.";
+
+        return null; 
+    }
+
+    // Return the edited values
     return {
         productId: editForm.children[0].children[2].value,
-        productName: editForm.children[2].children[2].value,
-        images: [imgSrc], 
+        productName: productName,
+        images: [imgSrc],
         sellerName: editForm.children[4].children[2].value,
         category: editForm.children[1].children[2].value,
-        price: editForm.children[5].children[2].value
+        price: price
     };
 }
+
 
 function updateProductData(EditedValues) {
     const index = arrOfproduct.findIndex(products => products.productId == EditedValues.productId);
@@ -485,5 +446,31 @@ function sortTable(column, sort_asc) {
  
 LogOut()
 
+table_rows = document.querySelectorAll('tbody tr'),
+table_headings = document.querySelectorAll('thead th');
+    
+   
+    table_headings.forEach((head, i) => {
 
-})
+        let sort_asc = true;
+        if (i == 1 || i == 3 || i == 4) {
+            head.onclick = (e) => {
+                // console.log(e.target);
+                table_headings.forEach(head => head.classList.remove('active'));
+                head.classList.add('active');
+
+                document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
+                table_rows.forEach(row => {
+                    row.querySelectorAll('td')[i].classList.add('active');
+                })
+
+                head.classList.toggle('asc', sort_asc);
+                sort_asc = head.classList.contains('asc') ? false : true;
+
+                sortTable(i, sort_asc);
+            }
+            // console.log(head);
+        }
+    });
+
+})//END OF LOAD 
