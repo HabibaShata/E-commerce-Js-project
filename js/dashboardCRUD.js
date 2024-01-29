@@ -1,6 +1,7 @@
 import {Product} from "./classes.js";
 import { products } from "./custom.js";
 import { categories } from "./classes.js";
+import {LogOut} from "../js/general-methods.js";
 
 ///////////// selectors///////////////
 // Selectors
@@ -28,6 +29,7 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // Initialize table and event listeners on window load
 window.addEventListener("load", function () {
+    LogOut();
     creatTableofData();
     attachEventListeners();
     deleteProduct();
@@ -91,12 +93,6 @@ function handleSubmitButtonClick(event) {
         
        location.reload();
     
-}
-
-function checkPriceInput(e) {
-    if(e.target.value <= 0) {
-        e.target.value = 1;
-    }
 }
 
 function populateFormWithProductData(data) {
@@ -291,7 +287,8 @@ function updateLocalStorage(arrOfproduct) {
 function creatTableofData() {
     for (let index = arrOfproduct.length-1; index >= 0; index--) {
         var element = arrOfproduct[index];
-        tbody.innerHTML += `
+        if(JSON.parse(localStorage.getItem("loggedInUser")).userRole=="admin") {
+            tbody.innerHTML += `
           <tr>
           <td>${element.productId}</td>
           <td>${element.productName}</td>
@@ -300,9 +297,6 @@ function creatTableofData() {
           <td>${element.category}</td>
           <td>${element.price}</td>
           <td>
-                      <a href="#" class="edit" title="Edit" data-bs-toggle="modal" data-bs-target="#userFormModal">
-                      <i class="material-icons edit" data-id="${element.productId}">&#xE254;</i>
-                  </a>
                   <!-- View Link -->
                   <a href="#" title="View" data-bs-toggle="modal" data-bs-target="#exampleModalLong2" >
                       <i data-id="${element.productId}" class="view material-icons">&#xE417;</i>
@@ -311,6 +305,29 @@ function creatTableofData() {
                       class=" material-icons text-danger">&#xE872;</i></a>
           </td>
          </tr>`
+        } else {
+            tbody.innerHTML += `
+          <tr>
+            <td>${element.productId}</td>
+            <td>${element.productName}</td>
+            <td><img src="${element["images"][0]}"/></td>
+            <td>${element.sellerName}</td>
+            <td>${element.category}</td>
+            <td>${element.price}</td>
+            <td>
+                    <a href="#" class="edit" title="Edit" data-bs-toggle="modal" data-bs-target="#userFormModal">
+                        <i class="material-icons edit" data-id="${element.productId}">&#xE254;</i>
+                    </a>
+                    <!-- View Link -->
+                    <a href="#" title="View" data-bs-toggle="modal" data-bs-target="#exampleModalLong2" >
+                        <i data-id="${element.productId}" class="view material-icons">&#xE417;</i>
+                    </a>
+                <a href="#"  title="Delete"  data-id="${element.productId}" class="delete trigger-btn"><i
+                        class=" material-icons text-danger">&#xE872;</i></a>
+                </td>
+         </tr>`
+        }
+        
 
     }
     
@@ -337,16 +354,10 @@ function sortTable(column, sort_asc) {
 
 /*end hissen*/ 
 
-///////////////// sort////////////////
 
 if (localStorage.getItem("cart")) {
     cart = JSON.parse(localStorage.getItem("cart"));
 }
-
-
-
-
-
 // Event handler for the click event on the "submit" form 
 submit.addEventListener('click',Add)
 
@@ -387,11 +398,11 @@ function Add() {
 }
 
 // open modal
-btnAdd.addEventListener("click", function () {
+// btnAdd.addEventListener("click", function () {
 
-    $('#myModal2').modal('show');
+//     $('#myModal2').modal('show');
 
-})
+// })
 
 /*//////////////----Delete--/////////////////*/
 

@@ -84,3 +84,6 @@ export const StatusEnum = {
 };
 
 export let categories = ["All", "Jewellery", "Accessories", "Artwork", "Pet-supplies", "Sweets"];
+
+
+export {categories}

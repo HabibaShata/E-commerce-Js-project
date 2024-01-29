@@ -100,7 +100,7 @@ window.addEventListener('load', function () {
                   labels: sellerProducts.map((p) => p.productName),
                   datasets: [{
                     label: 'quantities of each products',
-                    data: sellerProducts.map((p)=>p.quantity-p.quantity_sold),
+                    data: sellerProducts.map((p)=>p.quantity),
                     borderWidth: 5
                   }]
                 },
@@ -127,6 +127,11 @@ window.addEventListener('load', function () {
                 },
                 options: {
                   responsive: true,
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
                 }
               });
           }

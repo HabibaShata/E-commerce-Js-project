@@ -7,6 +7,12 @@ window.addEventListener("load", function () {
     signUpForm.addEventListener('submit', handleFormSubmit);
 });
 
+function showValidationMessages(validationMessages) {
+    validationMessages.forEach(mssg => {
+        console.log(mssg)
+    });
+}
+
 function handleFormSubmit(event) {
     event.preventDefault();
     // Validate the form before proceeding
@@ -25,11 +31,23 @@ function handleFormSubmit(event) {
     var emailExists = usersArray.some(function (user) {
         return user.userEmail.toLowerCase() === email.toLowerCase();
     });
+    var usernameExists = usersArray.some((user)=> {
+        return user.userName.toLowerCase() == username.toLowerCase();
+    })
 
     if (emailExists) {
-        showValidationMessages(['This email is already signed up. Please use a different email.']);
+        document.getElementById('emailMessage').innerHTML = "This email is already taken. Please choose a different email.";
+        document.getElementById('emailMessage').style.display = "block";
+        document.getElementById('userNameMessage').style.display = "none";
         emailExists = false;
+    } else if (usernameExists) {
+        document.getElementById('userNameMessage').innerHTML = "This username is already taken. Please choose a different username.";
+        document.getElementById('userNameMessage').style.display = "block";
+        document.getElementById('emailMessage').style.display = "none";
+        usernameExists = false;
     } else {
+        document.getElementById('userNameMessage').style.display = "none";
+        document.getElementById('emailMessage').style.display = "none";
         let maxId = Math.max(...usersArray.map(user => user.userID), 0); //get max id
         var user = new users(maxId + 1, username, password, email, role);
 
@@ -88,26 +106,5 @@ function validateForm() {
     return validationMessages;
 }
 
-// function validateEmail(email) {
-//     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//     return re.test(String(email).toLowerCase());
-// }
 
-function showValidationMessages(messages) {
-    let validationPopup = document.getElementById("validationPopup");
-    validationPopup.innerHTML = messages.map(message => `<p>${message}</p>`).join('');
-    validationPopup.style.animation = ""; // Reset animation
-    validationPopup.style.display = "block";
-
-    void validationPopup.offsetWidth;
-
-    // Start the animation by adding the class
-    validationPopup.style.animation = "fadeOut 5s forwards";
-
-    // Hide the popup after 2 seconds
-    // setTimeout(function () {
-    //     validationPopup.style.display = "none";
-    // }, 2000);
-}
-
-export {validateForm, handleFormSubmit, showValidationMessages};
+export {validateForm, handleFormSubmit};
