@@ -1,4 +1,4 @@
-import {users} from "classes.js" 
+import {users} from "./classes.js" 
 import {  handleFormSubmit } from "../sign-up/sign-up.js";
 import { isValidEmail, isValidPassword, isValidName } from "./profile.js";
 let allUsers = JSON.parse(localStorage.getItem("users")).filter(user=>user.userRole != "admin");
@@ -34,6 +34,7 @@ window.addEventListener("load", function(){
         row.innerHTML += `<th>${key}</th>`;
     }
     row.innerHTML += `<th>Actions</th>`;
+    
     DisplayUsers(allUsers);
     //display the pagination
     displayPagination(allUsers);
@@ -94,9 +95,14 @@ function DisplayUsers(usersArray)
             td.innerHTML = user[key];
         }
         td = rowTD.insertCell(-1);
-        td.innerHTML = `<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>`;
-        td.innerHTML += `<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>`;
+        td.innerHTML = `<a href="#editEmployeeModal" class="edit" data-bs-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>`;
+        td.innerHTML += `<a href="#deleteEmployeeModal" class="delete" data-bs-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>`;
     }
+
+    //display the current number per page
+    document.querySelector("#numberPerPage").innerHTML = endIndex-startIndex;
+    //display the total number of users
+    document.querySelector("#totalNumber").innerHTML = usersArray.length;
 }
 
 function displayPagination(usersArray)
@@ -129,7 +135,6 @@ function displayPagination(usersArray)
 }
 
 function pagination(e) {
-    debugger
     //if the user clicked on an LI item
     if (e.target.nodeName == "A") {
         //if the user clicked on the previous button
@@ -255,29 +260,53 @@ function prepareEditModal()
 function saveEditing()
 {
     //get the updated data from the modal form
-    let name = document.getElementById("edit_name").value;
-    let email = document.getElementById("edit_email").value;
-    let pass = document.getElementById("edit_pass").value;
+    let name = document.getElementById("edit_name");
+    let email = document.getElementById("edit_email");
+    let pass = document.getElementById("edit_pass");
     let role = document.querySelector('input[name="userType"]:checked').value;
 
     //validate the data
 
     //the containers in which the data will be displayed
     const firstNameMessage = document.getElementById('nameMessage');
-    const emailMessage = document.getElementById('emailMessage');
-    const passwordMessage = document.getElementById('passwordMessage');
+    const emailMessage = document.getElementById('editEmailMessage');
+    const passwordMessage = document.getElementById('editPasswordMessage');
 
     //check if the data is valid
-    const isFirstNameValid = isValidName(name, firstNameMessage);
-    const isEmailValid = isValidEmail(email, emailMessage);
-    const isPasswordValid = isValidPassword(pass, passwordMessage);
+    const isFirstNameValid = isValidName(name.value, firstNameMessage);
+    const isEmailValid = isValidEmail(email.value, emailMessage);
+    const isPasswordValid = isValidPassword(pass.value, passwordMessage);
+
+    if(isEmailValid) {
+        emailMessage.style.display = "none";
+        email.style.border = "2px solid green";
+    } else {
+        emailMessage.style.display = "block";
+        email.style.border = "2px solid red";
+    }
+
+    if(isFirstNameValid) {
+        firstNameMessage.style.display = "none";
+        name.style.border = "2px solid green";
+    } else {
+        firstNameMessage.style.display = "block";
+        name.style.border = "2px solid red";
+    }
+
+    if(isPasswordValid) {
+        passwordMessage.style.display = "none";
+        pass.style.border = "2px solid green";
+    } else {
+        passwordMessage.style.display = "block";
+        pass.style.border = "2px solid red";
+    }
 
     if (!isFirstNameValid || !isEmailValid || !isPasswordValid) {
         return;
     }
 
     //make a new user with the updated data
-    let user = new users(selectedUser.userID, name, pass, email, role);
+    let user = new users(selectedUser.userID, name.value, pass.value, email.value, role);
 
     //get the index of the user to be updated
     let oldUser = allUsers.find(user => user.userID == selectedUser.userID);

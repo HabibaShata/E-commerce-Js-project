@@ -446,6 +446,16 @@ function sortTable(column, sort_asc) {
  
 LogOut()
 
+close.addEventListener("click", closeModal)
+closex.addEventListener("click", closeModal)
+//close the add modal
+function closeModal() {
+    // Hide the modal after deletion
+    $('#myModal2').removeClass('fade');
+    // Hide the modal after deletion
+    $('#myModal2').modal('hide');
+}
+
 table_rows = document.querySelectorAll('tbody tr'),
 table_headings = document.querySelectorAll('thead th');
     

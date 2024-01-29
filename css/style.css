@@ -24,6 +24,16 @@ body {
   overflow-x: hidden;
 }
 
+/*classes*/
+.input-valid {
+  background-color: #000;
+  border: 1px solid green;
+}
+
+.input-invalid {
+  border: 1px solid red;
+}
+
 .layout_padding {
   padding: 70px 0;
 }
@@ -1648,4 +1658,16 @@ display: none;
   position: absolute;
   left: 0px;
   top: 20px;
+}
+
+.checkedInput {
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+  align-items: center; 
+}  
+
+.checkedInput input[type=checkbox] {
+  flex-basis: 20%;
+  margin: 0;
 }
