@@ -16,7 +16,7 @@ body {
 .form {
   position: relative;
   background: linear-gradient(to top, #fcb69f, #ffecd2);
-  max-width: 360px;
+  width: 50vh;
   margin: 0 auto 100px;
   padding: 45px;
   text-align: center;
@@ -355,4 +355,16 @@ a:hover{
     -ms-transform: translateY(-700px) rotate(600deg);
     transform: translateY(-700px) rotate(600deg);
   }
+}
+
+h2{
+  font-family:'Tahoma', sans-serif;
+  text-align:center;
+  font-style: bold;
+  color:#e1725e;
+}
+#togglePassword{
+  position: absolute;
+  right: 1px;
+  color: #000000;
 }

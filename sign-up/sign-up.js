@@ -5,6 +5,16 @@ window.addEventListener("load", function () {
     // Attach the form submission handler to the form
     let signUpForm = document.querySelector('.signupForm');
     signUpForm.addEventListener('submit', handleFormSubmit);
+
+    document.getElementById('togglePassword').addEventListener('click', function (e) {
+        const password = document.getElementById('password');
+        const confirmPassword=document.getElementById('confirmPassword')
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        confirmPassword.setAttribute('type', type);
+        
+        this.classList.toggle('fa-eye-slash');
+    })
 });
 
 function showValidationMessages(validationMessages) {
