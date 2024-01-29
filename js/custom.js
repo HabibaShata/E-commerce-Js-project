@@ -8,14 +8,20 @@ import {Product} from "./classes.js"
 
 // getYear();
 //Product class function
-
-
-//get the products data from the local storage
-let products = JSON.parse(localStorage.getItem("products"))|| [];
-// checking if the key  is not exist in the localStorage we will set the arr;
-if(!localStorage.getItem("products")){
-   //add the products to the local storage
+let products = [];
+if(!JSON.parse(localStorage.getItem("products"))||JSON.parse(localStorage.getItem("products")).length == 0) {
+   products = [
+      new Product (1, "Men's Shirt", "Jewellery", "Omar1", 100, 50, ["../images/1.jpeg"], 200, "any descroiption", ["Black", "Red", "White"]),
+      new Product (2, "Women's Shirt", "Jewellery", "Omar1", 100, 50, ["../images/2.jpeg"], 300, "any descroiption", ["Black", "Red", "White"]),
+      new Product (3, "Men's Shoes", "Accessories", "Omar1", 25, 25, ["../images/3.jpeg"], 320, "any descroiption", ["Black", "Red", "White"]),
+      new Product (4, "Women's Shoes", "Accessories", "Omar1", 30, 0, ["../images/1.jpeg"], 120, "any descroiption", ["Black", "Red", "White"]),
+      new Product (5, "Men's Accessories", "Artwork", "Omar1", 60, 40, ["../images/2.jpeg"], 140, "any descroiption", ["Black", "Red", "White"]),
+      new Product (6, "Women's Accessories", "Accessories", "Omar1", 30, 1, ["../images/3.jpeg"], 155, "any descroiption", ["Black", "Red", "White"]),
+      new Product (7, "Men's Watch", "Artwork", "Omar1", 25, 14, ["../images/4.jpeg"], 500, "any descroiption", ["Black", "Red", "White"]),
+   ];
    localStorage.setItem("products", JSON.stringify(products));
+} else {
+   products = JSON.parse(localStorage.getItem("products"));
 }
 
 //get the loggedInUser

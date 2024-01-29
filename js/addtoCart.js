@@ -103,7 +103,7 @@ window.addEventListener("load", function () {
 
     //check if the loggedinuser is the admin or seller so don't perform the following
     if (!(loggedInUser && (loggedInUser.userRole == "admin" || loggedInUser.userRole == "seller"))) {
-        listCartHTML.addEventListener('click', (event) => {
+        listCartHTML.addEventListener('dblclick', (event) => {
             let positionClick = event.target;
             //console.log(event.target.dataset.btn);
             if (positionClick.dataset.btn == "decr" || positionClick.dataset.btn == "incr") {
@@ -364,10 +364,9 @@ const addCartToHTML = () => {
         //console.log(itemsFromCart);
 
     } else {
-
         let items = document.querySelectorAll(".item");
         cnt = 0
-          iconCartSpan.innerText = cnt;
+        iconCartSpan.innerText = cnt;
         listCartHTML.removeChild(items);
         // console.log(arrCart.length);
     }
@@ -392,6 +391,7 @@ const addCartToHTML = () => {
 // }
 
 const changeQuantityCart = (product_id, type) => {
+    debugger
     let positionItemInCart = arrCart.findIndex((value) => value.product_id == product_id);
     // let positionItemInCart2 = arrCart.findIndex((value) =>{} );
 
@@ -401,7 +401,7 @@ const changeQuantityCart = (product_id, type) => {
         switch (type) {
             case 'incr':
                 if(arrCart[positionItemInCart].quantity <products[arrCart[positionItemInCart].product_id-1].quantity){
-                    arrCart[positionItemInCart].quantity = arrCart[positionItemInCart].quantity + 1;
+                    arrCart[positionItemInCart].quantity = Number(arrCart[positionItemInCart].quantity) + 1;
                 }else{
                     alert("out of sotck");
                 }
@@ -411,7 +411,7 @@ const changeQuantityCart = (product_id, type) => {
                 break;
 
             default:
-                let changeQuantity = arrCart[positionItemInCart].quantity - 1;
+                let changeQuantity = Number(arrCart[positionItemInCart].quantity) - 1;
                 if (changeQuantity >= 1) {
                     arrCart[positionItemInCart].quantity = changeQuantity;
                 }
@@ -420,6 +420,7 @@ const changeQuantityCart = (product_id, type) => {
     }
     addCartToHTML();
     addCartToMemory();
+    return;
 }
 
 // fun delete&update 

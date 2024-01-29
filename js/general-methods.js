@@ -33,7 +33,7 @@ export function renderingNavBar()
 						<a class="nav-link" href="admin.html">Home <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label" id="welcome-user"> <span class="caret">${loggedInUser.userName}</span></a>
+						<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label" id="welcome-user"> <span class="caret">${loggedInUser.userName}</span></a>
 						<ul class="dropdown-menu" id="user-DropDown">
 							<li><a href="profile.html">Profile</a></li>
 							<li><a href="usersCRUD.html">Users</a></li>
