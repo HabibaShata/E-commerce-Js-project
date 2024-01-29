@@ -56,23 +56,26 @@ window.addEventListener("load", function () {
 
 
     $('.confirm').on('click', () => {
-        const userAddress = address.find(add => add.username == loggedInUser.userName);
-        if (userAddress != null && userAddress != undefined) {
-            createOrder(userAddress);
-            clearCart();
+        if (phoneError.textContent == '' && AdditionalPhoneError.textContent == '') {
+
+            const userAddress = address.find(add => add.username == loggedInUser.userName);
+            if (userAddress != null && userAddress != undefined) {
+                createOrder(userAddress);
+                clearCart();
+            } else {
+                alert('Please Fill the Address and Save it');
+            }
         } else {
-            alert('Please Fill the Address and Save it')
+            alert('Please Write a valid Number');
         }
     })
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     //validation phone Number 
     var phoneInput = document.getElementById('phone');
+    var phoneError = document.getElementById('phoneError');
     var phoneRegex = /^(010|015|012)\d{8}$/;
 
     phoneInput.addEventListener('blur', function () {
-
-        var phoneError = document.getElementById('phoneError');
-
         if (!phoneRegex.test(phoneInput.value))
             phoneError.textContent = 'please Enter 11 number start with 010 or 012 or 015';
         else
@@ -81,9 +84,9 @@ window.addEventListener("load", function () {
 
     // validation for additional number
     var additionalPhoneInput = document.getElementById('additionalphone');
+    var AdditionalPhoneError = document.getElementById('AdditionalPhoneError');
 
     additionalPhoneInput.addEventListener('blur', function () {
-        var AdditionalPhoneError = document.getElementById('AdditionalPhoneError');
 
         // Check if additional phone number matches the required format
         if (!phoneRegex.test(additionalPhoneInput.value))
@@ -93,31 +96,46 @@ window.addEventListener("load", function () {
     });
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // get stored address if exsist and dispaly it
+    const userAdd = address.find(add => add.username === loggedInUser.userName);
+    if (userAdd != null) {
+        $('#phone').val(userAdd.phoneNumber);
+        $('#additionalphone').val(userAdd.additionalNumber);
+        $('#address').val(userAdd.address);
+        $('#info').val(userAdd.additionalInformation);
+        $('#region').val(userAdd.region);
+        $('#city').val(userAdd.city);
+    }
+
     //when save button clicked
     $('#addressForm').submit(function (event) {
-        //to prevent reload
         event.preventDefault();
+        if (phoneError.textContent == '' && AdditionalPhoneError.textContent == '') {
+            //to prevent reload
 
-        // get values from form fields
-        const phone = $('#phone').val();
-        const additionalphone = $('#additionalphone').val();
-        const adreess = $('#address').val();
-        const info = $('#info').val();
-        const region = $('#region').find(":selected").text();;
-        const city = $('#city').val();
+            // get values from form fields
+            const phone = $('#phone').val();
+            const additionalphone = $('#additionalphone').val();
+            const adreess = $('#address').val();
+            const info = $('#info').val();
+            const region = $('#region').find(":selected").text();;
+            const city = $('#city').val();
 
-        const addressObject = new Address(loggedInUser.userName, phone, additionalphone, adreess, info, region, city);
+            const addressObject = new Address(loggedInUser.userName, phone, additionalphone, adreess, info, region, city);
 
-        //add address if new / update if exsist
-        const userAddressIndex = address.findIndex(add => add.username === loggedInUser.userName);
+            //add address if new / update if exsist
+            const userAddressIndex = address.findIndex(add => add.username === loggedInUser.userName);
 
-        if (userAddressIndex !== -1) {
-            address[userAddressIndex] = addressObject;
+            if (userAddressIndex !== -1) {
+                address[userAddressIndex] = addressObject;
+            } else {
+                address.push(addressObject);
+            }
+
+            localStorage.setItem("address", JSON.stringify(address));
         } else {
-            address.push(addressObject);
+            alert('Please Write a valid Number');
         }
-
-        localStorage.setItem("address", JSON.stringify(address));
     });
 
 })
